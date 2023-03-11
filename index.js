@@ -2,6 +2,7 @@ const express = require('express');
 const sequelize = require('./db');
 const PORT = process.env.PORT || 5000;
 const app = express();
+const models = require('./models');
 
 const init = async () => {
   try {
@@ -9,7 +10,7 @@ const init = async () => {
     await sequelize.sync();
     app.listen(PORT, () => console.log('server is running'));
   } catch (error) {
-    console.error('Unable to connect to the database:');
+    console.error('Unable to connect to the database: ', error);
   }
 };
 
