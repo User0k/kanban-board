@@ -4,14 +4,9 @@ const { Column } = require('../models');
 const addColumn = errorHandler(async (req, res) => {
   const { title, BoardId } = req.body;
 
-  if (!title) {
+  if (!title || !BoardId) {
     res.status(400);
-    throw new Error('Column must contain a title');
-  }
-
-  if (!BoardId) {
-    res.status(400);
-    throw new Error('Column must contain a BoardId to bind');
+    throw new Error('Column must contain title and BoardId');
   }
 
   const order = (await Column.count({ where: { BoardId } })) + 1;
@@ -61,7 +56,7 @@ const deleteColumnById = errorHandler(async (req, res) => {
   const destroyed = await Column.destroy({ where: { id } });
 
   if (destroyed === 1) {
-    res.status(404);
+    res.status(200);
     return res.json({ message: 'Column has been deleted' });
   }
 

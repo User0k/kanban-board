@@ -1,5 +1,5 @@
 const sequelize = require('../db');
-const { DataTypes, fn } = require('sequelize');
+const { DataTypes, fn, QueryInterface } = require('sequelize');
 
 const User = sequelize.define('User', {
   id: {
@@ -29,7 +29,7 @@ const Column = sequelize.define('Column', {
     primaryKey: true,
   },
   title: { type: DataTypes.STRING, allowNull: false },
-  order: { type: DataTypes.INTEGER, autoIncrement: true },
+  order: { type: DataTypes.INTEGER },
 });
 
 const Task = sequelize.define('Task', {
@@ -40,18 +40,18 @@ const Task = sequelize.define('Task', {
   },
   title: { type: DataTypes.STRING, allowNull: false },
   description: { type: DataTypes.STRING },
-  order: { type: DataTypes.INTEGER, autoIncrement: true },
+  order: { type: DataTypes.INTEGER },
 });
 
 const UserToTask = sequelize.define('UserToTask', {
   id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
 });
 
-Board.hasMany(Column);
-Column.belongsTo(Board);
+Board.hasMany(Column, { onDelete: 'cascade', hooks: true });
+Column.belongsTo(Board, { onDelete: 'cascade', hooks: true });
 
-Column.hasMany(Task);
-Task.belongsTo(Column);
+Column.hasMany(Task, { onDelete: 'cascade', hooks: true });
+Task.belongsTo(Column, { onDelete: 'cascade', hooks: true });
 
 User.belongsToMany(Task, { through: UserToTask });
 Task.belongsToMany(User, { through: UserToTask });

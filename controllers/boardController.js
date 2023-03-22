@@ -6,7 +6,7 @@ const addBoard = errorHandler(async (req, res) => {
 
   if (!name || !description) {
     res.status(400);
-    throw new Error('Board must include Name and Description');
+    throw new Error('Board must contain name and description');
   }
 
   const board = await Board.create({ name, description });
@@ -37,12 +37,12 @@ const updateBoard = errorHandler(async (req, res) => {
 
   if (!name) {
     res.status(400);
-    throw new Error('Board should contain a Name');
+    throw new Error('Board must contain a name');
   }
 
   if (!description) {
     res.status(400);
-    throw new Error('Board should contain a Description');
+    throw new Error('Board must contain a description');
   }
 
   await Board.update({ name, description }, { where: { id } });
@@ -55,7 +55,7 @@ const deleteBoardById = errorHandler(async (req, res) => {
   const destroyed = await Board.destroy({ where: { id } });
 
   if (destroyed === 1) {
-    res.status(404);
+    res.status(200);
     return res.json({ message: 'Board has been deleted' });
   }
 

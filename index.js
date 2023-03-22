@@ -12,7 +12,7 @@ app.use('/api', router);
 const init = async () => {
   try {
     await sequelize.authenticate();
-    await sequelize.sync();
+    await sequelize.sync({ alter: true });
     app.listen(PORT, () => console.log('server is running'));
   } catch (error) {
     console.error('Unable to connect to the database: ', error);
