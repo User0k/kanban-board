@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const errorHandler = require('express-async-handler');
 const { Task } = require('../models');
 
@@ -27,9 +28,7 @@ const getTasks = errorHandler(async (req, res) => {
 
 const getTaskById = errorHandler(async (req, res) => {
   const { id } = req.params;
-  console.log(id)
   const task = await Task.findOne({ where: { id } });
-  console.log(task)
 
   if (task) {
     return res.json(task);
@@ -41,23 +40,39 @@ const getTaskById = errorHandler(async (req, res) => {
 
 const updateTaskByID = errorHandler(async (req, res) => {
   const { id } = req.params;
-  const { title, description, order } = req.body;
+  const { title, description } = req.body;
 
-  if (!title && !id) {
+  if (!title || !id) {
     res.status(400);
-    throw new Error('Task must contain title or id');
+    throw new Error('Task must contain title and id');
   }
 
-  await Task.update({ title, description, order }, { where: { id } });
+  await Task.update({ title, description }, { where: { id } });
   res.status(200);
   return res.json({ message: 'Task has been updated' });
 });
 
 const deleteTaskById = errorHandler(async (req, res) => {
   const { id } = req.params;
+  const task = await Task.findOne({ where: { id } });
+
+  if (!task) {
+    res.status(404);
+    throw new Error('Task not found');
+  }
+
   const destroyed = await Task.destroy({ where: { id } });
 
   if (destroyed === 1) {
+    const { ColumnId, order } = task.dataValues;
+    const tasks = await Task.findAll({
+      where: {
+        ColumnId,
+        order: { [Op.gt]: order },
+      },
+    });
+    const newOrders = tasks.map((task) => task?.dataValues.order - 1);
+    tasks.forEach((task, i) => task.update({ order: newOrders[i] }));
     res.status(200);
     return res.json({ message: 'Task has been deleted' });
   }
