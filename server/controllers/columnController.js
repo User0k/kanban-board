@@ -17,7 +17,7 @@ const addColumn = errorHandler(async (req, res) => {
 });
 
 const getColumns = errorHandler(async (req, res) => {
-  const { BoardId } = req.body;
+  const { BoardId } = req.params;
 
   const columns = !BoardId
     ? await Column.findAll()
@@ -76,7 +76,7 @@ const reorderColumns = errorHandler(async (req, res) => {
         order: { [Op.between]: [order + 1, targetOrder] },
       },
     });
-    columns.forEach(col => col.update({ order: col.dataValues.order - 1 }));
+    columns.forEach((col) => col.update({ order: col.dataValues.order - 1 }));
   } else {
     const columns = await Column.findAll({
       where: {
@@ -84,7 +84,7 @@ const reorderColumns = errorHandler(async (req, res) => {
         order: { [Op.between]: [targetOrder, order - 1] },
       },
     });
-    columns.forEach(col => col.update({ order: col.dataValues.order + 1 }));
+    columns.forEach((col) => col.update({ order: col.dataValues.order + 1 }));
   }
 
   await column.update({ order: targetOrder });

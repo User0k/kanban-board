@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();
+const columnRouter = express.Router({ mergeParams: true });
 const {
   addColumn,
   getColumns,
@@ -9,11 +9,11 @@ const {
   reorderColumns,
 } = require('../controllers/columnController');
 
-router.post('/', addColumn);
-router.get('/', getColumns);
-router.get('/:id', getColumnById);
-router.put('/:id', updateColumnByID);
-router.delete('/:id', deleteColumnById);
-router.put('/:id/reorder', reorderColumns);
+columnRouter.post('/', addColumn);
+columnRouter.get('/', getColumns);
+columnRouter.get('/:id', getColumnById);
+columnRouter.put('/:id', updateColumnByID);
+columnRouter.delete('/:id', deleteColumnById);
+columnRouter.put('/:id/reorder', reorderColumns);
 
-module.exports = router;
+module.exports = columnRouter;

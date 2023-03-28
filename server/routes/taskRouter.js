@@ -1,4 +1,5 @@
 const express = require('express');
+const taskRouter = express.Router({ mergeParams: true });
 const {
   addTask,
   getTasks,
@@ -6,12 +7,11 @@ const {
   updateTaskByID,
   deleteTaskById,
 } = require('../controllers/taskController');
-const router = express.Router();
 
-router.post('/', addTask);
-router.get('/', getTasks);
-router.get('/:id', getTaskById);
-router.put('/:id', updateTaskByID);
-router.delete('/:id', deleteTaskById);
+taskRouter.post('/', addTask);
+taskRouter.get('/', getTasks);
+taskRouter.get('/:id', getTaskById);
+taskRouter.put('/:id', updateTaskByID);
+taskRouter.delete('/:id', deleteTaskById);
 
-module.exports = router;
+module.exports = taskRouter;

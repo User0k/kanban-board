@@ -3,7 +3,8 @@ const errorHandler = require('express-async-handler');
 const { Task } = require('../models');
 
 const addTask = errorHandler(async (req, res) => {
-  const { title, description, ColumnId } = req.body;
+  const { title, description } = req.body;
+  const { ColumnId } = req.params;
 
   if (!title || !ColumnId) {
     res.status(400);
@@ -17,7 +18,7 @@ const addTask = errorHandler(async (req, res) => {
 });
 
 const getTasks = errorHandler(async (req, res) => {
-  const { ColumnId } = req.body;
+  const { ColumnId } = req.params;
 
   const tasks = !ColumnId
     ? await Task.findAll()

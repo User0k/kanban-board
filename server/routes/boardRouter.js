@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();
+const boardRouter = express.Router();
 const {
   addBoard,
   getAllBoards,
@@ -8,10 +8,10 @@ const {
   deleteBoardById,
 } = require('../controllers/boardController');
 
-router.post('/', addBoard);
-router.get('/', getAllBoards);
-router.get('/:id', getBoardById);
-router.put('/:id', updateBoard);
-router.delete('/:id', deleteBoardById);
+boardRouter.post('/', addBoard);
+boardRouter.get('/', getAllBoards);
+boardRouter.get('/:id', getBoardById);
+boardRouter.put('/:id', updateBoard);
+boardRouter.delete('/:id', deleteBoardById);
 
-module.exports = router;
+module.exports = boardRouter;
