@@ -4,6 +4,8 @@ export interface IBoard {
   description: string;
 }
 
+export type NewBoard = Omit<IBoard, 'id'>;
+
 export interface IColumn {
   id: string;
   title: string;
