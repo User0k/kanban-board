@@ -1,7 +1,8 @@
+import Board from './components/Board';
 import viteLogo from '/vite.svg';
 
 function App() {
-  return <div className="App">App</div>;
+  return <div className="App"><Board /></div>;
 }
 
 export default App;
