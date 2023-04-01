@@ -3,7 +3,8 @@ const errorHandler = require('express-async-handler');
 const { Column } = require('../models');
 
 const addColumn = errorHandler(async (req, res) => {
-  const { title, BoardId } = req.body;
+  const { BoardId } = req.params;
+  const { title } = req.body;
 
   if (!title || !BoardId) {
     res.status(400);
@@ -18,10 +19,12 @@ const addColumn = errorHandler(async (req, res) => {
 
 const getColumns = errorHandler(async (req, res) => {
   const { BoardId } = req.params;
+  const columns = await Column.findAll({ where: { BoardId } });
 
-  const columns = !BoardId
-    ? await Column.findAll()
-    : await Column.findAll({ where: { BoardId } });
+  if (!columns) {
+    res.status(404);
+    throw new Error('Columns not found');
+  }
 
   return res.json(columns);
 });
