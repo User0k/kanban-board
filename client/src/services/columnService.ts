@@ -32,7 +32,7 @@ export const boardApi = api.injectEndpoints({
     }),
     reorderColumn: build.mutation<IColumn, IReorderColumn>({
       query: ({ boardId, id, ...body }) => ({
-        url: `boards/${boardId}/columns/${id}`,
+        url: `boards/${boardId}/columns/${id}/reorder`,
         method: 'PUT',
         body,
       }),
