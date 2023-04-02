@@ -20,12 +20,22 @@ export interface IReorderColumn extends GetColumn {
   targetOrder: number;
 }
 
+export interface IGetTask {
+  id: string;
+  boardId: string;
+  columnId: string;
+}
+
 export interface ITask {
   id: string;
   title: string;
-  description: string;
+  description?: string;
   order?: number;
 }
+
+export interface IUpdateTask
+  extends IGetTask,
+    Pick<ITask, 'title' | 'description'> {}
 
 export interface IUser {
   id: string;

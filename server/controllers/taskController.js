@@ -19,12 +19,14 @@ const addTask = errorHandler(async (req, res) => {
 
 const getTasks = errorHandler(async (req, res) => {
   const { ColumnId } = req.params;
+  const tasks = await Task.findAll({ where: { ColumnId } });
 
-  const tasks = !ColumnId
-    ? await Task.findAll()
-    : await Task.findAll({ where: { ColumnId } });
+  if (tasks) {
+    return res.json(tasks);
+  }
 
-  return res.json(tasks);
+  res.status(404);
+  throw new Error('Tasks not found');
 });
 
 const getTaskById = errorHandler(async (req, res) => {

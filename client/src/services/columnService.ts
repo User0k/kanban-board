@@ -38,7 +38,7 @@ export const boardApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Column'],
     }),
-    deleteBoard: build.mutation<IColumn, GetColumn>({
+    deleteColumn: build.mutation<IColumn, GetColumn>({
       query: ({ boardId, id }) => ({
         url: `boards/${boardId}/columns/${id}`,
         method: 'DELETE',
@@ -54,5 +54,5 @@ export const {
   useCreateColumnMutation,
   useUpdateColumnMutation,
   useReorderColumnMutation,
-  useDeleteBoardMutation,
+  useDeleteColumnMutation,
 } = boardApi;
