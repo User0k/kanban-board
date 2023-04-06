@@ -1,0 +1,27 @@
+#header {
+  .MuiToolbar-root {
+    justify-content: space-around;
+    min-height: 50px;
+
+    @media (max-width: 700px) {
+      justify-content: space-between;
+    }
+  }
+
+  button {
+    border-radius: 0;
+    padding: 0 8px;
+    color: inherit;
+    border-color: inherit;
+
+    &.lang-active {
+      font-weight: 700;
+    }
+  }
+
+  .MuiTypography-root {
+    @media (max-width: 700px) {
+      display: none;
+    }
+  }
+}
