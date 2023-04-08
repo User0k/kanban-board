@@ -1,0 +1,25 @@
+#main {
+  width: 100%;
+  height: calc(100vh - 50px);
+  overflow: scroll;
+
+  h1 {
+    font-size: 1.7rem;
+  }
+
+  .btn-main {
+    width: 60px;
+    height: 55px;
+    background: linear-gradient(0deg, rgba(45,180,253,1) 0%, rgba(34,174,195,1) 100%);
+  }
+
+  .btn-create-board {
+    background-color: rgb(247, 247, 247);
+    width: 400px;
+    height: 240px;
+
+    &:hover {
+      background-color: rgb(230, 230, 230);
+    }
+  }
+}
