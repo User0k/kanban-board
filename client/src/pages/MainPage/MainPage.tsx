@@ -14,9 +14,10 @@ import CalendarViewMonthIcon from '@mui/icons-material/CalendarViewMonth';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import './MainPage.scss';
+import Spinner from '../../components/Spinner';
 
 function MainPage() {
-  const { data: boards } = useGetAllBoardsQuery();
+  const { data: boards, isLoading: isBoardsLoading } = useGetAllBoardsQuery();
   return (
     <Box id="main">
       <Box sx={{ pt: 3 }}>
@@ -30,7 +31,7 @@ function MainPage() {
               You can view, modify or delete them. Need to start with another
               one? Create new!
             </Typography>
-            <Typography variant="body2" sx={{ pt: 1, color: '#888888' }}>
+            <Typography variant="body2" color="text.secondary" sx={{ pt: 1 }}>
               Number of available boards: {boards?.length ?? 0}
             </Typography>
           </Stack>
@@ -38,16 +39,20 @@ function MainPage() {
         <Divider sx={{ p: 2, mb: 4 }} />
       </Box>
       <Container maxWidth="xl">
-        <Stack
-          direction={'row'}
-          gap={2}
-          justifyContent={'center'}
-          flexWrap="wrap">
-          {boards?.map((board) => (
-            <Board {...board} key={board.id} />
-          ))}
-          <Button className="btn-create-board">create a board</Button>
-        </Stack>
+        {isBoardsLoading ? (
+          <Spinner />
+        ) : (
+          <Stack
+            direction={'row'}
+            gap={2}
+            justifyContent={'center'}
+            flexWrap="wrap">
+            {boards?.map((board) => (
+              <Board {...board} key={board.id} />
+            ))}
+            <Button className="btn-create-board">create a board</Button>
+          </Stack>
+        )}
       </Container>
     </Box>
   );
