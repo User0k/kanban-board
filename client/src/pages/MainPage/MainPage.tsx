@@ -22,7 +22,7 @@ function MainPage() {
     <Box id="main">
       <Box sx={{ pt: 3 }}>
         <Stack direction={'row'} justifyContent={'center'}>
-          <Button variant="contained" className="btn-main">
+          <Button variant="contained" sx={{ ml: 2 }} className="btn-main">
             <CalendarViewMonthIcon fontSize="large" />
           </Button>
           <Stack sx={{ pl: 2 }}>
@@ -50,7 +50,7 @@ function MainPage() {
             {boards?.map((board) => (
               <Board {...board} key={board.id} />
             ))}
-            <Button className="btn-create-board">create a board</Button>
+            <Button sx={{mb: 2}} className="btn-create-board">create a board</Button>
           </Stack>
         )}
       </Container>
