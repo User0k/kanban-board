@@ -10,7 +10,7 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import CalendarViewMonthIcon from '@mui/icons-material/CalendarViewMonth';
+import AppsIcon from '@mui/icons-material/Apps';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import './MainPage.scss';
@@ -23,7 +23,7 @@ function MainPage() {
       <Box sx={{ pt: 3 }}>
         <Stack direction={'row'} justifyContent={'center'}>
           <Button variant="contained" sx={{ ml: 2 }} className="btn-main">
-            <CalendarViewMonthIcon fontSize="large" />
+            <AppsIcon fontSize="large" />
           </Button>
           <Stack sx={{ pl: 2 }}>
             <Typography variant="h1">Boards</Typography>
