@@ -1,6 +1,6 @@
 .create-board {
   .MuiPaper-root {
-    width: 420px;
+    width: 360px;
   }
 
   .create-board__ {
@@ -16,7 +16,8 @@
     }
   }
 
-  label, .MuiInputBase-root {
+  label,
+  .MuiInputBase-root {
     font-size: 0.9rem;
   }
 }
