@@ -1,0 +1,41 @@
+.choose-image {
+  &.MuiDialog-root {
+    top: calc(10vh);
+    left: calc(35vw - 50px);
+    height: 800px;
+    max-height: calc(100% - 54px);
+  }
+
+  &__image {
+    width: 200px;
+    height: 140px;
+    cursor: pointer;
+    &:hover {
+      filter: brightness(0.9);
+      transform: scale(1.02);
+      transition: all 0.2s;
+    }
+  }
+
+  .load-more-btn {
+    background-color: #f3f3f3;
+    padding: 1px;
+    max-height: 23px;
+    color: #858570;
+    &:hover {
+      background-color: #e6e6e6;
+    }
+  }
+}
+
+@media ((max-width: 1024px) and (min-width: 700px)) {
+  .choose-image.MuiDialog-root {
+    left: calc(70vw - 100px);
+  }
+}
+
+@media (max-width: 700px) {
+  .choose-image.MuiDialog-root {
+    left: calc(40vw - 100px);
+  }
+}

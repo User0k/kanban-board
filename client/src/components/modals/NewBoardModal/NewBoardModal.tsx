@@ -10,6 +10,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
+import ChooseImageModal from '../ChooseImageModal';
 import './NewBoardModal.scss';
 
 type FormValues = Omit<NewBoard, 'image'>;
@@ -60,9 +61,7 @@ function NewBoardModal({ images }: IModalProps) {
               direction={'row'}
               justifyContent={'space-between'}
               className="background-change__wrapper">
-              <Button variant="contained" size="small">
-                Choose image
-              </Button>
+              <ChooseImageModal images={images} setImage={setImage} />
               <Button variant="contained" size="small">
                 Choose gradient
               </Button>
