@@ -12,7 +12,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import Tooltip from '@mui/material/Tooltip';
 import './Board.scss';
 
-function Board({ name, description, id }: IBoard) {
+function Board({ name, description, id, image }: IBoard) {
   const [deleteModal, setDeleteModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
 
@@ -42,22 +42,15 @@ function Board({ name, description, id }: IBoard) {
           />
         </Tooltip>
       </Box>
-      <CardMedia
-        component="img"
-        alt="image"
-        height="150"
-        image="https://images.unsplash.com/photo-1679674704818-f3a500c1305b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY4MDk4MDIyOQ&ixlib=rb-4.0.3&q=80&w=1080"
-        className="card-board__image"
-      />
-      {/* <CardMedia>
+      <CardMedia>
         <Box
           sx={{
-            height: 150,
-            background:
-              'linear-gradient(0deg, rgba(45, 180, 253, 1) 0%,  rgba(34, 174, 195, 1) 100% )',
-          }}></Box>
-      </CardMedia> */}
-      <CardContent>
+            height: 165,
+            background: image,
+          }}
+        />
+      </CardMedia>
+      <CardContent sx={{ padding: '4px 12px' }}>
         <Typography variant="h6" component="div" noWrap={true}>
           {name}
         </Typography>
