@@ -20,6 +20,7 @@ const Board = sequelize.define('Board', {
   },
   name: { type: DataTypes.STRING, allowNull: false },
   description: { type: DataTypes.STRING },
+  image: { type: DataTypes.STRING, allowNull: false },
 });
 
 const Column = sequelize.define('Column', {

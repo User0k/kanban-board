@@ -2,6 +2,7 @@ export interface IBoard {
   id: string;
   name: string;
   description: string;
+  image: string;
 }
 
 export type NewBoard = Omit<IBoard, 'id'>;

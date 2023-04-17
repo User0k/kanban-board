@@ -2,14 +2,14 @@ const errorHandler = require('express-async-handler');
 const { Board } = require('../models');
 
 const addBoard = errorHandler(async (req, res) => {
-  const { name, description } = req.body;
+  const { name, description, image } = req.body;
 
-  if (!name || !description) {
+  if (!name || !description || !image) {
     res.status(400);
-    throw new Error('Board must contain name and description');
+    throw new Error('Board must contain name, description and image');
   }
 
-  const board = await Board.create({ name, description });
+  const board = await Board.create({ image, name, description });
   res.status(201);
   return res.json(board);
 });
@@ -33,19 +33,14 @@ const getBoardById = errorHandler(async (req, res) => {
 
 const updateBoard = errorHandler(async (req, res) => {
   const { id } = req.params;
-  const { name, description } = req.body;
+  const { name, description, image } = req.body;
 
-  if (!name) {
+  if (!name || !description || !image) {
     res.status(400);
-    throw new Error('Board must contain a name');
+    throw new Error('Board must contain name, description and image');
   }
 
-  if (!description) {
-    res.status(400);
-    throw new Error('Board must contain a description');
-  }
-
-  await Board.update({ name, description }, { where: { id } });
+  await Board.update({ name, description, image }, { where: { id } });
   res.status(200);
   return res.json({ message: 'Board has been updated' });
 });

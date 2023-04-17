@@ -12,7 +12,7 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import './NewBoardModal.scss';
 
-type FormValues = NewBoard;
+type FormValues = Omit<NewBoard, 'image'>;
 
 interface IModalProps {
   images: string[];
@@ -36,9 +36,9 @@ function NewBoardModal({ images }: IModalProps) {
   const onSetImage = (image: string) => setImage(image);
 
   const [createBoard] = useCreateBoardMutation();
-  const onSubmit = async (data: NewBoard) => {
+  const onSubmit = async (data: FormValues) => {
     handleClose();
-    await createBoard(data);
+    await createBoard({ ...data, image });
   };
 
   return (
