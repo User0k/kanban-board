@@ -2,6 +2,7 @@ import { NewBoard } from '../../../models';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCreateBoardMutation } from '../../../services/boardService';
+import imgMinifyer from '../../../utils/imgMinifyer';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -11,15 +12,12 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import ChooseImageModal from '../ChooseImageModal';
+import { PRELOADED_IMAGES } from '../../../constants';
 import './NewBoardModal.scss';
 
 type FormValues = Omit<NewBoard, 'image'>;
 
-interface IModalProps {
-  images: string[];
-}
-
-function NewBoardModal({ images }: IModalProps) {
+function NewBoardModal() {
   const {
     reset,
     register,
@@ -33,8 +31,9 @@ function NewBoardModal({ images }: IModalProps) {
     setOpen(false);
     reset();
   };
-  const [image, setImage] = useState(images[0]);
-  const onSetImage = (image: string) => setImage(image);
+
+  const [imageToSet] = imgMinifyer([PRELOADED_IMAGES[0]]);
+  const [image, setImage] = useState(imageToSet);
 
   const [createBoard] = useCreateBoardMutation();
   const onSubmit = async (data: FormValues) => {
@@ -61,7 +60,7 @@ function NewBoardModal({ images }: IModalProps) {
               direction={'row'}
               justifyContent={'space-between'}
               className="background-change__wrapper">
-              <ChooseImageModal images={images} setImage={setImage} />
+              <ChooseImageModal setImage={setImage} />
               <Button variant="contained" size="small">
                 Choose gradient
               </Button>

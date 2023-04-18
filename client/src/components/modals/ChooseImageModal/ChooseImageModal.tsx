@@ -1,20 +1,30 @@
 import { Dispatch, SetStateAction, useState } from 'react';
+import { getAllSources } from '../../../utils/backgroundRandomizer';
+import imgMinifyer from '../../../utils/imgMinifyer';
 import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
+import { IMAGES_LOAD_AMOUNT, PRELOADED_IMAGES } from '../../../constants';
 import './ChooseImageModal.scss';
 
 interface IModalProps {
-  images: string[];
   setImage: Dispatch<SetStateAction<string>>;
 }
 
-function ChooseImageModal({ images, setImage }: IModalProps) {
+function ChooseImageModal({ setImage }: IModalProps) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const preloadMinifiedImgs = imgMinifyer(PRELOADED_IMAGES);
+  const [images, setImages] = useState(preloadMinifiedImgs);
+
+  const loadMoreImages = async () => {
+    const imgArr: string[] = await getAllSources(IMAGES_LOAD_AMOUNT);
+    setImages(imgArr);
+  };
 
   return (
     <>
@@ -38,7 +48,7 @@ function ChooseImageModal({ images, setImage }: IModalProps) {
             variant="contained"
             size="small"
             className='load-more-btn'>
-            <KeyboardDoubleArrowDownIcon />
+            <KeyboardDoubleArrowDownIcon fontSize={'small'}/>
           </Button>
         </Stack>
       </Dialog>

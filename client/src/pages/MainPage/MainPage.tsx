@@ -1,13 +1,9 @@
-import { IMAGES_LOAD_AMOUNT, PRELOADED_IMAGES } from '../../constants';
 import {
   useGetAllBoardsQuery,
   useGetBoardByIdQuery,
   useUpdateBoardMutation,
   useDeleteBoardMutation,
 } from '../../services/boardService';
-import { useState } from 'react';
-import imgMinifyer from '../../utils/imgMinifyer';
-import { getAllSources } from '../../utils/backgroundRandomizer';
 import Board from '../../components/Board';
 import NewBoardModal from '../../components/modals/NewBoardModal';
 import Container from '@mui/material/Container';
@@ -22,13 +18,6 @@ import './MainPage.scss';
 
 function MainPage() {
   const { data: boards, isLoading: isBoardsLoading } = useGetAllBoardsQuery();
-  const preloadMinifiedImgs = imgMinifyer(PRELOADED_IMAGES);
-  const [images, setImages] = useState(preloadMinifiedImgs);
-
-  const loadMoreImages = async () => {
-    const imgArr: string[] = await getAllSources(IMAGES_LOAD_AMOUNT);
-    setImages(imgArr);
-  };
 
   return (
     <Box id="main">
@@ -62,7 +51,7 @@ function MainPage() {
             {boards?.map((board) => (
               <Board {...board} key={board.id} />
             ))}
-            <NewBoardModal images={images} />
+            <NewBoardModal />
           </Stack>
         )}
       </Container>
