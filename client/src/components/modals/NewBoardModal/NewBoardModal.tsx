@@ -61,9 +61,6 @@ function NewBoardModal() {
               justifyContent={'space-between'}
               className="background-change__wrapper">
               <ChooseImageModal setImage={setImage} />
-              <Button variant="contained" size="small">
-                Choose gradient
-              </Button>
             </Stack>
             <TextField
               label="Board name*"
