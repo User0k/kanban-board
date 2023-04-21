@@ -1,9 +1,6 @@
 .choose-image {
   &.MuiDialog-root {
-    top: calc(10vh);
     left: calc(35vw - 50px);
-    height: 800px;
-    max-height: calc(100% - 54px);
   }
 
   &__image {
@@ -17,10 +14,39 @@
     }
   }
 
+  &__btn-wrapper {
+    padding: 12px 0;
+  }
+
+  &__mini-image {
+    width: 100px;
+    height: 60px;
+    background-size: cover;
+    cursor: pointer;
+    &:hover {
+      filter: brightness(0.9);
+      transform: scale(1.02);
+      transition: all 0.2s;
+    }
+  }
+
+  &__btn-more {
+    width: 50px;
+    display: flex;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    background-color: #f3f3f3;
+    &:hover {
+      background-color: rgb(233, 233, 233);
+      cursor: pointer;
+    }
+  }
+
   .load-more-btn {
     background-color: #f3f3f3;
     padding: 1px;
-    max-height: 23px;
+    max-height: 18px;
     color: #858570;
     &:hover {
       background-color: #e6e6e6;

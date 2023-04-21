@@ -56,12 +56,7 @@ function NewBoardModal() {
               sx={{ backgroundImage: `${image}` }}
               className="create-board__preview"
             />
-            <Stack
-              direction={'row'}
-              justifyContent={'space-between'}
-              className="background-change__wrapper">
-              <ChooseImageModal setImage={setImage} />
-            </Stack>
+            <ChooseImageModal setImage={setImage} />
             <TextField
               label="Board name*"
               fullWidth
