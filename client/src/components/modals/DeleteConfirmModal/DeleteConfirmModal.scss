@@ -1,0 +1,6 @@
+@import '../../../vars-mixins.scss';
+
+.delete-button:hover {
+  color: $delete-button-color;
+  transition: color .2s;
+}

@@ -7,16 +7,13 @@ import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import Tooltip from '@mui/material/Tooltip';
 import './Board.scss';
 
 function Board({ name, description, id, image }: IBoard) {
-  const [deleteModal, setDeleteModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
 
-  const handleDeleteOpen = () => setDeleteModal(true);
   const handleEditOpen = () => setEditModal(true);
 
   const [deleteBoard] = useDeleteBoardMutation();
@@ -34,13 +31,7 @@ function Board({ name, description, id, image }: IBoard) {
             onClick={handleEditOpen}
           />
         </Tooltip>
-        <Tooltip title="Delete board">
-          <DeleteForeverIcon
-            sx={{ m: 1 }}
-            className="delete-button"
-            onClick={handleDeleteOpen}
-          />
-        </Tooltip>
+        <DeleteConfirmModal element="board" onDelete={onDelete} />
       </Box>
       <CardMedia>
         <Box
@@ -58,12 +49,6 @@ function Board({ name, description, id, image }: IBoard) {
           {description}
         </Typography>
       </CardContent>
-      <DeleteConfirmModal
-        element="board"
-        open={deleteModal}
-        setOpen={setDeleteModal}
-        onDelete={onDelete}
-      />
     </Card>
   );
 }
