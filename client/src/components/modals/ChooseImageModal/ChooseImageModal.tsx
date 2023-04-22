@@ -1,11 +1,12 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { getAllSources } from '../../../utils/backgroundRandomizer';
 import imgMinifyer from '../../../utils/imgMinifyer';
-import { getAllGradients } from '../../../utils/gradientGenerator';
+import { getGradients } from '../../../utils/gradientGenerator';
 import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import { IMAGES_LOAD_AMOUNT, PRELOADED_IMAGES } from '../../../constants';
@@ -16,8 +17,14 @@ interface IModalProps {
 }
 
 function ChooseImageModal({ setImage }: IModalProps) {
+  const preloadMinifiedImgs = imgMinifyer(PRELOADED_IMAGES);
+  const [images, setImages] = useState(preloadMinifiedImgs);
+  const [gradients, setGradients] = useState(getGradients(IMAGES_LOAD_AMOUNT));
   const [open, setOpen] = useState(false);
   const [isPicture, setIsPicture] = useState(true);
+  const [isFetching, setIsFetching] = useState(false);
+
+  const handleClose = () => setOpen(false);
 
   const handleOpenWithImages = () => {
     setIsPicture(true);
@@ -29,17 +36,26 @@ function ChooseImageModal({ setImage }: IModalProps) {
     setOpen(true);
   };
 
-  const handleClose = () => setOpen(false);
+  const loadMoreImages = async () => {
+    setIsFetching(true);
+    const urls: string[] = await getAllSources(IMAGES_LOAD_AMOUNT);
+    const imgArr = imgMinifyer(urls);
+    setIsFetching(false);
+    setImages([...images, ...imgArr]);
+  };
 
-  const preloadMinifiedImgs = imgMinifyer(PRELOADED_IMAGES);
-  const [images, setImages] = useState(preloadMinifiedImgs);
-  const [gradients, setGradients] = useState(
-    getAllGradients(IMAGES_LOAD_AMOUNT)
-  );
+  const loadMoreGradients = () => {
+    const newGradients = getGradients(IMAGES_LOAD_AMOUNT);
+    setGradients([...gradients, ...newGradients]);
+  };
 
   return (
     <>
-      <Stack direction={'row'} alignItems="end" spacing={1} className='choose-image__btn-wrapper'>
+      <Stack
+        direction={'row'}
+        alignItems="end"
+        spacing={1}
+        className="choose-image__btn-wrapper">
         <Box className="choose-image__btn-more" onClick={handleOpenWithImages}>
           <MoreHorizIcon />
         </Box>
@@ -67,7 +83,16 @@ function ChooseImageModal({ setImage }: IModalProps) {
               onClick={() => setImage(image)}
             />
           ))}
-          <Button variant="contained" size="small" className="load-more-btn">
+          {isFetching && (
+            <Stack alignItems="center">
+              <CircularProgress size={30} sx={{ m: 1 }} />
+            </Stack>
+          )}
+          <Button
+            variant="contained"
+            size="small"
+            className="load-more-btn"
+            onClick={isPicture ? loadMoreImages : loadMoreGradients}>
             <KeyboardDoubleArrowDownIcon fontSize={'small'} />
           </Button>
         </Stack>

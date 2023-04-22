@@ -21,7 +21,7 @@ function generateGradient() {
   }, 1) 100%)`;
 }
 
-export function getAllGradients(n: number) {
+export function getGradients(n: number) {
   const gradients: string[] = [];
   for (let i = 0; i < n; i++) {
     gradients.push(generateGradient());
