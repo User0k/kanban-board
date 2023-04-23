@@ -1,8 +1,8 @@
 import { NewBoard } from '../../../models';
 import { useState, ReactElement } from 'react';
 import { useForm } from 'react-hook-form';
-import { useCreateBoardMutation } from '../../../services/boardService';
-import imgMinifyer from '../../../utils/imgMinifyer';
+import { useUpdateBoardMutation } from '../../../services/boardService';
+import ChooseImageModal from '../ChooseImageModal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -10,16 +10,24 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
-import ChooseImageModal from '../ChooseImageModal';
-import { PRELOADED_IMAGES } from '../../../constants';
-import './NewBoardModal.scss';
+import './EditBoardModal.scss';
 
 type FormValues = Omit<NewBoard, 'image'>;
 interface IModalProps {
+  name: string;
+  description: string;
+  id: string;
+  imageFromProps: string;
   children: ReactElement;
 }
 
-function NewBoardModal({ children }: IModalProps) {
+function EditBoardModal({
+  name,
+  description,
+  id,
+  imageFromProps,
+  children,
+}: IModalProps) {
   const {
     reset,
     register,
@@ -34,31 +42,34 @@ function NewBoardModal({ children }: IModalProps) {
     reset();
   };
 
-  const [imageToSet] = imgMinifyer([PRELOADED_IMAGES[0]]);
-  const [image, setImage] = useState(imageToSet);
+  const onCloseWithPropImage = () => {
+    handleClose();
+    setImage(imageFromProps);
+  };
 
-  const [createBoard] = useCreateBoardMutation();
+  const [image, setImage] = useState(imageFromProps);
+
+  const [updateBoard] = useUpdateBoardMutation();
   const onSubmit = async (data: FormValues) => {
     handleClose();
-    await createBoard({ ...data, image });
+    await updateBoard({ ...data, image, id });
   };
 
   return (
     <>
       <Box onClick={handleOpen}>{children}</Box>
-      <Dialog open={open} onClose={handleClose} className="create-board">
-        <DialogTitle className="create-board__title">
-          Create a board
-        </DialogTitle>
+      <Dialog open={open} onClose={onCloseWithPropImage} className="edit-board">
+        <DialogTitle className="edit-board__title">Edit a board</DialogTitle>
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogContent sx={{ padding: '0 16px 16px 16px' }}>
             <Box
               sx={{ backgroundImage: `${image}` }}
-              className="create-board__preview"
+              className="edit-board__preview"
             />
             <ChooseImageModal setImage={setImage} />
             <TextField
               label="Board name*"
+              defaultValue={name}
               fullWidth
               size="small"
               sx={{ mb: 2 }}
@@ -66,15 +77,16 @@ function NewBoardModal({ children }: IModalProps) {
             />
             <TextField
               label="Board description*"
+              defaultValue={description}
               fullWidth
               size="small"
               {...register('description', { required: true })}
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={onCloseWithPropImage}>Cancel</Button>
             <Button variant="contained" type="submit" disabled={!isValid}>
-              Create
+              Update
             </Button>
           </DialogActions>
         </form>
@@ -83,4 +95,4 @@ function NewBoardModal({ children }: IModalProps) {
   );
 }
 
-export default NewBoardModal;
+export default EditBoardModal;

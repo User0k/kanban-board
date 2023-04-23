@@ -1,9 +1,4 @@
-import {
-  useGetAllBoardsQuery,
-  useGetBoardByIdQuery,
-  useUpdateBoardMutation,
-  useDeleteBoardMutation,
-} from '../../services/boardService';
+import { useGetAllBoardsQuery } from '../../services/boardService';
 import Board from '../../components/Board';
 import NewBoardModal from '../../components/modals/NewBoardModal';
 import Container from '@mui/material/Container';
@@ -51,7 +46,11 @@ function MainPage() {
             {boards?.map((board) => (
               <Board {...board} key={board.id} />
             ))}
-            <NewBoardModal />
+            <NewBoardModal>
+              <Button sx={{ mb: 2 }} className="btn-create-board">
+                create a board
+              </Button>
+            </NewBoardModal>
           </Stack>
         )}
       </Container>

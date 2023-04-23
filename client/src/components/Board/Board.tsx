@@ -1,7 +1,7 @@
-import { useState } from 'react';
 import { useDeleteBoardMutation } from '../../services/boardService';
 import { IBoard } from '../../models';
 import DeleteConfirmModal from '../modals/DeleteConfirmModal';
+import EditBoardModal from '../modals/EditBoardModal';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
@@ -9,13 +9,10 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import EditIcon from '@mui/icons-material/Edit';
 import Tooltip from '@mui/material/Tooltip';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import './Board.scss';
 
 function Board({ name, description, id, image }: IBoard) {
-  const [editModal, setEditModal] = useState(false);
-
-  const handleEditOpen = () => setEditModal(true);
-
   const [deleteBoard] = useDeleteBoardMutation();
   const onDelete = async () => {
     await deleteBoard(id);
@@ -24,14 +21,20 @@ function Board({ name, description, id, image }: IBoard) {
   return (
     <Card className="card-board">
       <Box className="card-board__bar">
-        <Tooltip title="Modify board">
-          <EditIcon
-            sx={{ m: 1 }}
-            className="edit-button"
-            onClick={handleEditOpen}
-          />
-        </Tooltip>
-        <DeleteConfirmModal element="board" onDelete={onDelete} />
+        <EditBoardModal
+          name={name}
+          description={description}
+          id={id}
+          imageFromProps={image}>
+          <Tooltip title="Edit board">
+            <EditIcon sx={{ m: 1 }} className="edit-button" />
+          </Tooltip>
+        </EditBoardModal>
+        <DeleteConfirmModal element="board" onDelete={onDelete}>
+          <Tooltip title="Delete board">
+            <DeleteForeverIcon sx={{ m: 1 }} className="delete-button" />
+          </Tooltip>
+        </DeleteConfirmModal>
       </Box>
       <CardMedia>
         <Box

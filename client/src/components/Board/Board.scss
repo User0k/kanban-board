@@ -31,3 +31,8 @@
   color: $edit-button-color;
   transition: color 0.2s;
 }
+
+.delete-button:hover {
+  color: $delete-button-color;
+  transition: color .2s;
+}

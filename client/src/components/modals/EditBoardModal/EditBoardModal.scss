@@ -1,0 +1,23 @@
+.edit-board {
+  .MuiPaper-root {
+    width: 360px;
+  }
+
+  .edit-board__ {
+    &title {
+      font-size: 1rem;
+      padding: 6px;
+      text-align: center;
+    }
+
+    &preview {
+      height: 200px;
+      background-size: cover;
+    }
+  }
+
+  label,
+  .MuiInputBase-root {
+    font-size: 0.9rem;
+  }
+}
