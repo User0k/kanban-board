@@ -1,4 +1,5 @@
 import { useDeleteBoardMutation } from '../../services/boardService';
+import { UseErrorHandler } from '../../store/hooks';
 import { IBoard } from '../../models';
 import DeleteConfirmModal from '../modals/DeleteConfirmModal';
 import EditBoardModal from '../modals/EditBoardModal';
@@ -13,10 +14,12 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import './Board.scss';
 
 function Board({ name, description, id, image }: IBoard) {
-  const [deleteBoard] = useDeleteBoardMutation();
+  const [deleteBoard, { isError: deleteBoardError }] = useDeleteBoardMutation();
   const onDelete = async () => {
     await deleteBoard(id);
   };
+
+  UseErrorHandler(deleteBoardError, 'Unable to delete board');
 
   return (
     <Card className="card-board">

@@ -1,7 +1,8 @@
-import { NewBoard } from '../../../models';
 import { useState, ReactElement } from 'react';
 import { useForm } from 'react-hook-form';
+import { UseErrorHandler } from '../../../store/hooks';
 import { useUpdateBoardMutation } from '../../../services/boardService';
+import { NewBoard } from '../../../models';
 import ChooseImageModal from '../ChooseImageModal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -49,11 +50,13 @@ function EditBoardModal({
 
   const [image, setImage] = useState(imageFromProps);
 
-  const [updateBoard] = useUpdateBoardMutation();
+  const [updateBoard, { isError: updateBoardError }] = useUpdateBoardMutation();
   const onSubmit = async (data: FormValues) => {
     handleClose();
     await updateBoard({ ...data, image, id });
   };
+
+  UseErrorHandler(updateBoardError, 'Unable to update board');
 
   return (
     <>

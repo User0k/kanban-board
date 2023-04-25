@@ -1,8 +1,9 @@
-import { NewBoard } from '../../../models';
 import { useState, ReactElement } from 'react';
 import { useForm } from 'react-hook-form';
+import { UseErrorHandler } from '../../../store/hooks';
 import { useCreateBoardMutation } from '../../../services/boardService';
 import imgMinifyer from '../../../utils/imgMinifyer';
+import { NewBoard } from '../../../models';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -37,11 +38,13 @@ function NewBoardModal({ children }: IModalProps) {
   const [imageToSet] = imgMinifyer([PRELOADED_IMAGES[0]]);
   const [image, setImage] = useState(imageToSet);
 
-  const [createBoard] = useCreateBoardMutation();
+  const [createBoard, { isError: createBoardError }] = useCreateBoardMutation();
   const onSubmit = async (data: FormValues) => {
     handleClose();
     await createBoard({ ...data, image });
   };
+
+  UseErrorHandler(createBoardError, 'Unable to create board');
 
   return (
     <>

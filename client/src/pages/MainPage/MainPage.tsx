@@ -1,6 +1,7 @@
 import { useGetAllBoardsQuery } from '../../services/boardService';
 import Board from '../../components/Board';
 import NewBoardModal from '../../components/modals/NewBoardModal';
+import ErrorBar from '../../components/ErrorBar';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -12,10 +13,15 @@ import Spinner from '../../components/Spinner';
 import './MainPage.scss';
 
 function MainPage() {
-  const { data: boards, isLoading: isBoardsLoading } = useGetAllBoardsQuery();
+  const {
+    data: boards,
+    isLoading: isBoardsLoading,
+    isError: getBoardsError,
+  } = useGetAllBoardsQuery();
 
   return (
     <Box id="main">
+      <ErrorBar />
       <Box sx={{ pt: 3 }}>
         <Stack direction={'row'} justifyContent={'center'}>
           <Button variant="contained" sx={{ ml: 2 }} className="btn-main">
@@ -46,11 +52,15 @@ function MainPage() {
             {boards?.map((board) => (
               <Board {...board} key={board.id} />
             ))}
-            <NewBoardModal>
-              <Button sx={{ mb: 2 }} className="btn-create-board">
-                create a board
-              </Button>
-            </NewBoardModal>
+            {!getBoardsError ? (
+              <NewBoardModal>
+                <Button sx={{ mb: 2 }} className="btn-create-board">
+                  create a board
+                </Button>
+              </NewBoardModal>
+            ) : (
+              <Box className="boards-unavailable">Unable to get boards :(</Box>
+            )}
           </Stack>
         )}
       </Container>

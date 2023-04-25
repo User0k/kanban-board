@@ -1,0 +1,11 @@
+.error-bar {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  right: auto;
+
+  .error-bar__btn-close {
+    padding: 0 0 0 8px;
+    color: inherit;
+  }
+}
