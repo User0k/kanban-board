@@ -1,4 +1,10 @@
-import { useState, ReactElement } from 'react';
+import {
+  useState,
+  ReactElement,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+} from 'react';
 import { useForm } from 'react-hook-form';
 import { UseErrorHandler } from '../../../store/hooks';
 import { useUpdateBoardMutation } from '../../../services/boardService';
@@ -19,6 +25,7 @@ interface IModalProps {
   description: string;
   id: string;
   imageFromProps: string;
+  setIsUpdating: Dispatch<SetStateAction<boolean>>;
   children: ReactElement;
 }
 
@@ -27,6 +34,7 @@ function EditBoardModal({
   description,
   id,
   imageFromProps,
+  setIsUpdating,
   children,
 }: IModalProps) {
   const {
@@ -50,11 +58,20 @@ function EditBoardModal({
 
   const [image, setImage] = useState(imageFromProps);
 
-  const [updateBoard, { isError: updateBoardError }] = useUpdateBoardMutation();
+  const [
+    updateBoard,
+    { isLoading: isBoardUpdating, isError: updateBoardError },
+  ] = useUpdateBoardMutation();
+
   const onSubmit = async (data: FormValues) => {
     handleClose();
     await updateBoard({ ...data, image, id });
   };
+
+  useEffect(
+    () => setIsUpdating(isBoardUpdating),
+    [setIsUpdating, isBoardUpdating]
+  );
 
   UseErrorHandler(updateBoardError, 'Unable to update board');
 

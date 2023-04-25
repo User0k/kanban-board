@@ -1,7 +1,7 @@
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
-function Spinner() {
+function PageSpinner() {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: '10vh' }}>
       <CircularProgress size={50} />
@@ -9,4 +9,4 @@ function Spinner() {
   );
 }
 
-export default Spinner;
+export default PageSpinner;

@@ -4,6 +4,7 @@ import { UseErrorHandler } from '../../../store/hooks';
 import { useCreateBoardMutation } from '../../../services/boardService';
 import imgMinifyer from '../../../utils/imgMinifyer';
 import { NewBoard } from '../../../models';
+import GlobalSpinner from '../../Spinners/GlobalSpinner';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -38,7 +39,11 @@ function NewBoardModal({ children }: IModalProps) {
   const [imageToSet] = imgMinifyer([PRELOADED_IMAGES[0]]);
   const [image, setImage] = useState(imageToSet);
 
-  const [createBoard, { isError: createBoardError }] = useCreateBoardMutation();
+  const [
+    createBoard,
+    { isLoading: isBoardCreating, isError: createBoardError },
+  ] = useCreateBoardMutation();
+
   const onSubmit = async (data: FormValues) => {
     handleClose();
     await createBoard({ ...data, image });
@@ -48,6 +53,7 @@ function NewBoardModal({ children }: IModalProps) {
 
   return (
     <>
+      {isBoardCreating && <GlobalSpinner color="success" />}
       <Box onClick={handleOpen}>{children}</Box>
       <Dialog open={open} onClose={handleClose} className="create-board">
         <DialogTitle className="create-board__title">

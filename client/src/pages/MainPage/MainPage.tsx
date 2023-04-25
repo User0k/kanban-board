@@ -2,6 +2,7 @@ import { useGetAllBoardsQuery } from '../../services/boardService';
 import Board from '../../components/Board';
 import NewBoardModal from '../../components/modals/NewBoardModal';
 import ErrorBar from '../../components/ErrorBar';
+import PageSpinner from '../../components/Spinners/PageSpinner';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -9,7 +10,6 @@ import Button from '@mui/material/Button';
 import AppsIcon from '@mui/icons-material/Apps';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-import Spinner from '../../components/Spinner';
 import './MainPage.scss';
 
 function MainPage() {
@@ -42,7 +42,7 @@ function MainPage() {
       </Box>
       <Container maxWidth="xl">
         {isBoardsLoading ? (
-          <Spinner />
+          <PageSpinner />
         ) : (
           <Stack
             direction={'row'}
