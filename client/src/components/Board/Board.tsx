@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDeleteBoardMutation } from '../../services/boardService';
 import { UseErrorHandler } from '../../store/hooks';
 import { IBoard } from '../../models';
@@ -15,12 +16,14 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import './Board.scss';
 
 function Board({ name, description, id, image }: IBoard) {
+  const navigate = useNavigate();
   const [isUpdating, setIsUpdating] = useState(false);
 
   const [
     deleteBoard,
     { isLoading: isBoardDeleting, isError: deleteBoardError },
   ] = useDeleteBoardMutation();
+
   const onDelete = async () => {
     await deleteBoard(id);
   };
@@ -31,7 +34,7 @@ function Board({ name, description, id, image }: IBoard) {
     <>
       {isBoardDeleting && <GlobalSpinner color="error" />}
       {isUpdating && <GlobalSpinner color="success" />}
-      <Card className="card-board">
+      <Card className="card-board" onClick={() => navigate(`/boards/${id}`)}>
         <Box className="card-board__bar">
           <Box className="card-board__bar-wrapper">
             <EditBoardModal

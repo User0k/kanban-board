@@ -4,8 +4,12 @@ export const BACKGROUND_IMG_SOURCE =
   'https://source.unsplash.com/random/1920x1080/?nature';
 
 export const IMAGES_LOAD_AMOUNT = 8;
+
 export const IMAGE_MIN_CROP =
   '?crop=entropy&cs=tinysrgb&fit=crop&h=200&q=80&utm_campaign=api-credit&w=400';
+
+export const IMAGE_FULL_HD =
+  '?crop=entropy&cs=tinysrgb&fit=crop&h=1080&q=80&utm_campaign=api-credit&w=1920';
 
 export const minColorHue = 100;
 

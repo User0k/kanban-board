@@ -1,0 +1,59 @@
+@import '../../vars-mixins.scss';
+
+.board-page {
+  height: calc(100vh - 50px);
+  background-size: cover;
+  background-position: center;
+
+  &__subheader {
+    width: 100%;
+    position: fixed;
+    top: 50px;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.5) 0%,
+      rgba(0, 0, 0, 0.2) 30%,
+      rgba(0, 0, 0, 0) 100%
+    );
+  }
+
+  &__title {
+    color: #f3f3f3;
+    min-width: 50%;
+  }
+
+  .btn-back {
+    height: fit-content;
+    min-width: 90px;
+    margin-right: 12px;
+  }
+
+  &__columns-wrapper {
+    height: 100%;
+    padding: 75px 16px;
+    overflow-x: scroll;
+  }
+
+  .btn-create-column {
+    background-color: $secondary-button-color;
+    align-self: baseline;
+    min-width: fit-content;
+  }
+}
+
+@media (max-width: 700px) {
+  .board-page {
+    h1 {
+      font-size: 1.3rem;
+    }
+
+    .btn-back {
+      height: fit-content;
+      min-width: 75px;
+    }
+
+    .btn-back, .btn-create-column {
+      font-size: 0.7rem;
+    }
+  }
+}
