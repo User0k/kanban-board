@@ -5,6 +5,11 @@
   cursor: pointer;
   position: relative;
 
+  &__bar-wrapper {
+    display: flex;
+    height: fit-content;
+  }
+
   &__bar {
     display: flex;
     justify-content: end;

@@ -10,7 +10,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<WelcomePage />} />
-          <Route path="main" element={<MainPage />} />
+          <Route path="boards" element={<MainPage />} />
+          <Route path="auth" element={<WelcomePage />} />
+          <Route path="login" element={<WelcomePage />} />
           <Route path="*" element={<PageNotFound />} />
         </Route>
       </Routes>

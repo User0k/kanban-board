@@ -11,7 +11,6 @@ import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import EditIcon from '@mui/icons-material/Edit';
-import Tooltip from '@mui/material/Tooltip';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import './Board.scss';
 
@@ -34,21 +33,19 @@ function Board({ name, description, id, image }: IBoard) {
       {isUpdating && <GlobalSpinner color="success" />}
       <Card className="card-board">
         <Box className="card-board__bar">
-          <EditBoardModal
-            name={name}
-            description={description}
-            id={id}
-            imageFromProps={image}
-            setIsUpdating={setIsUpdating}>
-            <Tooltip title="Edit board">
+          <Box className="card-board__bar-wrapper">
+            <EditBoardModal
+              name={name}
+              description={description}
+              id={id}
+              imageFromProps={image}
+              setIsUpdating={setIsUpdating}>
               <EditIcon sx={{ m: 1 }} className="edit-button" />
-            </Tooltip>
-          </EditBoardModal>
-          <DeleteConfirmModal element="board" onDelete={onDelete}>
-            <Tooltip title="Delete board">
+            </EditBoardModal>
+            <DeleteConfirmModal element="board" onDelete={onDelete}>
               <DeleteForeverIcon sx={{ m: 1 }} className="delete-button" />
-            </Tooltip>
-          </DeleteConfirmModal>
+            </DeleteConfirmModal>
+          </Box>
         </Box>
         <CardMedia>
           <Box

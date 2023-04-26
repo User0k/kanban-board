@@ -3,6 +3,7 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
+import Tooltip from '@mui/material/Tooltip';
 import Box from '@mui/material/Box';
 
 interface IModalProps {
@@ -22,7 +23,9 @@ function DeleteConfirmModal({ element, onDelete, children }: IModalProps) {
 
   return (
     <>
-      <Box onClick={handleOpen}>{children}</Box>
+      <Tooltip title={`Delete ${element}`}>
+        <Box className='btn-modal' onClick={handleOpen}>{children}</Box>
+      </Tooltip>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle sx={{ maxWidth: 337 }}>
           Are you sure you want to delete the {element}?
