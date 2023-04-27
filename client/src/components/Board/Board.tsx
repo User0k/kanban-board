@@ -24,6 +24,8 @@ function Board({ name, description, id, image }: IBoard) {
     { isLoading: isBoardDeleting, isError: deleteBoardError },
   ] = useDeleteBoardMutation();
 
+  const onNavigate = () => navigate(`/boards/${id}`);
+
   const onDelete = async () => {
     await deleteBoard(id);
   };
@@ -34,7 +36,7 @@ function Board({ name, description, id, image }: IBoard) {
     <>
       {isBoardDeleting && <GlobalSpinner color="error" />}
       {isUpdating && <GlobalSpinner color="success" />}
-      <Card className="card-board" onClick={() => navigate(`/boards/${id}`)}>
+      <Card className="card-board">
         <Box className="card-board__bar">
           <Box className="card-board__bar-wrapper">
             <EditBoardModal
@@ -50,7 +52,8 @@ function Board({ name, description, id, image }: IBoard) {
             </DeleteConfirmModal>
           </Box>
         </Box>
-        <CardMedia>
+        <CardMedia className="card-board__image" onClick={onNavigate}>
+          <Box className="card-board__image-shadow" />
           <Box
             sx={{
               height: 165,
