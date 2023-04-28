@@ -3,7 +3,7 @@
 #main {
   width: 100%;
   height: calc(100vh - 50px);
-  overflow: scroll;
+  overflow: auto;
 
   h1 {
     font-size: 1.7rem;
@@ -22,8 +22,7 @@
   .btn-create-board {
     @include board-sizes;
     background-color: rgb(247, 247, 247);
-    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-      0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    box-shadow: $shadow-button;
 
     &:hover {
       background-color: rgb(230, 230, 230);
@@ -37,8 +36,7 @@
     padding-top: calc($board-height / 2 - 12px);
     background-color: rgb(247, 247, 247);
     color: $error-color;
-    box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
-      0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    box-shadow: $shadow-button;
     text-align: center;
   }
 }

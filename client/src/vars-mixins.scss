@@ -5,6 +5,16 @@ $edit-button-color: rgb(155, 187, 255);
 $delete-button-color: rgb(255, 155, 155);
 $error-color: rgb(255, 0, 0);
 
+$shadow-gradient: linear-gradient(
+  to bottom,
+  rgba(0, 0, 0, 0.5) 0%,
+  rgba(42, 28, 28, 0.2) 30%,
+  rgba(0, 0, 0, 0) 100%
+);
+
+$shadow-button: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+  0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+
 @mixin board-sizes {
   width: $board-width;
   height: $board-height;

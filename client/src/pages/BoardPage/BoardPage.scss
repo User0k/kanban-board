@@ -10,9 +10,9 @@
     position: fixed;
     top: 50px;
     background: linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.5) 0%,
-      rgba(0, 0, 0, 0.2) 30%,
+      to bottom, 
+      rgba(0, 0, 0, 0.2) 0%, 
+      rgba(42, 28, 28, 0.1) 25%, 
       rgba(0, 0, 0, 0) 100%
     );
   }
@@ -25,13 +25,13 @@
   .btn-back {
     height: fit-content;
     min-width: 90px;
-    margin-right: 12px;
+    margin: 3px 12px 0 0;
   }
 
   &__columns-wrapper {
     height: 100%;
     padding: 75px 16px;
-    overflow-x: scroll;
+    overflow-x: auto;
   }
 
   .btn-create-column {
