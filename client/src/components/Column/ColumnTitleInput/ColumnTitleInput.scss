@@ -1,0 +1,24 @@
+@import '../../../vars-mixins.scss';
+
+.column__title {
+  &-input {
+    width: 215px;
+    padding-left: 8px;
+    font-size: 16px;
+    border: 1px solid #8ebcff;
+  }
+
+  &-confirm.MuiButtonBase-root,
+  &-cancel.MuiButtonBase-root {
+    padding: 0;
+    min-width: auto;
+  }
+
+  &-confirm svg {
+    fill: green;
+  }
+
+  &-cancel svg {
+    fill: $error-color;
+  }
+}

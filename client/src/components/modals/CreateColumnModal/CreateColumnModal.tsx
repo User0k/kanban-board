@@ -59,7 +59,11 @@ function CreateColumnModal({
 
   return (
     <>
-      <Box onClick={() => setIsOpen(true)}>{children}</Box>
+      <Box
+        className="modal-column__btn-wrapper"
+        onClick={() => setIsOpen(true)}>
+        {children}
+      </Box>
       <Dialog
         className="modal-column"
         open={isOpen}
