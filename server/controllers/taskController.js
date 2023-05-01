@@ -19,7 +19,10 @@ const addTask = errorHandler(async (req, res) => {
 
 const getTasks = errorHandler(async (req, res) => {
   const { ColumnId } = req.params;
-  const tasks = await Task.findAll({ where: { ColumnId } });
+  const tasks = await Task.findAll({
+    where: { ColumnId },
+    order: [['order', 'ASC']],
+  });
 
   if (tasks) {
     return res.json(tasks);

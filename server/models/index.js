@@ -19,7 +19,7 @@ const Board = sequelize.define('Board', {
     primaryKey: true,
   },
   name: { type: DataTypes.STRING, allowNull: false },
-  description: { type: DataTypes.STRING },
+  description: { type: DataTypes.STRING, allowNull: false },
   image: { type: DataTypes.STRING, allowNull: false },
 });
 

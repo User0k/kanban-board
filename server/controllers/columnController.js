@@ -19,7 +19,10 @@ const addColumn = errorHandler(async (req, res) => {
 
 const getColumns = errorHandler(async (req, res) => {
   const { BoardId } = req.params;
-  const columns = await Column.findAll({ where: { BoardId } });
+  const columns = await Column.findAll({
+    where: { BoardId },
+    order: [['order', 'ASC']],
+  });
 
   if (!columns) {
     res.status(404);

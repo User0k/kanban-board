@@ -38,6 +38,8 @@ export interface IUpdateTask
   extends IGetTask,
     Pick<ITask, 'title' | 'description'> {}
 
+export type NewTask = Omit<IUpdateTask, 'id'>;
+
 export interface IUser {
   id: string;
   email: string;

@@ -1,5 +1,5 @@
 import { api } from './api';
-import { IGetTask, ITask, IUpdateTask } from '../models';
+import { IGetTask, ITask, IUpdateTask, NewTask } from '../models';
 
 /**
  * TODO:
@@ -19,7 +19,7 @@ export const boardApi = api.injectEndpoints({
         url: `boards/${boardId}/columns/${columnId}/tasks/${id}`,
       }),
     }),
-    createTask: build.mutation<ITask, Omit<IUpdateTask, 'id'>>({
+    createTask: build.mutation<ITask, NewTask>({
       query: ({ boardId, columnId, ...body }) => ({
         url: `boards/${boardId}/columns/${columnId}/tasks`,
         method: 'POST',
