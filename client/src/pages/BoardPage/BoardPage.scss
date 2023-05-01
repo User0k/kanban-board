@@ -37,7 +37,7 @@
   .btn-create-column {
     background-color: $secondary-button-color;
     align-self: baseline;
-    min-width: fit-content;
+    min-width: max-content;
   }
 }
 
