@@ -81,7 +81,7 @@ function BoardPage() {
             ) : (
               columns &&
               columns.map((column: IColumn) => (
-                <Column {...column} key={column.id} />
+                <Column {...column} boardId={boardId!} key={column.id} />
               ))
             )}
             {isColumnCreating && <CircularProgress color="success" />}

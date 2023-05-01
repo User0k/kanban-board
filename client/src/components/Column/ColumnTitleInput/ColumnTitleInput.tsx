@@ -31,7 +31,7 @@ function ColumnTitleInput({
 
     if (editColumnName.length) {
       setColumnName(editColumnName);
-      await updateColumn({ id, boardId, title });
+      await updateColumn({ id, boardId, title: editColumnName });
     }
   };
 
