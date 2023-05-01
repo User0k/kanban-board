@@ -40,7 +40,7 @@ function MainPage() {
         </Stack>
         <Divider sx={{ p: 2, mb: 4 }} />
       </Box>
-      <Container maxWidth="xl">
+      <Container maxWidth="xl" sx={{ mb: 2 }}>
         {isBoardsLoading ? (
           <PageSpinner />
         ) : (
@@ -49,18 +49,14 @@ function MainPage() {
             gap={2}
             justifyContent={'center'}
             flexWrap="wrap">
-            {boards?.map((board) => (
-              <Board {...board} key={board.id} />
-            ))}
             {!getBoardsError ? (
-              <NewBoardModal>
-                <Button sx={{ mb: 2 }} className="btn-create-board">
-                  create a board
-                </Button>
-              </NewBoardModal>
+              <NewBoardModal>create a board</NewBoardModal>
             ) : (
               <Box className="boards-unavailable">Unable to get boards :(</Box>
             )}
+            {boards?.map((board) => (
+              <Board {...board} key={board.id} />
+            ))}
           </Stack>
         )}
       </Container>

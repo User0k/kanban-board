@@ -1,4 +1,4 @@
-import { useState, ReactElement } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { UseErrorHandler } from '../../../store/hooks';
 import { useCreateBoardMutation } from '../../../services/boardService';
@@ -18,7 +18,7 @@ import './NewBoardModal.scss';
 
 type FormValues = Omit<NewBoard, 'image'>;
 interface IModalProps {
-  children: ReactElement;
+  children: string;
 }
 
 function NewBoardModal({ children }: IModalProps) {
@@ -54,7 +54,9 @@ function NewBoardModal({ children }: IModalProps) {
   return (
     <>
       {isBoardCreating && <GlobalSpinner color="success" />}
-      <Box onClick={handleOpen}>{children}</Box>
+      <Box className="btn-create-board" onClick={handleOpen}>
+        {children}
+      </Box>
       <Dialog open={open} onClose={handleClose} className="create-board">
         <DialogTitle className="create-board__title">
           Create a board

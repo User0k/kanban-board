@@ -15,7 +15,7 @@ const addBoard = errorHandler(async (req, res) => {
 });
 
 const getAllBoards = errorHandler(async (req, res) => {
-  const boards = await Board.findAll();
+  const boards = await Board.findAll({ order: [['createdAt', 'DESC']] });
   return res.json(boards);
 });
 

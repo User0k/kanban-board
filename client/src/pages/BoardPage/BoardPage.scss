@@ -10,9 +10,9 @@
     position: fixed;
     top: 50px;
     background: linear-gradient(
-      to bottom, 
-      rgba(0, 0, 0, 0.2) 0%, 
-      rgba(42, 28, 28, 0.1) 25%, 
+      to bottom,
+      rgba(0, 0, 0, 0.3) 0%,
+      rgba(42, 28, 28, 0.2) 40%,
       rgba(0, 0, 0, 0) 100%
     );
   }
@@ -52,7 +52,8 @@
       min-width: 75px;
     }
 
-    .btn-back, .btn-create-column {
+    .btn-back,
+    .btn-create-column {
       font-size: 0.7rem;
     }
   }
