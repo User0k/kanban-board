@@ -1,0 +1,24 @@
+.modal-task .MuiPaper-root {
+  margin: 0;
+}
+
+.modal-task__content,
+#create-task {
+  width: 320px;
+}
+
+.modal-task__title-error {
+  line-height: 2.66;
+}
+
+#create-task {
+  padding-top: 10px;
+  padding-bottom: 0;
+}
+
+@media (max-width: 700px) {
+  .modal-task__content,
+  #create-task {
+    width: 300px;
+  }
+}
