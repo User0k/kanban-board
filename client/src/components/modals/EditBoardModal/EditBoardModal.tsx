@@ -82,7 +82,7 @@ function EditBoardModal({
         <Box className='btn-modal' onClick={handleOpen}>{children}</Box>
       </Tooltip>
       <Dialog open={open} onClose={onCloseWithPropImage} className="edit-board">
-        <DialogTitle className="edit-board__title">Edit a board</DialogTitle>
+        <DialogTitle className="edit-board__title">Edit the board</DialogTitle>
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogContent sx={{ padding: '0 16px 16px 16px' }}>
             <Box

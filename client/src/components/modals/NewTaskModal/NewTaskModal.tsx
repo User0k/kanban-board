@@ -98,6 +98,7 @@ function NewTaskModal({
               label="Task description"
               type="text"
               fullWidth
+              {...register('description')}
             />
           </DialogContent>
           <DialogActions sx={{ justifyContent: 'space-between' }}>

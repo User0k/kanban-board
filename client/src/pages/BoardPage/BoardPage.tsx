@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetBoardByIdQuery } from '../../services/boardService';
 import { useGetColumnsInBoardQuery } from '../../services/columnService';
+import { useGetTasksInBoardQuery } from '../../services/taskService';
 import { IColumn } from '../../models';
 import CreateColumnModal from '../../components/modals/CreateColumnModal';
 import ErrorBar from '../../components/ErrorBar';
@@ -18,12 +19,8 @@ import './BoardPage.scss';
 
 function BoardPage() {
   const navigate = useNavigate();
-  const { boardId } = useParams() || '';
-
-  const { data: board, isError: boardNotFound } = useGetBoardByIdQuery(
-    boardId || ''
-  );
-
+  const boardId = useParams().boardId || '';
+  const { data: board, isError: boardNotFound } = useGetBoardByIdQuery(boardId);
   const image = board?.image;
   let bgImage = image;
 
@@ -35,7 +32,8 @@ function BoardPage() {
     data: columns,
     isLoading: isColumnsLoading,
     isError: columnsGetError,
-  } = useGetColumnsInBoardQuery(boardId || '');
+  } = useGetColumnsInBoardQuery(boardId);
+  const { data: tasksInBoard } = useGetTasksInBoardQuery(boardId);
 
   const [isColumnCreating, setIsColumnCreating] = useState(false);
 
@@ -81,12 +79,17 @@ function BoardPage() {
             ) : (
               columns &&
               columns.map((column: IColumn) => (
-                <Column {...column} boardId={boardId!} key={column.id} />
+                <Column
+                  {...column}
+                  boardId={boardId}
+                  tasks={tasksInBoard && tasksInBoard[column.id]}
+                  key={column.id}
+                />
               ))
             )}
             {isColumnCreating && <CircularProgress color="success" />}
             <CreateColumnModal
-              boardId={boardId!}
+              boardId={boardId}
               setIsColumnCreating={setIsColumnCreating}>
               <Button
                 className="btn-create-column"

@@ -5,9 +5,9 @@ interface IColor {
   color?: 'primary' | 'success' | 'error';
 }
 
-function GlobalSpinner({color = 'primary'}: IColor) {
+function GlobalSpinner({ color = 'primary' }: IColor) {
   return (
-    <Box sx={{ position: 'absolute', zIndex: '999', top: '50%' }}>
+    <Box sx={{ position: 'absolute', zIndex: '999', top: '50%', left: '50%' }}>
       <CircularProgress color={color} />
     </Box>
   );
