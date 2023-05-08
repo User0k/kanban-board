@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { IColumn } from '../../models';
-import { useGetTasksInColumnQuery } from '../../services/taskService';
+import { IColumn, ITask } from '../../models';
 import ColumnTitleInput from './ColumnTitleInput';
 import ColumnTitleText from './ColumnTitleText';
 import NewTaskModal from '../modals/NewTaskModal';
@@ -12,13 +11,16 @@ import CircularProgress from '@mui/material/CircularProgress';
 import AddIcon from '@mui/icons-material/Add';
 import './Column.scss';
 
-function Column({ boardId, id, title }: IColumn) {
+interface IColumnProps extends IColumn {
+  tasks: ITask[] | undefined;
+}
+
+function Column({ boardId, id, title, tasks }: IColumnProps) {
   const [columnName, setColumnName] = useState(title);
   const [isEditing, setIsEditing] = useState(false);
   const [isTaskCreating, setIsTaskCreating] = useState(false);
   const onCloseInput = () => setIsEditing(false);
   const onOpenInput = () => setIsEditing(true);
-  const { data: tasks } = useGetTasksInColumnQuery({ boardId, columnId: id });
 
   return (
     <Box className="column">
@@ -42,9 +44,10 @@ function Column({ boardId, id, title }: IColumn) {
         )}
       </Stack>
       <Box className="task-list">
-        {(tasks || []).map((task) => (
-          <Task key={task.id} />
-        ))}
+        {tasks &&
+          tasks.map((task) => (
+            <Task {...task} boardId={boardId} columnId={id} key={task.id} />
+          ))}
       </Box>
       {isTaskCreating && <CircularProgress color="success" />}
       <NewTaskModal
