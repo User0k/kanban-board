@@ -1,5 +1,5 @@
 import { api } from './api';
-import { IGetTask, ITask, IUpdateTask, NewTask } from '../models';
+import { IGetTask, ITask, IUpdateTask, NewTask, IGroupedTasks } from '../models';
 
 /**
  * TODO:
@@ -8,6 +8,12 @@ import { IGetTask, ITask, IUpdateTask, NewTask } from '../models';
 
 export const boardApi = api.injectEndpoints({
   endpoints: (build) => ({
+    getTasksInBoard: build.query<IGroupedTasks, string>({
+      query: (boardId) => ({
+        url: `boards/${boardId}/tasks`,
+      }),
+      providesTags: ['Task'],
+    }),
     getTasksInColumn: build.query<ITask[], Omit<IGetTask, 'id'>>({
       query: ({ boardId, columnId }) => ({
         url: `boards/${boardId}/columns/${columnId}/tasks`,
@@ -46,6 +52,7 @@ export const boardApi = api.injectEndpoints({
 });
 
 export const {
+  useGetTasksInBoardQuery,
   useGetTasksInColumnQuery,
   useGetTaskByIdQuery,
   useCreateTaskMutation,

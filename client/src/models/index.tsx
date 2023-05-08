@@ -40,6 +40,10 @@ export interface IUpdateTask
 
 export type NewTask = Omit<IUpdateTask, 'id'>;
 
+export interface IGroupedTasks {
+  [columnId: string]: ITask[];
+}
+
 export interface IUser {
   id: string;
   email: string;
