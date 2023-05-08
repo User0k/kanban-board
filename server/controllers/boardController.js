@@ -1,5 +1,5 @@
 const errorHandler = require('express-async-handler');
-const { Board } = require('../models');
+const { Board, Task } = require('../models');
 
 const addBoard = errorHandler(async (req, res) => {
   const { name, description, image } = req.body;
@@ -29,6 +29,31 @@ const getBoardById = errorHandler(async (req, res) => {
 
   res.status(404);
   throw new Error('Board not found');
+});
+
+const getTasksInBoard = errorHandler(async (req, res) => {
+  const BoardId = req.params.id;
+  const tasks = await Task.findAll({
+    where: { BoardId },
+    order: [['order', 'ASC']],
+  });
+
+  if (tasks) {
+    const groupedTasks = tasks.reduce((acc, task) => {
+      if (!acc[task.ColumnId]) {
+        acc[task.ColumnId] = [task];
+      } else {
+        acc[task.ColumnId].push(task);
+      }
+
+      return acc;
+    }, {});
+
+    return res.json(groupedTasks);
+  }
+
+  res.status(404);
+  throw new Error('Tasks not found');
 });
 
 const updateBoard = errorHandler(async (req, res) => {
@@ -62,6 +87,7 @@ module.exports = {
   addBoard,
   getAllBoards,
   getBoardById,
+  getTasksInBoard,
   updateBoard,
   deleteBoardById,
 };

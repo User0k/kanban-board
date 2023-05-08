@@ -4,20 +4,26 @@ const { Task } = require('../models');
 
 const addTask = errorHandler(async (req, res) => {
   const { title, description } = req.body;
-  const { ColumnId } = req.params;
+  const { BoardId, ColumnId } = req.params;
 
-  if (!title || !ColumnId) {
+  if (!title || !BoardId || !ColumnId) {
     res.status(400);
-    throw new Error('Task must contain title and ColumnId');
+    throw new Error('Task must contain title, BoardId and ColumnId');
   }
 
   const order = (await Task.count({ where: { ColumnId } })) + 1;
-  const task = await Task.create({ title, description, ColumnId, order });
+  const task = await Task.create({
+    title,
+    description,
+    BoardId,
+    ColumnId,
+    order,
+  });
   res.status(201);
   return res.json(task);
 });
 
-const getTasks = errorHandler(async (req, res) => {
+const getTasksInColumn = errorHandler(async (req, res) => {
   const { ColumnId } = req.params;
   const tasks = await Task.findAll({
     where: { ColumnId },
@@ -89,7 +95,7 @@ const deleteTaskById = errorHandler(async (req, res) => {
 
 module.exports = {
   addTask,
-  getTasks,
+  getTasksInColumn,
   getTaskById,
   updateTaskByID,
   deleteTaskById,

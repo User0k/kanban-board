@@ -49,9 +49,11 @@ const UserToTask = sequelize.define('UserToTask', {
 });
 
 Board.hasMany(Column, { onDelete: 'cascade', hooks: true });
+Board.hasMany(Task);
 Column.belongsTo(Board, { onDelete: 'cascade', hooks: true });
 
 Column.hasMany(Task, { onDelete: 'cascade', hooks: true });
+Task.belongsTo(Board);
 Task.belongsTo(Column, { onDelete: 'cascade', hooks: true });
 
 User.belongsToMany(Task, { through: UserToTask });
