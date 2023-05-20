@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { IColumn, ITask } from '../../models';
 import ColumnTitleInput from './ColumnTitleInput';
 import ColumnTitleText from './ColumnTitleText';
-import NewTaskModal from '../modals/NewTaskModal';
+import CreateTaskModal from '../modals/CreateTaskModal';
 import Task from '../Task';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
@@ -50,7 +50,7 @@ function Column({ boardId, id, title, tasks }: IColumnProps) {
           ))}
       </Box>
       {isTaskCreating && <CircularProgress color="success" />}
-      <NewTaskModal
+      <CreateTaskModal
         boardId={boardId}
         columnId={id}
         setIsTaskCreating={setIsTaskCreating}>
@@ -60,7 +60,7 @@ function Column({ boardId, id, title, tasks }: IColumnProps) {
           startIcon={<AddIcon />}>
           Add task
         </Button>
-      </NewTaskModal>
+      </CreateTaskModal>
     </Box>
   );
 }

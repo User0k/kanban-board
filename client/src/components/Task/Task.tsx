@@ -11,6 +11,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
 import './Task.scss';
+import { Tooltip } from '@mui/material';
 
 function Task(taskProps: IUpdateTask) {
   const { title, description, boardId, columnId, id } = taskProps;
@@ -39,7 +40,9 @@ function Task(taskProps: IUpdateTask) {
               <DeleteForeverIcon className="task-delete" />
             </DeleteConfirmModal>
             <EditTaskModal {...taskProps}>
-              <MoreVertIcon className="task-modify" />
+              <Tooltip title="Edit task" id='edit-task-tooltip'>
+                <MoreVertIcon className="task-modify" />
+              </Tooltip>
             </EditTaskModal>
             {description && (
               <FormatAlignLeftIcon className="task-description" />

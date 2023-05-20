@@ -9,8 +9,12 @@
     line-break: anywhere;
   }
 
+  &__bar {
+    padding-top: 5px;
+  }
+
   &__bar > svg {
-    margin-top: 5px;
+    margin-top: -6px;
     fill: #5c5c5c;
   }
 
@@ -34,4 +38,8 @@
   &-modify:hover {
     fill: #303f9f;
   }
+}
+
+#edit-task-tooltip {
+  padding-top: 5px;
 }
