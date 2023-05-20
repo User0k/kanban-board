@@ -1,14 +1,7 @@
-import {
-  Dispatch,
-  ReactElement,
-  SetStateAction,
-  useEffect,
-  useState,
-} from 'react';
-import { useForm } from 'react-hook-form';
-import { useCreateTaskMutation } from '../../../services/taskService';
+import { ReactElement, useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { useUpdateTaskMutation } from '../../../services/taskService';
 import { UseErrorHandler } from '../../../store/hooks';
-import { NewTask } from '../../../models';
 import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -17,50 +10,54 @@ import TextField from '@mui/material/TextField';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import './NewTaskModal.scss';
+import '../CreateTaskModal/CreateTaskModal.scss';
 
-type FormValues = NewTask;
+interface IFormValues {
+  title: string;
+  description: string;
+}
 
 interface IModalProps {
   boardId: string;
   columnId: string;
-  setIsTaskCreating: Dispatch<SetStateAction<boolean>>;
+  id: string;
+  title: string;
+  description?: string;
   children: ReactElement;
 }
 
-function NewTaskModal({
+function CreateTaskModal({
   boardId,
   columnId,
-  setIsTaskCreating,
+  id,
+  title,
+  description,
   children,
 }: IModalProps) {
-  const [createTask, { isLoading: isTaskCreating, isError: createTaskError }] =
-    useCreateTaskMutation();
-
-  useEffect(() => {
-    isTaskCreating ? setIsTaskCreating(true) : setIsTaskCreating(false);
-  }, [isTaskCreating, setIsTaskCreating]);
-
+  const [updateTask, { isError: updateTaskError }] = useUpdateTaskMutation();
   const [isOpen, setIsOpen] = useState(false);
+  const defaultValues = { title, description: description || '' };
+
   const {
-    register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
-  } = useForm<FormValues>();
+  } = useForm<IFormValues>({ defaultValues });
 
-  const onSubmit = async (data: FormValues) => {
-    await createTask({
+  const onSubmit = async (data: IFormValues) => {
+    await updateTask({
       boardId,
       columnId,
+      id,
       title: data.title,
       description: data.description,
     });
-    reset();
     setIsOpen(false);
+    reset({ title: data.title, description: data.description });
   };
 
-  UseErrorHandler(createTaskError, 'Unable to create task');
+  UseErrorHandler(updateTaskError, 'Unable to update task');
 
   return (
     <>
@@ -74,14 +71,20 @@ function NewTaskModal({
         <DialogTitle id="create-task">Add a task</DialogTitle>
         <form onSubmit={handleSubmit(onSubmit)} className="modal-task__content">
           <DialogContent>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="new_title"
-              label="Task title*"
-              type="text"
-              fullWidth
-              {...register('title', { required: true })}
+            <Controller
+              name="title"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  autoFocus
+                  margin="dense"
+                  label="Task title*"
+                  type="text"
+                  fullWidth
+                />
+              )}
+              rules={{ required: true }}
             />
             {errors.title && (
               <Typography
@@ -91,14 +94,18 @@ function NewTaskModal({
                 Please, specify a title
               </Typography>
             )}
-            <TextField
-              autoFocus
-              margin="dense"
-              id="new_description"
-              label="Task description"
-              type="text"
-              fullWidth
-              {...register('description')}
+            <Controller
+              name='description'
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  margin="dense"
+                  label="Task description"
+                  type="text"
+                  fullWidth
+                />
+              )}
             />
           </DialogContent>
           <DialogActions sx={{ justifyContent: 'space-between' }}>
@@ -115,4 +122,4 @@ function NewTaskModal({
   );
 }
 
-export default NewTaskModal;
+export default CreateTaskModal;
