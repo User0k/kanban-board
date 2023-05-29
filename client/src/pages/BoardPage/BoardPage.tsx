@@ -1,8 +1,9 @@
 import { IMAGE_FULL_HD } from '../../constants';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { DragDropContext, Droppable, DropResult } from '@hello-pangea/dnd';
 import { useGetBoardByIdQuery } from '../../services/boardService';
-import { useGetColumnsInBoardQuery } from '../../services/columnService';
+import { useGetColumnsInBoardQuery, useReorderColumnMutation } from '../../services/columnService';
 import { useGetTasksInBoardQuery } from '../../services/taskService';
 import { IColumn } from '../../models';
 import CreateColumnModal from '../../components/modals/CreateColumnModal';
@@ -39,6 +40,40 @@ function BoardPage() {
 
   const boardName = columnsGetError ? 'Can`t get columns' : board?.name || '';
 
+  const [storedColumns, setStoredColumns] = useState<IColumn[]>([]);
+
+  useEffect(() => {
+    if (!isColumnsLoading && columns) {
+      setStoredColumns(columns);
+    }
+  }, [isColumnsLoading, columns]);
+
+  const [reorderColumn] = useReorderColumnMutation();
+
+  const onDragEnd = async (result: DropResult) => {
+    const { destination, source, draggableId, type } = result;
+
+    if (!destination) {
+      return;
+    }
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    if (type === 'column') {
+      const newColumns = [...storedColumns];
+      const draggableColumn = newColumns.splice(source.index, 1);
+      newColumns.splice(destination.index, 0, ...draggableColumn);
+      setStoredColumns(newColumns);
+      await reorderColumn({ boardId, id: draggableId, targetOrder: destination.index + 1});
+      return;
+    }
+  };
+
   return (
     <>
       {boardNotFound ? (
@@ -68,37 +103,49 @@ function BoardPage() {
               </Typography>
             </Stack>
           </Box>
-          <Stack
-            className="board-page__columns-wrapper"
-            direction="row"
-            spacing={2}>
-            {isColumnsLoading ? (
-              <Stack alignItems="center">
-                <CircularProgress size={30} sx={{ m: 1 }} />
-              </Stack>
-            ) : (
-              columns &&
-              columns.map((column: IColumn) => (
-                <Column
-                  {...column}
-                  boardId={boardId}
-                  tasks={tasksInBoard && tasksInBoard[column.id]}
-                  key={column.id}
-                />
-              ))
-            )}
-            {isColumnCreating && <CircularProgress color="success" />}
-            <CreateColumnModal
-              boardId={boardId}
-              setIsColumnCreating={setIsColumnCreating}>
-              <Button
-                className="btn-create-column"
-                variant="contained"
-                startIcon={<AddIcon />}>
-                Create Column
-              </Button>
-            </CreateColumnModal>
-          </Stack>
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable
+              droppableId={boardId}
+              direction="horizontal"
+              type="column">
+              {(provided) => (
+                <Stack
+                  className="board-page__columns-wrapper"
+                  direction="row"
+                  spacing={2}
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}>
+                  {isColumnsLoading ? (
+                    <Stack alignItems="center">
+                      <CircularProgress size={30} sx={{ m: 1 }} />
+                    </Stack>
+                  ) : (
+                    storedColumns.map((column: IColumn, index) => (
+                      <Column
+                        {...column}
+                        boardId={boardId}
+                        tasks={tasksInBoard && tasksInBoard[column.id]}
+                        index={index}
+                        key={column.id}
+                      />
+                    ))
+                  )}
+                  {provided.placeholder}
+                  {isColumnCreating && <CircularProgress color="success" />}
+                  <CreateColumnModal
+                    boardId={boardId}
+                    setIsColumnCreating={setIsColumnCreating}>
+                    <Button
+                      className="btn-create-column"
+                      variant="contained"
+                      startIcon={<AddIcon />}>
+                      Create Column
+                    </Button>
+                  </CreateColumnModal>
+                </Stack>
+              )}
+            </Droppable>
+          </DragDropContext>
         </Box>
       )}
     </>
