@@ -6,7 +6,7 @@ import {
   useEffect,
 } from 'react';
 import { useForm } from 'react-hook-form';
-import { UseErrorHandler } from '../../../store/hooks';
+import { useErrorHandler } from '../../../hooks/useErrorHandler';
 import { useUpdateBoardMutation } from '../../../services/boardService';
 import { NewBoard } from '../../../models';
 import ChooseImageModal from '../ChooseImageModal';
@@ -74,7 +74,7 @@ function EditBoardModal({
     [setIsUpdating, isBoardUpdating]
   );
 
-  UseErrorHandler(updateBoardError, 'Unable to update board');
+  useErrorHandler(updateBoardError, 'Unable to update board');
 
   return (
     <>

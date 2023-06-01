@@ -1,6 +1,6 @@
 import { IUpdateTask } from '../../models';
 import { useDeleteTaskMutation } from '../../services/taskService';
-import { UseErrorHandler } from '../../store/hooks';
+import { useErrorHandler } from '../../hooks/useErrorHandler';
 import GlobalSpinner from '../Spinners/GlobalSpinner';
 import DeleteConfirmModal from '../modals/DeleteConfirmModal';
 import EditTaskModal from '../modals/EditTaskModal';
@@ -22,7 +22,7 @@ function Task(taskProps: IUpdateTask) {
     await deleTask({ boardId, columnId, id });
   };
 
-  UseErrorHandler(deleteTaskError, 'Unable to delete task');
+  useErrorHandler(deleteTaskError, 'Unable to delete task');
 
   return (
     <>

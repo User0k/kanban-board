@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { UseErrorHandler } from '../../../store/hooks';
+import { useErrorHandler } from '../../../hooks/useErrorHandler';
 import { useCreateBoardMutation } from '../../../services/boardService';
 import imgMinifyer from '../../../utils/imgMinifyer';
 import { NewBoard } from '../../../models';
@@ -49,7 +49,7 @@ function NewBoardModal({ children }: IModalProps) {
     await createBoard({ ...data, image });
   };
 
-  UseErrorHandler(createBoardError, 'Unable to create board');
+  useErrorHandler(createBoardError, 'Unable to create board');
 
   return (
     <>

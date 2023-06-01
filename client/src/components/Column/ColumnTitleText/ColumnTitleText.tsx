@@ -1,5 +1,5 @@
 import { useDeleteColumnMutation } from '../../../services/columnService';
-import { UseErrorHandler } from '../../../store/hooks';
+import { useErrorHandler } from '../../../hooks/useErrorHandler';
 import GlobalSpinner from '../../Spinners/GlobalSpinner';
 import DeleteConfirmModal from '../../modals/DeleteConfirmModal';
 import Typography from '@mui/material/Typography';
@@ -31,7 +31,7 @@ function ColumnTitleText({
     await deleteColumn({ boardId, id });
   };
 
-  UseErrorHandler(deleteColumnError, 'Unable to delete column');
+  useErrorHandler(deleteColumnError, 'Unable to delete column');
 
   return (
     <>

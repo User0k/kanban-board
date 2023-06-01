@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDeleteBoardMutation } from '../../services/boardService';
-import { UseErrorHandler } from '../../store/hooks';
+import { useErrorHandler } from '../../hooks/useErrorHandler';
 import { IBoard } from '../../models';
 import GlobalSpinner from '../Spinners/GlobalSpinner';
 import DeleteConfirmModal from '../modals/DeleteConfirmModal';
@@ -30,7 +30,7 @@ function Board({ name, description, id, image }: IBoard) {
     await deleteBoard(id);
   };
 
-  UseErrorHandler(deleteBoardError, 'Unable to delete board');
+  useErrorHandler(deleteBoardError, 'Unable to delete board');
 
   return (
     <>

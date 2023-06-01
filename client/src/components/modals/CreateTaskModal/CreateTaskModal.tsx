@@ -7,7 +7,7 @@ import {
 } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCreateTaskMutation } from '../../../services/taskService';
-import { UseErrorHandler } from '../../../store/hooks';
+import { useErrorHandler } from '../../../hooks/useErrorHandler';
 import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -62,7 +62,7 @@ function CreateTaskModal({
     setIsOpen(false);
   };
 
-  UseErrorHandler(createTaskError, 'Unable to create task');
+  useErrorHandler(createTaskError, 'Unable to create task');
 
   return (
     <>

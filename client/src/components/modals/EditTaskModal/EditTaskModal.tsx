@@ -1,7 +1,7 @@
 import { ReactElement, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useUpdateTaskMutation } from '../../../services/taskService';
-import { UseErrorHandler } from '../../../store/hooks';
+import { useErrorHandler } from '../../../hooks/useErrorHandler';
 import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -57,7 +57,7 @@ function CreateTaskModal({
     reset({ title: data.title, description: data.description });
   };
 
-  UseErrorHandler(updateTaskError, 'Unable to update task');
+  useErrorHandler(updateTaskError, 'Unable to update task');
 
   return (
     <>

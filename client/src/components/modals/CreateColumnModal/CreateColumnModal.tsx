@@ -7,7 +7,7 @@ import {
 } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCreateColumnMutation } from '../../../services/columnService';
-import { UseErrorHandler } from '../../../store/hooks';
+import { useErrorHandler } from '../../../hooks/useErrorHandler';
 import { NewColumn } from '../../../models';
 import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
@@ -55,7 +55,7 @@ function CreateColumnModal({
     setIsOpen(false);
   };
 
-  UseErrorHandler(createColumnError, 'Unable to create column');
+  useErrorHandler(createColumnError, 'Unable to create column');
 
   return (
     <>
