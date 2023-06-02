@@ -1,10 +1,14 @@
 import { IMAGE_FULL_HD } from '../../constants';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { DragDropContext, Droppable, DropResult } from '@hello-pangea/dnd';
+import { DragDropContext, Droppable } from '@hello-pangea/dnd';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { useDragEnd } from '../../hooks/useDragEnd';
 import { useGetBoardByIdQuery } from '../../services/boardService';
-import { useGetColumnsInBoardQuery, useReorderColumnMutation } from '../../services/columnService';
+import { useGetColumnsInBoardQuery } from '../../services/columnService';
 import { useGetTasksInBoardQuery } from '../../services/taskService';
+import { updateColumnSet } from '../../store/slices/columnSetSlice';
 import { IColumn } from '../../models';
 import CreateColumnModal from '../../components/modals/CreateColumnModal';
 import ErrorBar from '../../components/ErrorBar';
@@ -19,6 +23,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import './BoardPage.scss';
 
 function BoardPage() {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const boardId = useParams().boardId || '';
   const { data: board, isError: boardNotFound } = useGetBoardByIdQuery(boardId);
@@ -37,42 +42,16 @@ function BoardPage() {
   const { data: tasksInBoard } = useGetTasksInBoardQuery(boardId);
 
   const [isColumnCreating, setIsColumnCreating] = useState(false);
-
   const boardName = columnsGetError ? 'Can`t get columns' : board?.name || '';
-
-  const [storedColumns, setStoredColumns] = useState<IColumn[]>([]);
 
   useEffect(() => {
     if (!isColumnsLoading && columns) {
-      setStoredColumns(columns);
+      dispatch(updateColumnSet(columns));
     }
-  }, [isColumnsLoading, columns]);
+  }, [isColumnsLoading, columns, dispatch]);
 
-  const [reorderColumn] = useReorderColumnMutation();
-
-  const onDragEnd = async (result: DropResult) => {
-    const { destination, source, draggableId, type } = result;
-
-    if (!destination) {
-      return;
-    }
-
-    if (
-      destination.droppableId === source.droppableId &&
-      destination.index === source.index
-    ) {
-      return;
-    }
-
-    if (type === 'column') {
-      const newColumns = [...storedColumns];
-      const draggableColumn = newColumns.splice(source.index, 1);
-      newColumns.splice(destination.index, 0, ...draggableColumn);
-      setStoredColumns(newColumns);
-      await reorderColumn({ boardId, id: draggableId, targetOrder: destination.index + 1});
-      return;
-    }
-  };
+  const storedColumns = useAppSelector((state) => state.columnSetReducer).columns;
+  const onDragEnd = useDragEnd(boardId);
 
   return (
     <>
