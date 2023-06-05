@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { Draggable } from '@hello-pangea/dnd';
 import { IColumn, ITask } from '../../models';
+import { Droppable } from '@hello-pangea/dnd';
+import DraggableElement from '../../dndWrappers/DraggableElement';
 import ColumnTitleInput from './ColumnTitleInput';
 import ColumnTitleText from './ColumnTitleText';
 import CreateTaskModal from '../modals/CreateTaskModal';
@@ -25,53 +26,58 @@ function Column({ boardId, id, title, tasks, index }: IColumnProps) {
   const onOpenInput = () => setIsEditing(true);
 
   return (
-    <Draggable draggableId={id} index={index}>
-      {(provided) => (
-        <Box
-          className="column"
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          ref={provided.innerRef}>
-          <Stack className="column__title-wrapper">
-            {isEditing ? (
-              <ColumnTitleInput
-                boardId={boardId}
-                id={id}
-                title={title}
-                columnName={columnName}
-                onCloseInput={onCloseInput}
-                setColumnName={setColumnName}
-              />
-            ) : (
-              <ColumnTitleText
-                boardId={boardId}
-                id={id}
-                columnName={columnName}
-                onOpenInput={onOpenInput}
-              />
-            )}
-          </Stack>
-          <Box className="task-list">
-            {tasks &&
-              tasks.map((task) => (
-                <Task {...task} boardId={boardId} columnId={id} key={task.id} />
-              ))}
-          </Box>
-          {isTaskCreating && <CircularProgress color="success" />}
-          <CreateTaskModal
-            boardId={boardId}
-            columnId={id}
-            setIsTaskCreating={setIsTaskCreating}>
-            <Button
-              className="btn-create_task"
-              variant="contained"
-              startIcon={<AddIcon />}>
-              Add task
-            </Button>
-          </CreateTaskModal>
-        </Box>
-      )}
-    </Draggable>
+    <DraggableElement id={id} index={index} className="column">
+      <Droppable droppableId={id}>
+        {(provided) => (
+          <div {...provided.droppableProps} ref={provided.innerRef}>
+            <Stack className="column__title-wrapper">
+              {isEditing ? (
+                <ColumnTitleInput
+                  boardId={boardId}
+                  id={id}
+                  title={title}
+                  columnName={columnName}
+                  onCloseInput={onCloseInput}
+                  setColumnName={setColumnName}
+                />
+              ) : (
+                <ColumnTitleText
+                  boardId={boardId}
+                  id={id}
+                  columnName={columnName}
+                  onOpenInput={onOpenInput}
+                />
+              )}
+            </Stack>
+            <Box className="task-list">
+              {tasks &&
+                tasks.map((task, index) => (
+                  <Task
+                    {...task}
+                    boardId={boardId}
+                    columnId={id}
+                    index={index}
+                    key={task.id}
+                  />
+                ))}
+            </Box>
+            {provided.placeholder}
+            {isTaskCreating && <CircularProgress color="success" />}
+            <CreateTaskModal
+              boardId={boardId}
+              columnId={id}
+              setIsTaskCreating={setIsTaskCreating}>
+              <Button
+                className="btn-create_task"
+                variant="contained"
+                startIcon={<AddIcon />}>
+                Add task
+              </Button>
+            </CreateTaskModal>
+          </div>
+        )}
+      </Droppable>
+    </DraggableElement>
   );
 }
 
