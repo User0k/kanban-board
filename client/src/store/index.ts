@@ -1,12 +1,12 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { api } from '../services/api';
 import errorReducer from './slices/errorSlice';
-import columnSetReducer from './slices/columnSetSlice';
+import boardReducer from './slices/boardSlice';
 
 const rootReducer = combineReducers({
   [api.reducerPath]: api.reducer,
   errorReducer,
-  columnSetReducer,
+  boardReducer,
 });
 
 export const store = configureStore({

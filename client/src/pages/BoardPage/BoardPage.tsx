@@ -8,7 +8,7 @@ import { useDragEnd } from '../../hooks/useDragEnd';
 import { useGetBoardByIdQuery } from '../../services/boardService';
 import { useGetColumnsInBoardQuery } from '../../services/columnService';
 import { useGetTasksInBoardQuery } from '../../services/taskService';
-import { updateColumnSet } from '../../store/slices/columnSetSlice';
+import { updateColumnSet, updateTaskSet } from '../../store/slices/boardSlice';
 import { IColumn } from '../../models';
 import CreateColumnModal from '../../components/modals/CreateColumnModal';
 import ErrorBar from '../../components/ErrorBar';
@@ -50,7 +50,14 @@ function BoardPage() {
     }
   }, [isColumnsLoading, columns, dispatch]);
 
-  const storedColumns = useAppSelector((state) => state.columnSetReducer).columns;
+  useEffect(() => {
+    if (tasksInBoard) {
+      dispatch(updateTaskSet(tasksInBoard));
+    }
+  }, [tasksInBoard, dispatch]);
+
+  const storedColumns = useAppSelector((state) => state.boardReducer).columns;
+  const storedTasks = useAppSelector((state) => state.boardReducer).tasks;
   const onDragEnd = useDragEnd(boardId);
 
   return (
@@ -103,7 +110,7 @@ function BoardPage() {
                       <Column
                         {...column}
                         boardId={boardId}
-                        tasks={tasksInBoard && tasksInBoard[column.id]}
+                        tasks={storedTasks[column.id]}
                         index={index}
                         key={column.id}
                       />
