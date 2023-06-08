@@ -1,6 +1,7 @@
 const { Op } = require('sequelize');
 const errorHandler = require('express-async-handler');
 const { Column } = require('../models');
+const { reorderOneDirection } = require('../helpers/reorderOneDirection');
 
 const addColumn = errorHandler(async (req, res) => {
   const { BoardId } = req.params;
@@ -75,24 +76,7 @@ const reorderColumns = errorHandler(async (req, res) => {
   }
 
   const { order, BoardId } = column.dataValues;
-  if (order < targetOrder) {
-    const columns = await Column.findAll({
-      where: {
-        BoardId,
-        order: { [Op.between]: [order + 1, targetOrder] },
-      },
-    });
-    columns.forEach((col) => col.update({ order: col.dataValues.order - 1 }));
-  } else {
-    const columns = await Column.findAll({
-      where: {
-        BoardId,
-        order: { [Op.between]: [targetOrder, order - 1] },
-      },
-    });
-    columns.forEach((col) => col.update({ order: col.dataValues.order + 1 }));
-  }
-
+  await reorderOneDirection(Column, { BoardId: BoardId }, order, targetOrder);
   await column.update({ order: targetOrder });
   res.status(200);
   return res.json({ message: 'Columns has been reordered' });
