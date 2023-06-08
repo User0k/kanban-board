@@ -1,6 +1,7 @@
 const { Op } = require('sequelize');
 const errorHandler = require('express-async-handler');
 const { Task } = require('../models');
+const { reorderOneDirection } = require('../helpers/reorderOneDirection');
 
 const addTask = errorHandler(async (req, res) => {
   const { title, description } = req.body;
@@ -64,6 +65,57 @@ const updateTaskByID = errorHandler(async (req, res) => {
   return res.json({ message: 'Task has been updated' });
 });
 
+const reorderTasks = errorHandler(async (req, res) => {
+  const { columnId, id } = req.params;
+  const { targetOrder, targetColumnId } = req.body;
+
+  if (!targetOrder) {
+    res.status(400);
+    throw new Error('Task must contain targetOrder');
+  }
+
+  const task = await Task.findOne({ where: { id } });
+
+  if (!task) {
+    res.status(404);
+    throw new Error('Task not found');
+  }
+
+  const { order } = task.dataValues;
+
+  if (!targetColumnId) {
+    await reorderOneDirection(Task, { ColumnId: columnId }, order, targetOrder);
+    await task.update({ order: targetOrder });
+    return res.json({ message: 'Tasks has been reordered' });
+  }
+
+  const shiftOrderTasks = await Task.findAll({
+    where: {
+      ColumnId: columnId,
+      order: { [Op.gt]: order },
+    },
+  });
+
+  const unshiftOrderTasks = await Task.findAll({
+    where: {
+      ColumnId: columnId,
+      order: { [Op.gte]: targetOrder },
+    },
+  });
+
+  shiftOrderTasks.forEach((task) =>
+    task.update({ order: task.dataValues.order - 1 })
+  );
+
+  unshiftOrderTasks.forEach((task) =>
+    task.update({ order: task.dataValues.order + 1 })
+  );
+
+  await task.update({ order: targetOrder, ColumnId: targetColumnId });
+  res.status(200);
+  return res.json({ message: 'Tasks has been reordered' });
+});
+
 const deleteTaskById = errorHandler(async (req, res) => {
   const { id } = req.params;
   const task = await Task.findOne({ where: { id } });
@@ -98,5 +150,6 @@ module.exports = {
   getTasksInColumn,
   getTaskById,
   updateTaskByID,
+  reorderTasks,
   deleteTaskById,
 };

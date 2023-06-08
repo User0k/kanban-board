@@ -1,10 +1,12 @@
 import { api } from './api';
-import { IGetTask, ITask, IUpdateTask, NewTask, IGroupedTasks } from '../models';
-
-/**
- * TODO:
- * Implement reordering tasks in service and controller
- */
+import {
+  IGetTask,
+  ITask,
+  IUpdateTask,
+  NewTask,
+  IGroupedTasks,
+  IReorderTask,
+} from '../models';
 
 export const boardApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -41,6 +43,14 @@ export const boardApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Task'],
     }),
+    reorderTasks: build.mutation<ITask, IReorderTask>({
+      query: ({ boardId, columnId, id, ...body }) => ({
+        url: `boards/${boardId}/reorder/columns/${columnId}/tasks/${id}`,
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: ['Task'],
+    }),
     deleteTask: build.mutation<ITask, IGetTask>({
       query: ({ boardId, columnId, id }) => ({
         url: `boards/${boardId}/columns/${columnId}/tasks/${id}`,
@@ -57,5 +67,6 @@ export const {
   useGetTaskByIdQuery,
   useCreateTaskMutation,
   useUpdateTaskMutation,
+  useReorderTasksMutation,
   useDeleteTaskMutation,
 } = boardApi;

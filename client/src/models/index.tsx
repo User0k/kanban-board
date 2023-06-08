@@ -40,6 +40,11 @@ export interface IUpdateTask
 
 export type NewTask = Omit<IUpdateTask, 'id'>;
 
+export interface IReorderTask extends IGetTask {
+  targetColumnId?: string;
+  targetOrder: number;
+}
+
 export interface IGroupedTasks {
   [columnId: string]: ITask[];
 }
