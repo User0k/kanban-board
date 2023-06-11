@@ -4,9 +4,11 @@ const sequelize = require('./db');
 const PORT = process.env.PORT || 5000;
 const app = express();
 const router = require('./routes');
+const cookieParser = require('cookie-parser');
 
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 app.use('/api', router);
 
 const init = async () => {

@@ -1,17 +1,6 @@
 const sequelize = require('../db');
 const { DataTypes, fn, QueryInterface } = require('sequelize');
 
-const User = sequelize.define('User', {
-  id: {
-    type: DataTypes.UUID,
-    defaultValue: fn('uuid_generate_v4'),
-    primaryKey: true,
-  },
-  email: { type: DataTypes.STRING, unique: true, allowNull: false },
-  password: { type: DataTypes.STRING, allowNull: false },
-  name: { type: DataTypes.STRING, allowNull: false },
-});
-
 const Board = sequelize.define('Board', {
   id: {
     type: DataTypes.UUID,
@@ -42,6 +31,18 @@ const Task = sequelize.define('Task', {
   title: { type: DataTypes.STRING, allowNull: false },
   description: { type: DataTypes.STRING },
   order: { type: DataTypes.INTEGER },
+});
+
+const User = sequelize.define('User', {
+  id: {
+    type: DataTypes.UUID,
+    defaultValue: fn('uuid_generate_v4'),
+    primaryKey: true,
+  },
+  email: { type: DataTypes.STRING, unique: true, allowNull: false },
+  password: { type: DataTypes.STRING, allowNull: false },
+  name: { type: DataTypes.STRING, allowNull: false },
+  refreshToken: { type: DataTypes.STRING, unique: true },
 });
 
 const UserToTask = sequelize.define('UserToTask', {
