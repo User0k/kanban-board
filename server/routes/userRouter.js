@@ -1,7 +1,12 @@
 const express = require('express');
 const userRouter = express.Router();
 const { body } = require('express-validator');
-const { register } = require('../controllers/userController');
+const {
+  register,
+  login,
+  logout,
+  refresh,
+} = require('../controllers/userController');
 
 userRouter.post(
   '/register',
@@ -10,5 +15,8 @@ userRouter.post(
   body('name').isLength({ min: 1, max: 32 }),
   register
 );
+userRouter.post('/login', login);
+userRouter.post('/logout', logout);
+userRouter.get('/refresh', refresh);
 
 module.exports = userRouter;
