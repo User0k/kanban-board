@@ -49,9 +49,18 @@ export interface IGroupedTasks {
   [columnId: string]: ITask[];
 }
 
-export interface IUser {
-  id: string;
+export interface IUserFields {
   email: string;
   password: string;
   name: string;
+}
+
+export interface IUser extends IUserFields {
+  id: string;
+  refreshToken: string | null;
+}
+
+export interface IAuthResponse {
+  accessToken: string;
+  iser: IUser;
 }
