@@ -62,5 +62,5 @@ export interface IUser extends IUserFields {
 
 export interface IAuthResponse {
   accessToken: string;
-  iser: IUser;
+  user: IUser;
 }
