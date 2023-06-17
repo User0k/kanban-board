@@ -1,9 +1,24 @@
-#register-page {
+#auth-page {
   max-width: 320px;
   transform: translateY(calc(50vh - 50% - 70px));
 }
 
-.registration-title {
+.auth-title {
   text-align: center;
   padding-bottom: 12px;
+}
+
+@media (max-height: 640px) {
+  #auth-page {
+    transform: translateY(calc(50vh - 50% - 20px));
+
+    .auth-title {
+      font-size: 1.3rem;
+      padding-bottom: 0;
+    }
+
+    input {
+      font-size: 0.8rem;
+    }
+  }
 }

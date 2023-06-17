@@ -55,6 +55,8 @@ export interface IUserFields {
   name: string;
 }
 
+export type LoginFields = Omit<IUserFields, 'name'>;
+
 export interface IUser extends IUserFields {
   id: string;
   refreshToken: string | null;
