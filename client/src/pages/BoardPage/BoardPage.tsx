@@ -11,7 +11,6 @@ import { useGetTasksInBoardQuery } from '../../services/taskService';
 import { updateColumnSet, updateTaskSet } from '../../store/slices/boardSlice';
 import { IColumn } from '../../models';
 import CreateColumnModal from '../../components/modals/CreateColumnModal';
-import ErrorBar from '../../components/ErrorBar';
 import Column from '../../components/Column';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -66,7 +65,6 @@ function BoardPage() {
         'This board cannot be found'
       ) : (
         <Box className="board-page" sx={{ backgroundImage: `${bgImage}` }}>
-          <ErrorBar />
           <Box className="board-page__subheader">
             <Stack
               direction="row"

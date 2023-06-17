@@ -1,7 +1,6 @@
 import { useGetAllBoardsQuery } from '../../services/boardService';
 import Board from '../../components/Board';
 import NewBoardModal from '../../components/modals/NewBoardModal';
-import ErrorBar from '../../components/ErrorBar';
 import PageSpinner from '../../components/Spinners/PageSpinner';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
@@ -21,7 +20,6 @@ function MainPage() {
 
   return (
     <Box id="main">
-      <ErrorBar />
       <Box sx={{ pt: 3 }}>
         <Stack direction={'row'} justifyContent={'center'}>
           <Button variant="contained" sx={{ ml: 2 }} className="btn-main">
