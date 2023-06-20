@@ -44,7 +44,7 @@ const login = errorHandler(async (req, res) => {
   const user = await User.findOne({ where: { email } });
 
   if (!user) {
-    res.status(404);
+    res.status(422);
     throw new Error('User with this email not found');
   }
 
@@ -84,7 +84,7 @@ const refresh = errorHandler(async (req, res) => {
 
   if (!refreshToken) {
     res.status(401);
-    throw new Error('Unauthorized');
+    throw new Error('No refresh token found');
   }
 
   const isCorrectToken = jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY);
@@ -92,11 +92,15 @@ const refresh = errorHandler(async (req, res) => {
 
   if (!isCorrectToken || !user) {
     res.status(401);
-    throw new Error('Unauthorized');
+    throw new Error('No user or token');
   }
 
   const tokens = tokenGenerator({ email: user.dataValues.email });
-  res.cookie('refreshToken', tokens.refreshToken);
+  res.cookie('refreshToken', tokens.refreshToken, {
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    httpOnly: true,
+  });
+
   await user.update({ refreshToken: tokens.refreshToken });
   res.status(201);
   return res.json({ accessToken: tokens.accessToken, user });
