@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const { User } = require('../models');
 const tokenGenerator = require('../helpers/tokenGenerator');
 const validationHandler = require('../helpers/validationHandler');
+const colorizer = require('../helpers/nameToColor');
 
 const register = errorHandler(async (req, res) => {
   const { email, password, name } = req.body;
@@ -23,6 +24,7 @@ const register = errorHandler(async (req, res) => {
 
   const hashedPassword = await bcrypt.hash(password, 5);
   const { accessToken, refreshToken } = tokenGenerator({ email });
+  const color = colorizer(name);
   res.cookie('refreshToken', refreshToken, {
     maxAge: 30 * 24 * 60 * 60 * 1000,
     httpOnly: true,
@@ -32,6 +34,7 @@ const register = errorHandler(async (req, res) => {
     email,
     password: hashedPassword,
     name,
+    color,
     refreshToken,
   });
 

@@ -1,4 +1,5 @@
 const errorHandler = require('express-async-handler');
+const colorizer = require('../helpers/nameToColor');
 const { User } = require('../models');
 
 const deleteUser = errorHandler(async (req, res) => {
@@ -24,7 +25,9 @@ const updateUserName = errorHandler(async (req, res) => {
     throw new Error('User must contian a name');
   }
 
-  await User.update({ name }, { where: { id } });
+  const color = colorizer(name);
+
+  await User.update({ name, color }, { where: { id } });
   res.status(200);
   return res.json({ message: 'User has been updated' });
 });

@@ -7,10 +7,10 @@ const router = require('./routes');
 const cookieParser = require('cookie-parser');
 
 const corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: process.env.CLIENT_URL,
   optionsSuccessStatus: 200,
-  credentials: true
-}
+  credentials: true,
+};
 
 app.use(cors(corsOptions));
 app.use(express.json());
