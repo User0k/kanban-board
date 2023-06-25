@@ -62,7 +62,7 @@ function BoardPage() {
   return (
     <>
       {boardNotFound ? (
-        'This board cannot be found'
+        <Box className='board-not-found'>This board cannot be found</Box>
       ) : (
         <Box className="board-page" sx={{ backgroundImage: `${bgImage}` }}>
           <Box className="board-page__subheader">
