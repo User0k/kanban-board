@@ -60,6 +60,8 @@ Task.belongsTo(Column, { onDelete: 'cascade', hooks: true });
 
 User.belongsToMany(Task, { through: UserToTask });
 Task.belongsToMany(User, { through: UserToTask });
+User.belongsToMany(Board, { through: UserToTask });
+Board.belongsToMany(User, { through: UserToTask });
 
 module.exports = {
   User,

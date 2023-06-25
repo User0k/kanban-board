@@ -145,38 +145,6 @@ const deleteTaskById = errorHandler(async (req, res) => {
   throw new Error('Task not found');
 });
 
-const assignUser = errorHandler(async (req, res) => {
-  const { id } = req.params;
-  const { userId } = req.body;
-  const user = await User.findByPk(userId);
-
-  if (!user) {
-    res.status(404);
-    throw new Error('User with this id not found');
-  }
-
-  await user.addTask(id);
-  await user.save();
-  res.status(201);
-  return res.json({ message: 'User has been assigned' });
-});
-
-const unassignUser = errorHandler(async (req, res) => {
-  const { id } = req.params;
-  const { userId } = req.body;
-  const user = await User.findByPk(userId);
-
-  if (!user) {
-    res.status(404);
-    throw new Error('User with this id not found');
-  }
-
-  await user.removeTask(id);
-  await user.save();
-  res.status(204);
-  return res.json({ message: 'User has been unassigned' });
-});
-
 module.exports = {
   addTask,
   getTasksInColumn,
@@ -184,6 +152,4 @@ module.exports = {
   updateTaskByID,
   reorderTasks,
   deleteTaskById,
-  assignUser,
-  unassignUser,
 };

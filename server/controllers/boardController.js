@@ -1,5 +1,5 @@
 const errorHandler = require('express-async-handler');
-const { Board, Task } = require('../models');
+const { Board, Task, User } = require('../models');
 
 const addBoard = errorHandler(async (req, res) => {
   const { name, description, image } = req.body;
@@ -32,9 +32,14 @@ const getBoardById = errorHandler(async (req, res) => {
 });
 
 const getTasksInBoard = errorHandler(async (req, res) => {
-  const BoardId = req.params.id;
   const tasks = await Task.findAll({
-    where: { BoardId },
+    where: { BoardId: req.params.id },
+    include: [
+      {
+        model: User,
+        through: { attributes: [] },
+      },
+    ],
     order: [['order', 'ASC']],
   });
 
