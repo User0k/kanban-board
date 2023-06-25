@@ -24,7 +24,7 @@ export default function Header() {
           <HomeIcon sx={{ mr: 1 }} />
           <Typography variant="h6">Home</Typography>
         </IconButton>
-        {!isLoggedIn ? (
+        {isLoggedIn ? (
           <IconButton component={Link} to={'/boards'} sx={{ mr: 2 }}>
             <DashboardIcon sx={{ mr: 1 }} />
             <Typography variant="h6">Boards</Typography>
