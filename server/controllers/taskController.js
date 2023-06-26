@@ -1,6 +1,6 @@
 const { Op } = require('sequelize');
 const errorHandler = require('express-async-handler');
-const { Task, User } = require('../models');
+const { Task } = require('../models');
 const { reorderOneDirection } = require('../helpers/reorderOneDirection');
 
 const addTask = errorHandler(async (req, res) => {

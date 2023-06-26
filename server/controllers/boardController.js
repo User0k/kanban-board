@@ -32,15 +32,22 @@ const getBoardById = errorHandler(async (req, res) => {
 });
 
 const getTasksInBoard = errorHandler(async (req, res) => {
+  const BoardId = req.params.id;
   const tasks = await Task.findAll({
-    where: { BoardId: req.params.id },
+    where: { BoardId },
     include: [
       {
+        model: Board,
+        required: true,
+      },
+      {
         model: User,
-        through: { attributes: [] },
+        attributes: ['id', 'name', 'color'],
+        through: {
+          attributes: [],
+        },
       },
     ],
-    order: [['order', 'ASC']],
   });
 
   if (tasks) {

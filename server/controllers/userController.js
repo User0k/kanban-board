@@ -74,9 +74,7 @@ const assignUser = errorHandler(async (req, res) => {
     throw new Error('Task with this id not found');
   }
 
-  await user.addTask(taskId);
-  await user.addBoard(task.dataValues.BoardId);
-  await user.save();
+  await task.addUser(user);
   res.status(201);
   return res.json({ message: 'User has been assigned' });
 });
@@ -98,9 +96,7 @@ const unassignUser = errorHandler(async (req, res) => {
     throw new Error('Task with this id not found');
   }
 
-  await user.removeTask(taskId);
-  await user.removeBoard(task.dataValues.BoardId);
-  await user.save();
+  await task.removeUser(user);
   res.status(204);
   return res.json({ message: 'User has been unassigned' });
 });
