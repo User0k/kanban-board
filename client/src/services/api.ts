@@ -5,7 +5,7 @@ export const api = createApi({
   reducerPath: 'api',
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_URL,
-    credentials: "include",
+    credentials: 'include',
   }),
   endpoints: () => ({}),
   tagTypes: ['Board', 'Column', 'Task'],

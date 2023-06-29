@@ -6,27 +6,30 @@ export const userService = api.injectEndpoints({
     getAllUsers: build.query<IUser[], void>({
       query: () => ({
         url: 'users/',
-        method: 'GET',
-      })
+      }),
     }),
-    getUser: build.query<IUser, void>({
-      query: () => ({
-        url: 'users/:id',
-        method: 'GET',
-      })
+    getUser: build.query<IUser, string>({
+      query: (id) => ({
+        url: `users/${id}`,
+      }),
     }),
-    updateUserName: build.mutation<IUser, Pick<IUser, 'name'>>({
-      query: (body) => ({
-        url: 'users/:id',
+    getAssignedUsers: build.query<IUser, string>({
+      query: (boardId) => ({
+        url: `boards/${boardId}/users`,
+      }),
+    }),
+    updateUserName: build.mutation<IUser, Pick<IUser, 'id' | 'name'>>({
+      query: (id, ...body) => ({
+        url: `users/${id}`,
         method: 'PATCH',
-        body
-      })
+        body,
+      }),
     }),
-    deleteUser: build.mutation<IUser, void>({
-      query: () => ({
-        url: 'users/:id',
+    deleteUser: build.mutation<IUser, string>({
+      query: (id) => ({
+        url: `users/${id}`,
         method: 'DELETE',
-      })
+      }),
     }),
   }),
 });
@@ -34,6 +37,7 @@ export const userService = api.injectEndpoints({
 export const {
   useGetUserQuery,
   useGetAllUsersQuery,
+  useGetAssignedUsersQuery,
   useUpdateUserNameMutation,
-  useDeleteUserMutation
+  useDeleteUserMutation,
 } = userService;
