@@ -35,19 +35,7 @@ const getTasksInBoard = errorHandler(async (req, res) => {
   const BoardId = req.params.id;
   const tasks = await Task.findAll({
     where: { BoardId },
-    include: [
-      {
-        model: Board,
-        required: true,
-      },
-      {
-        model: User,
-        attributes: ['id', 'name', 'color'],
-        through: {
-          attributes: [],
-        },
-      },
-    ],
+    order: [['order', 'ASC']],
   });
 
   if (tasks) {
@@ -66,6 +54,34 @@ const getTasksInBoard = errorHandler(async (req, res) => {
 
   res.status(404);
   throw new Error('Tasks not found');
+});
+
+const getAssignedUsersInBoard = errorHandler(async (req, res) => {
+  const BoardId = req.params.id;
+  const tasks = await Task.findAll({
+    where: { BoardId },
+    attributes: ['id'],
+    include: [
+      {
+        model: User,
+        attributes: ['id', 'name', 'color'],
+        through: { attributes: [] },
+      },
+    ],
+  });
+
+  if (!tasks) {
+    res.status(404);
+    throw new Error('Tasks with this boardId not found');
+  }
+
+  const taskUsers = {};
+  for (let task of tasks) {
+    taskUsers[task.id] = { users: task.Users };
+  }
+
+  res.status(200);
+  return res.json(taskUsers);
 });
 
 const updateBoard = errorHandler(async (req, res) => {
@@ -100,6 +116,7 @@ module.exports = {
   getAllBoards,
   getBoardById,
   getTasksInBoard,
+  getAssignedUsersInBoard,
   updateBoard,
   deleteBoardById,
 };
