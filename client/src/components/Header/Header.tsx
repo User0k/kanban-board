@@ -15,7 +15,7 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import './Header.scss';
 
 export default function Header() {
-  const { isLoggedIn } = useAppSelector((state) => state.authSlice);
+  const { isLoggedIn } = useAppSelector((state) => state.authReducer);
 
   return (
     <AppBar id="header" position="static">

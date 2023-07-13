@@ -1,5 +1,5 @@
 import { api } from './api';
-import { IUser } from '../models';
+import { IUser, IUsersInTasks } from '../models';
 
 export const userService = api.injectEndpoints({
   endpoints: (build) => ({
@@ -13,7 +13,7 @@ export const userService = api.injectEndpoints({
         url: `users/${id}`,
       }),
     }),
-    getAssignedUsers: build.query<IUser, string>({
+    getAssignedUsers: build.query<IUsersInTasks, string>({
       query: (boardId) => ({
         url: `boards/${boardId}/users`,
       }),

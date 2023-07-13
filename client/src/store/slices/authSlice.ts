@@ -13,7 +13,7 @@ const initialState: IState = {
 };
 
 export const authSlice = createSlice({
-  name: 'user',
+  name: 'auth',
   initialState,
   reducers: {
     setIsLoggedIn: (state, action: PayloadAction<boolean>) => {

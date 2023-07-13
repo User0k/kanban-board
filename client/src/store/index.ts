@@ -1,13 +1,13 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { api } from '../services/api';
 import errorReducer from './slices/errorSlice';
-import authSlice from './slices/authSlice';
+import authReducer from './slices/authSlice';
 import boardReducer from './slices/boardSlice';
 
 const rootReducer = combineReducers({
   [api.reducerPath]: api.reducer,
   errorReducer,
-  authSlice,
+  authReducer,
   boardReducer,
 });
 

@@ -1,14 +1,12 @@
 import { IMAGE_FULL_HD } from '../../constants';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { DragDropContext, Droppable } from '@hello-pangea/dnd';
-import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useDragEnd } from '../../hooks/useDragEnd';
+import { useUpdateColumnSet } from '../../hooks/useUpdateColumnSet';
+import { useUpdateTaskSet } from '../../hooks/useUpdateTaskSet';
 import { useGetBoardByIdQuery } from '../../services/boardService';
-import { useGetColumnsInBoardQuery } from '../../services/columnService';
-import { useGetTasksInBoardQuery } from '../../services/taskService';
-import { updateColumnSet, updateTaskSet } from '../../store/slices/boardSlice';
 import { IColumn } from '../../models';
 import CreateColumnModal from '../../components/modals/CreateColumnModal';
 import Column from '../../components/Column';
@@ -22,7 +20,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 import './BoardPage.scss';
 
 function BoardPage() {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const boardId = useParams().boardId || '';
   const { data: board, isError: boardNotFound } = useGetBoardByIdQuery(boardId);
@@ -33,28 +30,11 @@ function BoardPage() {
     bgImage = image.split('?')[0] + IMAGE_FULL_HD + ')';
   }
 
-  const {
-    data: columns,
-    isLoading: isColumnsLoading,
-    isError: columnsGetError,
-  } = useGetColumnsInBoardQuery(boardId);
-  const { data: tasksInBoard } = useGetTasksInBoardQuery(boardId);
-
+  const { isColumnsLoading, columnsGetError } = useUpdateColumnSet(boardId);
   const [isColumnCreating, setIsColumnCreating] = useState(false);
   const boardName = columnsGetError ? 'Can`t get columns' : board?.name || '';
 
-  useEffect(() => {
-    if (!isColumnsLoading && columns) {
-      dispatch(updateColumnSet(columns));
-    }
-  }, [isColumnsLoading, columns, dispatch]);
-
-  useEffect(() => {
-    if (tasksInBoard) {
-      dispatch(updateTaskSet(tasksInBoard));
-    }
-  }, [tasksInBoard, dispatch]);
-
+  useUpdateTaskSet(boardId);
   const storedColumns = useAppSelector((state) => state.boardReducer).columns;
   const storedTasks = useAppSelector((state) => state.boardReducer).tasks;
   const onDragEnd = useDragEnd(boardId);
@@ -62,7 +42,7 @@ function BoardPage() {
   return (
     <>
       {boardNotFound ? (
-        <Box className='board-not-found'>This board cannot be found</Box>
+        <Box className="board-not-found">This board cannot be found</Box>
       ) : (
         <Box className="board-page" sx={{ backgroundImage: `${bgImage}` }}>
           <Box className="board-page__subheader">
