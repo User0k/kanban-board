@@ -1,0 +1,45 @@
+@import '../../../vars-mixins.scss';
+
+.avatar-small.MuiAvatar-colorDefault {
+  @include avatar-small;
+}
+
+.avatar-large.MuiAvatar-colorDefault {
+  @include avatar-large;
+}
+
+.modal-profile {
+  .MuiDialogContent-root {
+    padding: 13px;
+  }
+
+  .btn-close {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    font-size: 1.2rem;
+    fill: #ffffff;
+    cursor: pointer;
+  }
+
+  &__header {
+    text-align: center;
+    min-width: 280px;
+    height: 92px;
+    background-color: #1976d2;
+  }
+
+  &__user-name {
+    color: #ffffff;
+    padding: 15px 0 10px 10px;
+  }
+
+  .unassign-btn {
+    padding-top: 33px;
+    transition: color .2s;
+    cursor: pointer;
+    &:hover {
+      color: #303f9f;
+    }
+  }
+}

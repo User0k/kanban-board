@@ -1,7 +1,9 @@
 import { IUpdateTask } from '../../models';
+import { useAppSelector } from '../../hooks/useAppSelector';
 import { useDeleteTaskMutation } from '../../services/taskService';
 import { useErrorHandler } from '../../hooks/useErrorHandler';
 import GlobalSpinner from '../Spinners/GlobalSpinner';
+import UserButton from './UserButton';
 import DeleteConfirmModal from '../modals/DeleteConfirmModal';
 import EditTaskModal from '../modals/EditTaskModal';
 import DraggableElement from '../../dndWrappers/DraggableElement';
@@ -12,6 +14,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
 import Tooltip from '@mui/material/Tooltip';
+import AvatarGroup from '@mui/material/AvatarGroup';
 import './Task.scss';
 
 interface ITaskProps extends IUpdateTask {
@@ -27,6 +30,8 @@ function Task({ index, ...taskProps }: ITaskProps) {
     await deleTask({ boardId, columnId, id });
   };
 
+  const users = useAppSelector((state) => state.boardReducer.assignedUsers)[id];
+
   useErrorHandler(deleteTaskError, 'Unable to delete task');
 
   return (
@@ -41,18 +46,28 @@ function Task({ index, ...taskProps }: ITaskProps) {
               color="text.secondary">
               {title}
             </Typography>
-            <Stack className="task__bar" direction="row" alignItems="center">
-              <DeleteConfirmModal element="task" onDelete={onDelete}>
-                <DeleteForeverIcon className="task-delete" />
-              </DeleteConfirmModal>
-              <EditTaskModal {...taskProps}>
-                <Tooltip title="Edit task" id="edit-task-tooltip">
-                  <MoreVertIcon className="task-modify" />
-                </Tooltip>
-              </EditTaskModal>
-              {description && (
-                <FormatAlignLeftIcon className="task-description" />
-              )}
+            <Stack
+              direction="row"
+              justifyContent="space-between"
+              sx={{ minWidth: '250px' }}>
+              <Stack className="task__bar" direction="row" alignItems="center">
+                <DeleteConfirmModal element="task" onDelete={onDelete}>
+                  <DeleteForeverIcon className="task-delete" />
+                </DeleteConfirmModal>
+                <EditTaskModal {...taskProps}>
+                  <Tooltip title="Edit task" id="edit-task-tooltip">
+                    <MoreVertIcon className="task-modify" />
+                  </Tooltip>
+                </EditTaskModal>
+                {description && (
+                  <FormatAlignLeftIcon className="task-description" />
+                )}
+              </Stack>
+              <AvatarGroup max={3}>
+                {users?.map((user) => (
+                  <UserButton key={user.id} user={user} />
+                ))}
+              </AvatarGroup>
             </Stack>
           </Stack>
         </Card>
