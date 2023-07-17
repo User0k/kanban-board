@@ -60,9 +60,16 @@ export type LoginFields = Omit<IUserFields, 'name'>;
 export interface IUser extends IUserFields {
   id: string;
   refreshToken: string | null;
+  color: string;
 }
 
 export interface IAuthResponse {
   accessToken: string;
   user: IUser;
+}
+
+export type AssignedUser = Pick<IUser, 'id' | 'color' | 'name'>;
+
+export interface IUsersInTasks {
+  [taskId: string]: AssignedUser[];
 }

@@ -6,6 +6,7 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import { useDragEnd } from '../../hooks/useDragEnd';
 import { useUpdateColumnSet } from '../../hooks/useUpdateColumnSet';
 import { useUpdateTaskSet } from '../../hooks/useUpdateTaskSet';
+import { useUpdateAssignedUsers } from '../../hooks/useUpdateAssignedUsers';
 import { useGetBoardByIdQuery } from '../../services/boardService';
 import { IColumn } from '../../models';
 import CreateColumnModal from '../../components/modals/CreateColumnModal';
@@ -35,6 +36,7 @@ function BoardPage() {
   const boardName = columnsGetError ? 'Can`t get columns' : board?.name || '';
 
   useUpdateTaskSet(boardId);
+  useUpdateAssignedUsers(boardId);
   const storedColumns = useAppSelector((state) => state.boardReducer).columns;
   const storedTasks = useAppSelector((state) => state.boardReducer).tasks;
   const onDragEnd = useDragEnd(boardId);
