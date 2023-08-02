@@ -2,6 +2,7 @@ import { ReactElement, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useUpdateTaskMutation } from '../../../services/taskService';
 import { useErrorHandler } from '../../../hooks/useErrorHandler';
+import UsersStack from './UsersStack';
 import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -95,7 +96,7 @@ function CreateTaskModal({
               </Typography>
             )}
             <Controller
-              name='description'
+              name="description"
               control={control}
               render={({ field }) => (
                 <TextField
@@ -107,6 +108,7 @@ function CreateTaskModal({
                 />
               )}
             />
+            <UsersStack id={id} />
           </DialogContent>
           <DialogActions sx={{ justifyContent: 'space-between' }}>
             <Button onClick={() => setIsOpen(false)} color="primary" autoFocus>
