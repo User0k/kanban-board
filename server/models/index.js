@@ -64,4 +64,5 @@ module.exports = {
   Board,
   Column,
   Task,
+  UserToTask,
 };

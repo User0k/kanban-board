@@ -1,5 +1,5 @@
 const errorHandler = require('express-async-handler');
-const { Board, Task, User } = require('../models');
+const { Board, Task, User, UserToTask } = require('../models');
 
 const addBoard = errorHandler(async (req, res) => {
   const { name, description, image } = req.body;
@@ -56,32 +56,49 @@ const getTasksInBoard = errorHandler(async (req, res) => {
   throw new Error('Tasks not found');
 });
 
-const getAssignedUsersInBoard = errorHandler(async (req, res) => {
-  const BoardId = req.params.id;
-  const tasks = await Task.findAll({
-    where: { BoardId },
-    attributes: ['id'],
-    include: [
-      {
-        model: User,
-        attributes: ['id', 'name', 'color'],
-        through: { attributes: [] },
-      },
-    ],
-  });
+const getAssignedUsersThroughTasks = errorHandler(async (req, res) => {
+  const { taskIds } = req.body;
 
-  if (!tasks) {
-    res.status(404);
-    throw new Error('Tasks with this boardId not found');
+  if (!Array.isArray(taskIds)) {
+    res.status(400);
+    throw new Error('Must contain a valid array of task ids');
   }
 
-  const taskUsers = {};
-  for (let task of tasks) {
-    taskUsers[task.id] = { users: task.Users };
-  }
+  const uniqueUsers = {};
+  const usersThroughTasks = {};
+
+  await Promise.all(
+    taskIds.map(async (taskId) => {
+      const usersToTasks = await UserToTask.findAll({
+        where: { TaskId: taskId },
+        attributes: ['UserId'],
+      });
+
+      if (usersToTasks.length) {
+        const taskUsers = await Promise.all(
+          usersToTasks.map(async (model) => {
+            let user = uniqueUsers[model.UserId];
+
+            if (user) {
+              return user;
+            }
+
+            user = await User.findOne({
+              where: { id: model.UserId },
+              attributes: ['id', 'name', 'color'],
+            });
+            uniqueUsers[model.UserId] = user;
+            return user;
+          })
+        );
+
+        usersThroughTasks[taskId] = taskUsers;
+      }
+    })
+  );
 
   res.status(200);
-  return res.json(taskUsers);
+  return res.json(usersThroughTasks);
 });
 
 const updateBoard = errorHandler(async (req, res) => {
@@ -116,7 +133,7 @@ module.exports = {
   getAllBoards,
   getBoardById,
   getTasksInBoard,
-  getAssignedUsersInBoard,
+  getAssignedUsersThroughTasks,
   updateBoard,
   deleteBoardById,
 };
