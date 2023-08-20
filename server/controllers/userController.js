@@ -73,7 +73,7 @@ const getUsersByIds = errorHandler(async (req, res) => {
 });
 
 const getUsersInTasks = errorHandler(async (req, res) => {
-  const { taskIds } = req.body;
+  const taskIds = req.query.taskIds.split(',');
 
   if (!Array.isArray(taskIds)) {
     res.status(400);
