@@ -69,7 +69,7 @@ const getUsersByIds = errorHandler(async (req, res) => {
   });
 
   res.status(200);
-  return res.json({ users });
+  return res.json(users);
 });
 
 const getUsersInTasks = errorHandler(async (req, res) => {
@@ -85,30 +85,37 @@ const getUsersInTasks = errorHandler(async (req, res) => {
 
   await Promise.all(
     taskIds.map(async (taskId) => {
-      const usersToTasks = await UserToTask.findAll({
-        where: { TaskId: taskId },
-        attributes: ['UserId'],
-      });
+      try {
+        const usersToTasks = await UserToTask.findAll({
+          where: { TaskId: taskId },
+          attributes: ['UserId'],
+        });
 
-      if (usersToTasks.length) {
-        const taskUsers = await Promise.all(
-          usersToTasks.map(async (model) => {
-            let user = uniqueUsers[model.UserId];
+        if (usersToTasks.length) {
+          const taskUsers = await Promise.all(
+            usersToTasks.map(async (model) => {
+              let user = uniqueUsers[model.UserId];
 
-            if (user) {
+              if (user) {
+                return user;
+              }
+
+              user = await User.findOne({
+                where: { id: model.UserId },
+                attributes: ['id', 'name', 'color'],
+              });
+              uniqueUsers[model.UserId] = user;
               return user;
-            }
+            })
+          );
 
-            user = await User.findOne({
-              where: { id: model.UserId },
-              attributes: ['id', 'name', 'color'],
-            });
-            uniqueUsers[model.UserId] = user;
-            return user;
-          })
+          usersInTasks[taskId] = taskUsers || [];
+        }
+      } catch (error) {
+        console.error(
+          `Error retrieving usersToTasks for taskId: ${taskId}`,
+          error
         );
-
-        usersInTasks[taskId] = taskUsers;
       }
     })
   );

@@ -1,5 +1,5 @@
 import { api } from './api';
-import { IUser, IUsersInTasks } from '../models';
+import { IServerMessage, IUser, IUsersInTasks } from '../models';
 
 export const userService = api.injectEndpoints({
   endpoints: (build) => ({
@@ -13,19 +13,26 @@ export const userService = api.injectEndpoints({
         url: `users/${id}`,
       }),
     }),
-    getAssignedUsers: build.query<IUsersInTasks, string>({
-      query: (boardId) => ({
-        url: `boards/${boardId}/users`,
+    getUsersInTasks: build.query<IUsersInTasks, string[]>({
+      query: (ids) => ({
+        url: `users-in-tasks?taskIds=${ids}`,
       }),
     }),
-    updateUserName: build.mutation<IUser, Pick<IUser, 'id' | 'name'>>({
-      query: (id, ...body) => ({
-        url: `users/${id}`,
-        method: 'PATCH',
+    getUsersByIds: build.mutation<IUser[], { ids: string[] }>({
+      query: (body) => ({
+        url: `users/choose-users`,
+        method: 'POST',
         body,
       }),
     }),
-    deleteUser: build.mutation<IUser, string>({
+    updateUserName: build.mutation<IServerMessage, Pick<IUser, 'id' | 'name'>>({
+      query: ({ id, name }) => ({
+        url: `users/${id}`,
+        method: 'PATCH',
+        body: name,
+      }),
+    }),
+    deleteUser: build.mutation<IServerMessage, string>({
       query: (id) => ({
         url: `users/${id}`,
         method: 'DELETE',
@@ -37,7 +44,8 @@ export const userService = api.injectEndpoints({
 export const {
   useGetUserQuery,
   useGetAllUsersQuery,
-  useGetAssignedUsersQuery,
+  useGetUsersInTasksQuery,
+  useGetUsersByIdsMutation,
   useUpdateUserNameMutation,
   useDeleteUserMutation,
 } = userService;

@@ -1,5 +1,5 @@
 import { api } from './api';
-import { IBoard, NewBoard } from '../models';
+import { IBoard, IServerMessage, NewBoard } from '../models';
 
 export const boardApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -22,18 +22,15 @@ export const boardApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Board'],
     }),
-    updateBoard: build.mutation<IBoard, IBoard>({
-      query(data) {
-        const { id, ...body } = data;
-        return {
-          url: `boards/${id}`,
-          method: 'PUT',
-          body,
-        };
-      },
+    updateBoard: build.mutation<IServerMessage, IBoard>({
+      query: ({ id, ...body }) => ({
+        url: `boards/${id}`,
+        method: 'PUT',
+        body,
+      }),
       invalidatesTags: ['Board'],
     }),
-    deleteBoard: build.mutation<IBoard, string>({
+    deleteBoard: build.mutation<IServerMessage, string>({
       query: (id) => ({
         url: `boards/${id}`,
         method: 'DELETE',

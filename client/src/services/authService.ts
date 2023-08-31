@@ -1,5 +1,5 @@
 import { api } from './api';
-import { IUserFields, IAuthResponse } from '../models';
+import { IUserFields, IAuthResponse, IServerMessage } from '../models';
 
 export const authService = api.injectEndpoints({
   endpoints: (build) => ({
@@ -17,7 +17,7 @@ export const authService = api.injectEndpoints({
         body,
       }),
     }),
-    logout: build.mutation<IAuthResponse, void>({
+    logout: build.mutation<IServerMessage, void>({
       query: () => ({
         url: 'logout',
         method: 'POST',

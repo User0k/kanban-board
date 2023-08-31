@@ -30,6 +30,7 @@ export interface IGetTask {
 export interface ITask {
   id: string;
   title: string;
+  ColumnId: string;
   description?: string;
   order?: number;
 }
@@ -72,4 +73,8 @@ export type AssignedUser = Pick<IUser, 'id' | 'color' | 'name'>;
 
 export interface IUsersInTasks {
   [taskId: string]: AssignedUser[];
+}
+
+export interface IServerMessage {
+  message: string;
 }

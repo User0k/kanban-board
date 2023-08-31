@@ -35,8 +35,8 @@ function BoardPage() {
   const [isColumnCreating, setIsColumnCreating] = useState(false);
   const boardName = columnsGetError ? 'Can`t get columns' : board?.name || '';
 
-  useUpdateTaskSet(boardId);
-  useUpdateAssignedUsers(boardId);
+  const tasksIds = useUpdateTaskSet(boardId);
+  useUpdateAssignedUsers(tasksIds);
   const storedColumns = useAppSelector((state) => state.boardReducer).columns;
   const storedTasks = useAppSelector((state) => state.boardReducer).tasks;
   const onDragEnd = useDragEnd(boardId);

@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
-import { useGetAssignedUsersQuery } from '../services/userService';
+import { useGetUsersInTasksQuery } from '../services/userService';
 import { updateAssignedSet } from '../store/slices/boardSlice';
 import { useAppDispatch } from './useAppDispatch';
 
-export const useUpdateAssignedUsers = (boardId: string) => {
+export const useUpdateAssignedUsers = (tasksIds: string[]) => {
   const dispatch = useAppDispatch();
-  const { data: users } = useGetAssignedUsersQuery(boardId);
+  const { data: users } = useGetUsersInTasksQuery(tasksIds);
 
   useEffect(() => {
     if (users) {

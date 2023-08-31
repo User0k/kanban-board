@@ -1,5 +1,5 @@
 import { api } from './api';
-import { IColumn, GetColumn, NewColumn, IReorderColumn } from '../models';
+import { IColumn, GetColumn, NewColumn, IReorderColumn, IServerMessage } from '../models';
 
 export const boardApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -15,10 +15,10 @@ export const boardApi = api.injectEndpoints({
       }),
     }),
     createColumn: build.mutation<IColumn, NewColumn>({
-      query: ({ boardId, ...body }) => ({
+      query: ({ boardId, title }) => ({
         url: `boards/${boardId}/columns/`,
         method: 'POST',
-        body,
+        body: title,
       }),
       invalidatesTags: ['Column'],
     }),
@@ -30,15 +30,15 @@ export const boardApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Column'],
     }),
-    reorderColumn: build.mutation<IColumn, IReorderColumn>({
-      query: ({ boardId, id, ...body }) => ({
+    reorderColumn: build.mutation<IServerMessage, IReorderColumn>({
+      query: ({ boardId, id, targetOrder }) => ({
         url: `boards/${boardId}/reorder/columns/${id}`,
         method: 'PUT',
-        body,
+        body: targetOrder,
       }),
       invalidatesTags: ['Column'],
     }),
-    deleteColumn: build.mutation<IColumn, GetColumn>({
+    deleteColumn: build.mutation<IServerMessage, GetColumn>({
       query: ({ boardId, id }) => ({
         url: `boards/${boardId}/columns/${id}`,
         method: 'DELETE',

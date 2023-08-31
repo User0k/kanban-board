@@ -4,13 +4,13 @@ import {
   ITask,
   IUpdateTask,
   NewTask,
-  IGroupedTasks,
   IReorderTask,
+  IServerMessage,
 } from '../models';
 
 export const boardApi = api.injectEndpoints({
   endpoints: (build) => ({
-    getTasksInBoard: build.query<IGroupedTasks, string>({
+    getTasksInBoard: build.query<ITask[], string>({
       query: (boardId) => ({
         url: `boards/${boardId}/tasks`,
       }),
@@ -35,7 +35,7 @@ export const boardApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Task'],
     }),
-    updateTask: build.mutation<ITask, IUpdateTask>({
+    updateTask: build.mutation<IServerMessage, IUpdateTask>({
       query: ({ boardId, columnId, id, ...body }) => ({
         url: `boards/${boardId}/columns/${columnId}/tasks/${id}`,
         method: 'PUT',
@@ -43,7 +43,7 @@ export const boardApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Task'],
     }),
-    reorderTasks: build.mutation<ITask, IReorderTask>({
+    reorderTasks: build.mutation<IServerMessage, IReorderTask>({
       query: ({ boardId, columnId, id, ...body }) => ({
         url: `boards/${boardId}/reorder/columns/${columnId}/tasks/${id}`,
         method: 'PUT',
@@ -51,7 +51,7 @@ export const boardApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Task'],
     }),
-    deleteTask: build.mutation<ITask, IGetTask>({
+    deleteTask: build.mutation<IServerMessage, IGetTask>({
       query: ({ boardId, columnId, id }) => ({
         url: `boards/${boardId}/columns/${columnId}/tasks/${id}`,
         method: 'DELETE',

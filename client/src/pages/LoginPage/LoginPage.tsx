@@ -53,6 +53,7 @@ function LoginPage() {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack>
           <TextField
+            autoFocus
             margin="dense"
             label="Email*"
             type="email"
