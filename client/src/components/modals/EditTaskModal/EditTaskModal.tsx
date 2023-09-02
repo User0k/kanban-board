@@ -27,7 +27,7 @@ interface IModalProps {
   children: ReactElement;
 }
 
-function CreateTaskModal({
+function EditTaskModal({
   boardId,
   columnId,
   id,
@@ -69,9 +69,9 @@ function CreateTaskModal({
         className="modal-task"
         open={isOpen}
         onClose={() => setIsOpen(false)}>
-        <DialogTitle id="create-task">Add a task</DialogTitle>
-        <form onSubmit={handleSubmit(onSubmit)} className="modal-task__content">
-          <DialogContent>
+        <DialogTitle id="edit-task">Edit task</DialogTitle>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <DialogContent className="modal-task__content">
             <Controller
               name="title"
               control={control}
@@ -124,4 +124,4 @@ function CreateTaskModal({
   );
 }
 
-export default CreateTaskModal;
+export default EditTaskModal;

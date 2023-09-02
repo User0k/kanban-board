@@ -1,0 +1,65 @@
+@import '../../../../vars-mixins.scss';
+
+.modal-assign {
+  &.MuiDialog-root {
+    left: calc(35vw - 400px);
+  }
+
+  .btn-close {
+    @include btn-close;
+  }
+
+  &__header {
+    min-width: 280px;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #000000;
+  }
+
+  &__content.MuiDialogContent-root {
+    padding: 0 12px 12px 12px;
+  }
+
+  &__stack {
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 3px;
+    padding: 8px;
+    cursor: pointer;
+    &:hover {
+      background-color: #e6e6e6;
+    }
+
+    .user-full-name {
+      align-self: center;
+      width: 200px;
+      padding-right: 6px;
+      font-size: 15px;
+    }
+  }
+
+  .avatar-medium {
+    @include avatar-medium;
+  }
+
+  .assigned-icon {
+    fill: #1b5e20;
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .modal-assign {
+    &.MuiDialog-root {
+      left: calc(35vw - 145px);
+    }
+
+    .user-full-name {
+      width: 165px;
+    }
+
+    &__header {
+      min-width: auto;
+    }
+  }
+}

@@ -3,7 +3,8 @@
 }
 
 .modal-task__content,
-#create-task {
+#create-task,
+#edit-task {
   width: 320px;
 }
 
@@ -11,14 +12,20 @@
   line-height: 2.66;
 }
 
-#create-task {
+.modal-task__content.MuiDialogContent-root {
+  padding-bottom: 10px;
+}
+
+#create-task,
+#edit-task {
   padding-top: 10px;
   padding-bottom: 0;
 }
 
 @media (max-width: 700px) {
   .modal-task__content,
-  #create-task {
+  #create-task,
+  #edit-task {
     width: 300px;
   }
 }
