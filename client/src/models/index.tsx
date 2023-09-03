@@ -72,7 +72,7 @@ export interface IAuthResponse {
 export type AssignedUser = Pick<IUser, 'id' | 'color' | 'name'>;
 
 export interface IUsersInTasks {
-  [taskId: string]: AssignedUser[];
+  [taskId: string]: AssignedUser[] | undefined;
 }
 
 export interface IServerMessage {
