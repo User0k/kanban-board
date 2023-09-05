@@ -1,6 +1,8 @@
 import { ReactElement, useState } from 'react';
 import { useGetAllUsersQuery } from '../../../../services/userService';
 import { nameAbbreviation } from '../../../../utils/nameAbbreviation';
+import { useHandleAssign } from '../../../../hooks/useHandleAssign';
+import { AssignedUser } from '../../../../models';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -13,21 +15,25 @@ import Box from '@mui/material/Box';
 import './ChooseUserModal.scss';
 
 interface IModalProps {
-  usersIds: string[];
+  taskId: string;
+  users: AssignedUser[];
   children: ReactElement;
 }
 
-function ChooseUserModal({ usersIds, children }: IModalProps) {
+function ChooseUserModal({ taskId, users, children }: IModalProps) {
   const [assignOpen, setAssignOpen] = useState(false);
   const { data: allUsers } = useGetAllUsersQuery();
   const onOpenAssign = () => setAssignOpen(true);
   const onCloseAssign = () => setAssignOpen(false);
-  const handleAssign = (userId: string) => usersIds.includes(userId);
+  const handleAssign = useHandleAssign(taskId, users);
 
   return (
     <>
       <Box onClick={onOpenAssign}>{children}</Box>
-      <Dialog className="modal-assign" open={assignOpen} onClose={onCloseAssign}>
+      <Dialog
+        className="modal-assign"
+        open={assignOpen}
+        onClose={onCloseAssign}>
         <CloseIcon className="btn-close" onClick={onCloseAssign} />
         <DialogTitle className="modal-assign__header">Participants</DialogTitle>
         <DialogContent className="modal-assign__content">
@@ -38,7 +44,7 @@ function ChooseUserModal({ usersIds, children }: IModalProps) {
                   key={user.id}
                   className="modal-assign__stack"
                   direction="row"
-                  onClick={() => handleAssign(user.id)}>
+                  onClick={() => handleAssign(user)}>
                   <Stack direction="row" gap={1}>
                     <Avatar
                       className="avatar-medium"
@@ -51,9 +57,9 @@ function ChooseUserModal({ usersIds, children }: IModalProps) {
                       {user.name}
                     </Typography>
                   </Stack>
-                  {usersIds.includes(user.id) && (
-                    <DoneIcon className="assigned-icon" />
-                  )}
+                  {users.some(
+                    (assignedUser) => assignedUser.id === user.id
+                  ) && <DoneIcon className="assigned-icon" />}
                 </Stack>
               ))}
           </Stack>

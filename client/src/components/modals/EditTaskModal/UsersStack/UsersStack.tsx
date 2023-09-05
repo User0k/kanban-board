@@ -17,7 +17,7 @@ function UsersStack({ id }: { id: string }) {
         usersInTask.map((user) => <UserButton key={user.id} user={user} />)}
       <ChooseUserModal
         taskId={id}
-        usersIds={usersInTask?.map((user) => user.id) || []}>
+        users={usersInTask || []}>
         <Tooltip title="Assign user">
           <Avatar className="btn-assign">+</Avatar>
         </Tooltip>
