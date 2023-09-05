@@ -1,11 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { IColumn, IGroupedTasks, IUsersInTasks } from '../../models';
+import {
+  AssignedUser,
+  IColumn,
+  IGroupedTasks,
+  IUsersInTasks,
+} from '../../models';
 
 interface IState {
   columns: IColumn[];
   tasks: IGroupedTasks;
   assignedUsers: IUsersInTasks;
+}
+
+interface IUserPayload {
+  taskId: string;
+  user: AssignedUser;
 }
 
 const initialState: IState = {
@@ -27,9 +37,33 @@ export const boardSlice = createSlice({
     updateAssignedSet: (state, action: PayloadAction<IUsersInTasks>) => {
       state.assignedUsers = action.payload;
     },
+    addUserToTask: (state, action: PayloadAction<IUserPayload>) => {
+      const { taskId, user } = action.payload;
+      const users = state.assignedUsers[taskId];
+      users ? users.push(user) : (state.assignedUsers[taskId] = [user]);
+    },
+    removeUserFromTask: (state, action: PayloadAction<IUserPayload>) => {
+      const {
+        taskId,
+        user: { id },
+      } = action.payload;
+
+      const index = state.assignedUsers[taskId]?.findIndex(
+        (user) => user.id === id
+      );
+
+      if (index !== undefined && index >= 0) {
+        state.assignedUsers[taskId]?.splice(index, 1);
+      }
+    },
   },
 });
 
-export const { updateColumnSet, updateTaskSet, updateAssignedSet } =
-  boardSlice.actions;
+export const {
+  updateColumnSet,
+  updateTaskSet,
+  updateAssignedSet,
+  addUserToTask,
+  removeUserFromTask,
+} = boardSlice.actions;
 export default boardSlice.reducer;

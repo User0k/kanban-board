@@ -8,5 +8,5 @@ export const api = createApi({
     credentials: 'include',
   }),
   endpoints: () => ({}),
-  tagTypes: ['Board', 'Column', 'Task'],
+  tagTypes: ['Board', 'Column', 'Task', 'User'],
 });

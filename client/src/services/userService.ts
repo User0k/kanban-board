@@ -1,22 +1,25 @@
 import { api } from './api';
-import { IServerMessage, IUser, IUsersInTasks } from '../models';
+import { AssignedUser, IServerMessage, IUser, IUsersInTasks } from '../models';
 
 export const userService = api.injectEndpoints({
   endpoints: (build) => ({
-    getAllUsers: build.query<IUser[], void>({
+    getAllUsers: build.query<AssignedUser[], void>({
       query: () => ({
         url: 'users/',
       }),
+      providesTags: ['User'],
     }),
     getUser: build.query<IUser, string>({
       query: (id) => ({
         url: `users/${id}`,
       }),
+      providesTags: ['User'],
     }),
     getUsersInTasks: build.query<IUsersInTasks, string[]>({
       query: (ids) => ({
         url: `users-in-tasks?taskIds=${ids}`,
       }),
+      providesTags: ['User'],
     }),
     getUsersByIds: build.mutation<IUser[], { ids: string[] }>({
       query: (body) => ({
@@ -37,6 +40,26 @@ export const userService = api.injectEndpoints({
         url: `users/${id}`,
         method: 'DELETE',
       }),
+      invalidatesTags: ['User'],
+    }),
+    assignUser: build.mutation<IServerMessage, { id: string; taskId: string }>({
+      query: ({ id, ...body }) => ({
+        url: `users/${id}/assign`,
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['User'],
+    }),
+    unassignUser: build.mutation<
+      IServerMessage,
+      { id: string; taskId: string }
+    >({
+      query: ({ id, ...body }) => ({
+        url: `users/${id}/assign`,
+        method: 'DELETE',
+        body,
+      }),
+      invalidatesTags: ['User'],
     }),
   }),
 });
@@ -48,4 +71,6 @@ export const {
   useGetUsersByIdsMutation,
   useUpdateUserNameMutation,
   useDeleteUserMutation,
+  useAssignUserMutation,
+  useUnassignUserMutation,
 } = userService;
