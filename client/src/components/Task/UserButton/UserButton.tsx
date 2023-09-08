@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import { AssignedUser } from '../../../models';
+import { useUnassignUserMutation } from '../../../services/userService';
 import { nameAbbreviation } from '../../../utils/nameAbbreviation';
+import { AssignedUser } from '../../../models';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -11,11 +12,22 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import './UserButton.scss';
 
-function UserButton({ user }: { user: AssignedUser }) {
+interface IUserButtonProps {
+  taskId: string;
+  user: AssignedUser;
+}
+
+function UserButton({ taskId, user }: IUserButtonProps) {
   const [open, setOpen] = useState(false);
+  const [unassignUser] = useUnassignUserMutation();
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const abbrName = nameAbbreviation(user.name);
+
+  const handleUnassign = async () => {
+    await unassignUser({ id: user.id, taskId });
+    setOpen(false);
+  }
 
   return (
     <>
@@ -42,7 +54,7 @@ function UserButton({ user }: { user: AssignedUser }) {
           </Stack>
         </DialogTitle>
         <DialogContent>
-          <Typography className="unassign-btn" variant="body2">
+          <Typography className="unassign-btn" variant="body2" onClick={handleUnassign}>
             Unasssign from a task
           </Typography>
         </DialogContent>

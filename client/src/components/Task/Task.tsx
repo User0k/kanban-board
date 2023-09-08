@@ -65,7 +65,7 @@ function Task({ index, ...taskProps }: ITaskProps) {
               </Stack>
               <AvatarGroup max={3}>
                 {users?.map((user) => (
-                  <UserButton key={user.id} user={user} />
+                  <UserButton key={user.id} taskId={id} user={user} />
                 ))}
               </AvatarGroup>
             </Stack>
