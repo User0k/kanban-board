@@ -1,10 +1,11 @@
 const errorHandler = require('express-async-handler');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const { User } = require('../models');
 const tokenGenerator = require('../helpers/tokenGenerator');
-const validationHandler = require('../helpers/validationHandler');
+const { validationHandler } = require('../helpers/validationTools');
 const colorizer = require('../helpers/nameToColor');
+const userAttrFilterer = require('../helpers/userAttrFilterer');
+const { User } = require('../models');
 
 const register = errorHandler(async (req, res) => {
   const { email, password, name } = req.body;
@@ -30,16 +31,21 @@ const register = errorHandler(async (req, res) => {
     httpOnly: true,
   });
 
-  const user = await User.create({
-    email,
-    password: hashedPassword,
-    name,
-    color,
-    refreshToken,
-  });
+  try {
+    const user = await User.create({
+      email,
+      password: hashedPassword,
+      name,
+      color,
+      refreshToken,
+    });
 
-  res.status(201);
-  return res.json({ accessToken, user });
+    res.status(201);
+    return res.json({ accessToken, user: userAttrFilterer(user.get()) });
+  } catch (error) {
+    res.status(409);
+    throw new Error(error?.erros?.message);
+  }
 });
 
 const login = errorHandler(async (req, res) => {
@@ -70,7 +76,7 @@ const login = errorHandler(async (req, res) => {
   });
 
   res.status(200);
-  return res.json({ accessToken, user });
+  return res.json({ accessToken, user: userAttrFilterer(user.get()) });
 });
 
 const logout = errorHandler(async (req, res) => {
@@ -106,7 +112,10 @@ const refresh = errorHandler(async (req, res) => {
 
   await user.update({ refreshToken: tokens.refreshToken });
   res.status(201);
-  return res.json({ accessToken: tokens.accessToken, user });
+  return res.json({
+    accessToken: tokens.accessToken,
+    user: userAttrFilterer(user.get()),
+  });
 });
 
 module.exports = {

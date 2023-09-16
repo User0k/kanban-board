@@ -1,6 +1,10 @@
 const express = require('express');
 const authRouter = express.Router();
-const { body } = require('express-validator');
+const {
+  validateEmail,
+  validatePassword,
+  validateName,
+} = require('../helpers/validationTools');
 const {
   register,
   login,
@@ -10,9 +14,9 @@ const {
 
 authRouter.post(
   '/register',
-  body('email').isEmail(),
-  body('password').isLength({ min: 6, max: 32 }),
-  body('name').isLength({ min: 1, max: 32 }),
+  validateEmail,
+  validatePassword,
+  validateName,
   register
 );
 authRouter.post('/login', login);

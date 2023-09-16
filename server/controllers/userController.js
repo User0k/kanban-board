@@ -1,6 +1,8 @@
 const { Op } = require('sequelize');
 const errorHandler = require('express-async-handler');
+const { validationHandler } = require('../helpers/validationTools');
 const colorizer = require('../helpers/nameToColor');
+const userResponseFields = require('../constants');
 const { User, Task, UserToTask } = require('../models');
 
 const deleteUser = errorHandler(async (req, res) => {
@@ -17,24 +19,28 @@ const deleteUser = errorHandler(async (req, res) => {
   throw new Error('User not found');
 });
 
-const updateUserName = errorHandler(async (req, res) => {
+const updateUser = errorHandler(async (req, res) => {
   const { id } = req.params;
-  const { name } = req.body;
+  const { email, name } = req.body;
+  const validationErrorMsg = validationHandler(req);
 
-  if (!name) {
-    res.status(401);
-    throw new Error('User must contian a name');
+  if (validationErrorMsg) {
+    res.status(400);
+    throw new Error(validationErrorMsg);
   }
 
   const color = colorizer(name);
 
-  await User.update({ name, color }, { where: { id } });
+  await User.update({ email, name, color }, { where: { id } });
   res.status(200);
   return res.json({ message: 'User has been updated' });
 });
 
 const getAllUsers = errorHandler(async (req, res) => {
-  const users = await User.findAll({ order: [['name', 'ASC']] });
+  const users = await User.findAll({
+    order: [['name', 'ASC']],
+    attributes: userResponseFields,
+  });
 
   if (!users) {
     res.status(404);
@@ -47,7 +53,10 @@ const getAllUsers = errorHandler(async (req, res) => {
 
 const getUser = errorHandler(async (req, res) => {
   const { id } = req.params;
-  const user = await User.findOne({ where: { id } });
+  const user = await User.findOne({
+    where: { id },
+    attributes: userResponseFields,
+  });
 
   if (!user) {
     res.status(404);
@@ -65,6 +74,7 @@ const getUsersByIds = errorHandler(async (req, res) => {
       id: {
         [Op.in]: ids,
       },
+      attributes: userResponseFields,
     },
   });
 
@@ -170,7 +180,7 @@ const unassignUser = errorHandler(async (req, res) => {
 
 module.exports = {
   deleteUser,
-  updateUserName,
+  updateUser,
   getAllUsers,
   getUsersInTasks,
   getUsersByIds,
