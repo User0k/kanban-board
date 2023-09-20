@@ -10,6 +10,7 @@ const {
   login,
   logout,
   refresh,
+  checkAuth,
 } = require('../controllers/authController');
 
 authRouter.post(
@@ -22,5 +23,6 @@ authRouter.post(
 authRouter.post('/login', login);
 authRouter.post('/logout', logout);
 authRouter.get('/refresh', refresh);
+authRouter.get('/checkAuth', checkAuth);
 
 module.exports = authRouter;

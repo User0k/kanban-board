@@ -2,6 +2,7 @@ const errorHandler = require('express-async-handler');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const tokenGenerator = require('../helpers/tokenGenerator');
+const cookieSetter = require('../helpers/cookieSetter');
 const { validationHandler } = require('../helpers/validationTools');
 const colorizer = require('../helpers/nameToColor');
 const userAttrFilterer = require('../helpers/userAttrFilterer');
@@ -26,10 +27,7 @@ const register = errorHandler(async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, 5);
   const { accessToken, refreshToken } = tokenGenerator({ email });
   const color = colorizer(name);
-  res.cookie('refreshToken', refreshToken, {
-    maxAge: 30 * 24 * 60 * 60 * 1000,
-    httpOnly: true,
-  });
+  cookieSetter(res, 'refreshToken', refreshToken);
 
   try {
     const user = await User.create({
@@ -69,11 +67,7 @@ const login = errorHandler(async (req, res) => {
 
   const { accessToken, refreshToken } = tokenGenerator({ email });
   await user.update({ refreshToken });
-
-  res.cookie('refreshToken', refreshToken, {
-    maxAge: 30 * 24 * 60 * 60 * 1000,
-    httpOnly: true,
-  });
+  cookieSetter(res, 'refreshToken', refreshToken);
 
   res.status(200);
   return res.json({ accessToken, user: userAttrFilterer(user.get()) });
@@ -96,26 +90,44 @@ const refresh = errorHandler(async (req, res) => {
     throw new Error('No refresh token found');
   }
 
-  const isCorrectToken = jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY);
-  const user = await User.findOne({ where: { refreshToken } });
+  try {
+    jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY);
+    const user = await User.findOne({ where: { refreshToken } });
 
-  if (!isCorrectToken || !user) {
+    if (!user) {
+      res.status(401);
+      throw new Error('No user found');
+    }
+
+    const { accessToken } = tokenGenerator({ email: user.dataValues.email });
+    await user.update({ refreshToken: tokens.refreshToken });
+
+    res.status(201);
+    return res.json({
+      accessToken,
+      user: userAttrFilterer(user.get()),
+    });
+  } catch (error) {
     res.status(401);
-    throw new Error('No user or token');
+    throw new Error('Invalid or expired refresh token');
+  }
+});
+
+const checkAuth = errorHandler(async (req, res) => {
+  const header = req.headers?.authorization.split(' ');
+
+  if (header[0] !== 'Bearer' || !header[1]) {
+    res.status(401);
+    throw new Error('No access token found');
   }
 
-  const tokens = tokenGenerator({ email: user.dataValues.email });
-  res.cookie('refreshToken', tokens.refreshToken, {
-    maxAge: 30 * 24 * 60 * 60 * 1000,
-    httpOnly: true,
-  });
-
-  await user.update({ refreshToken: tokens.refreshToken });
-  res.status(201);
-  return res.json({
-    accessToken: tokens.accessToken,
-    user: userAttrFilterer(user.get()),
-  });
+  try {
+    jwt.verify(header[1], process.env.JWT_ACCESS_KEY);
+    return res.json('Access token is correct');
+  } catch (error) {
+    res.status(401);
+    throw new Error('Invalid or expired access token');
+  }
 });
 
 module.exports = {
@@ -123,4 +135,5 @@ module.exports = {
   login,
   logout,
   refresh,
+  checkAuth,
 };
