@@ -1,21 +1,24 @@
 import { useEffect } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { useAppDispatch } from './hooks/useAppDispatch';
-import { setIsLoggedIn, setUser } from './store/slices/authSlice';
-import { useRefreshQuery } from './services/authService';
+import { useCheckAuthQuery } from './services/authService';
 import GlobalSpinner from './components/Spinners/GlobalSpinner';
 
 function PrivateRoute({ children }: { children: JSX.Element }) {
-  const { data: authResponse, isLoading: isChecking } = useRefreshQuery();
-  const dispatch = useAppDispatch();
+  const accessToken = localStorage.getItem('accessToken') ?? '';
+  const {
+    data: authResponse,
+    isLoading: isChecking,
+    refetch: checkAuth,
+  } = useCheckAuthQuery(accessToken);
   const location = useLocation();
 
   useEffect(() => {
-    if (localStorage.getItem('accessToken') && authResponse) {
-      dispatch(setIsLoggedIn(true));
-      dispatch(setUser(authResponse.user));
-    }
-  }, [authResponse, dispatch]);
+    const fetchData = async () => {
+      await checkAuth();
+    };
+
+    fetchData();
+  }, [location.pathname, checkAuth]);
 
   if (isChecking) {
     return <GlobalSpinner />;

@@ -28,6 +28,11 @@ export const authService = api.injectEndpoints({
         url: 'refresh',
       }),
     }),
+    checkAuth: build.query<string, string>({
+      query: () => ({
+        url: '/checkAuth',
+      }),
+    }),
   }),
 });
 
@@ -36,4 +41,5 @@ export const {
   useLogoutMutation,
   useRegisterMutation,
   useRefreshQuery,
+  useCheckAuthQuery,
 } = authService;
