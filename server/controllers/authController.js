@@ -90,27 +90,21 @@ const refresh = errorHandler(async (req, res) => {
     throw new Error('No refresh token found');
   }
 
-  try {
-    jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY);
-    const user = await User.findOne({ where: { refreshToken } });
+  const isCorrectToken = jwt.verify(refreshToken, process.env.JWT_REFRESH_KEY);
+  const user = await User.findOne({ where: { refreshToken } });
 
-    if (!user) {
-      res.status(401);
-      throw new Error('No user found');
-    }
-
-    const { accessToken } = tokenGenerator({ email: user.dataValues.email });
-    await user.update({ refreshToken: tokens.refreshToken });
-
-    res.status(201);
-    return res.json({
-      accessToken,
-      user: userAttrFilterer(user.get()),
-    });
-  } catch (error) {
+  if (!isCorrectToken || !user) {
     res.status(401);
-    throw new Error('Invalid or expired refresh token');
+    throw new Error('No user or token');
   }
+
+  const { accessToken } = tokenGenerator({ email: user.dataValues.email });
+
+  res.status(201);
+  return res.json({
+    accessToken,
+    user: userAttrFilterer(user.get()),
+  });
 });
 
 const checkAuth = errorHandler(async (req, res) => {
@@ -121,13 +115,15 @@ const checkAuth = errorHandler(async (req, res) => {
     throw new Error('No access token found');
   }
 
-  try {
-    jwt.verify(header[1], process.env.JWT_ACCESS_KEY);
-    return res.json('Access token is correct');
-  } catch (error) {
+  const isCorrectToken = jwt.verify(header[1], process.env.JWT_ACCESS_KEY);
+
+  if (!isCorrectToken) {
     res.status(401);
     throw new Error('Invalid or expired access token');
   }
+
+  res.status(201);
+  return res.json('Access token is correct');
 });
 
 module.exports = {
