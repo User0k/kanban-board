@@ -6,8 +6,10 @@ import {
   IGroupedTasks,
   IUsersInTasks,
 } from '../../models';
+import { IMAGE_FULL_HD } from '../../constants';
 
 interface IState {
+  bgImage: string;
   columns: IColumn[];
   tasks: IGroupedTasks;
   assignedUsers: IUsersInTasks;
@@ -19,6 +21,7 @@ interface IUserPayload {
 }
 
 const initialState: IState = {
+  bgImage: '',
   columns: [],
   tasks: {},
   assignedUsers: {},
@@ -28,6 +31,12 @@ export const boardSlice = createSlice({
   name: 'board',
   initialState,
   reducers: {
+    setBoardImage: (state, action: PayloadAction<string>) => {
+      const { payload } = action;
+      payload && payload[0] === 'u'
+        ? (state.bgImage = payload.split('?')[0] + IMAGE_FULL_HD + ')')
+        : (state.bgImage = payload);
+    },
     updateColumnSet: (state, action: PayloadAction<IColumn[]>) => {
       state.columns = action.payload;
     },
@@ -60,6 +69,7 @@ export const boardSlice = createSlice({
 });
 
 export const {
+  setBoardImage,
   updateColumnSet,
   updateTaskSet,
   updateAssignedSet,

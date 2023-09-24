@@ -1,5 +1,4 @@
-import { IMAGE_FULL_HD } from '../../constants';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import { useAppSelector } from '../../hooks/useAppSelector';
@@ -24,21 +23,19 @@ function BoardPage() {
   const navigate = useNavigate();
   const boardId = useParams().boardId || '';
   const { data: board, isError: boardNotFound } = useGetBoardByIdQuery(boardId);
-  const image = board?.image;
-  let bgImage = image;
+  const { bgImage } = useAppSelector((state) => state.boardReducer);
+  const [image, setImage] = useState(bgImage);
+  useEffect(() => setImage(image), [image]);
 
-  if (image && image[0] === 'u') {
-    bgImage = image.split('?')[0] + IMAGE_FULL_HD + ')';
-  }
-
-  const { isColumnsLoading, columnsGetError } = useUpdateColumnSet(boardId);
   const [isColumnCreating, setIsColumnCreating] = useState(false);
+  const { isColumnsLoading, columnsGetError } = useUpdateColumnSet(boardId);
   const boardName = columnsGetError ? 'Can`t get columns' : board?.name || '';
+  const storedColumns = useAppSelector((state) => state.boardReducer).columns;
 
   const tasksIds = useUpdateTaskSet(boardId);
   useUpdateAssignedUsers(tasksIds);
-  const storedColumns = useAppSelector((state) => state.boardReducer).columns;
   const storedTasks = useAppSelector((state) => state.boardReducer).tasks;
+
   const onDragEnd = useDragEnd(boardId);
 
   return (
@@ -46,7 +43,7 @@ function BoardPage() {
       {boardNotFound ? (
         <Box className="board-not-found">This board cannot be found</Box>
       ) : (
-        <Box className="board-page" sx={{ backgroundImage: `${bgImage}` }}>
+        <Box className="board-page" sx={{ backgroundImage: `${image}` }}>
           <Box className="board-page__subheader">
             <Stack
               direction="row"

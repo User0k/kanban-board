@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/useAppSelector';
+import { useFirstLoad } from '../../hooks/useFirstLoad';
 import LoggedInBtnGroup from './AuthButtonGroups/LoggedInBtnGroup';
 import LogOutedBtnGroup from './AuthButtonGroups/LogOutedBtnGroup';
 import AppBar from '@mui/material/AppBar';
@@ -16,6 +17,7 @@ import './Header.scss';
 
 export default function Header() {
   const { isLoggedIn } = useAppSelector((state) => state.authReducer);
+  useFirstLoad();
 
   return (
     <AppBar id="header" position="static">
