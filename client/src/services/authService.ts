@@ -30,7 +30,7 @@ export const authService = api.injectEndpoints({
     }),
     checkAuth: build.query<string, string>({
       query: () => ({
-        url: '/checkAuth',
+        url: 'checkAuth',
       }),
     }),
   }),

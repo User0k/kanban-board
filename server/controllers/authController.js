@@ -115,15 +115,14 @@ const checkAuth = errorHandler(async (req, res) => {
     throw new Error('No access token found');
   }
 
-  const isCorrectToken = jwt.verify(header[1], process.env.JWT_ACCESS_KEY);
-
-  if (!isCorrectToken) {
+  try {
+    jwt.verify(header[1], process.env.JWT_ACCESS_KEY);
+    res.status(201);
+    return res.json('Access token is correct');
+  } catch (error) {
     res.status(401);
-    throw new Error('Invalid or expired access token');
+    throw new Error('Expired access token');
   }
-
-  res.status(201);
-  return res.json('Access token is correct');
 });
 
 module.exports = {
