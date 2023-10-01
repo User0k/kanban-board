@@ -78,8 +78,10 @@ function EditBoardModal({
 
   return (
     <>
-      <Tooltip title='Update board'>
-        <Box className='btn-modal' onClick={handleOpen}>{children}</Box>
+      <Tooltip title="Update board">
+        <Box className="btn-modal" onClick={handleOpen}>
+          {children}
+        </Box>
       </Tooltip>
       <Dialog open={open} onClose={onCloseWithPropImage} className="edit-board">
         <DialogTitle className="edit-board__title">Edit the board</DialogTitle>

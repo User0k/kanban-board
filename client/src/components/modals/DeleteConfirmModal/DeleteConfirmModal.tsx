@@ -10,9 +10,15 @@ interface IModalProps {
   element: string;
   onDelete: () => Promise<void>;
   children: ReactElement;
+  provideTooltip?: boolean;
 }
 
-function DeleteConfirmModal({ element, onDelete, children }: IModalProps) {
+function DeleteConfirmModal({
+  element,
+  onDelete,
+  children,
+  provideTooltip = true,
+}: IModalProps) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -23,9 +29,17 @@ function DeleteConfirmModal({ element, onDelete, children }: IModalProps) {
 
   return (
     <>
-      <Tooltip title={`Delete ${element}`}>
-        <Box className='btn-modal' onClick={handleOpen}>{children}</Box>
-      </Tooltip>
+      {provideTooltip ? (
+        <Tooltip title={`Delete ${element}`}>
+          <Box className="btn-modal" onClick={handleOpen}>
+            {children}
+          </Box>
+        </Tooltip>
+      ) : (
+        <Box className="btn-modal" onClick={handleOpen}>
+          {children}
+        </Box>
+      )}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle sx={{ maxWidth: 337 }}>
           Are you sure you want to delete the {element}?

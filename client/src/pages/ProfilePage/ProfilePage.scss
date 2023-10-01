@@ -1,0 +1,61 @@
+.profile {
+  &__body {
+    margin-top: 15vh;
+  }
+
+  &__header {
+    padding: 30px 0 18px 0;
+    text-align: center;
+  }
+
+  &__credentials-wrapper {
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+  }
+
+  &__name,
+  &__email {
+    width: 220px;
+    gap: 6px;
+    margin-bottom: 8px;
+
+    .edit-credentials-icon:hover {
+      cursor: pointer;
+      fill: #4053d1;
+    }
+  }
+
+  &__btn-delete.MuiButtonBase-root {
+    margin-top: 40px;
+    width: 320px;
+  }
+}
+
+@media (max-width: 700px) {
+  #profile .avatar-large {
+    width: 80px;
+    height: 80px;
+    margin-left: 5px;
+    font-size: 2rem;
+  }
+
+  .profile.MuiStack-root {
+    &__body-wrapper {
+      gap: 10px;
+      font-size: 1.1rem;
+      margin-left: 10px;
+    }
+  }
+
+  .profile__name,
+  .profile__email {
+    width: 210px;
+  }
+}
+
+@media (max-height: 600px) {
+  .profile__body {
+    margin-top: 0;
+  }
+}
