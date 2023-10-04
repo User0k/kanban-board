@@ -1,0 +1,23 @@
+{
+  "name": "kanban-board",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"cd server && npm run dev\" \"cd client && npm run dev\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/User0k/kanban-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/User0k/kanban-backend/issues"
+  },
+  "homepage": "https://github.com/User0k/kanban-backend#readme",
+  "devDependencies": {
+    "concurrently": "^8.1.0"
+  }
+}
