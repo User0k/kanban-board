@@ -27,7 +27,7 @@ function UserButton({ taskId, user }: IUserButtonProps) {
   const handleUnassign = async () => {
     await unassignUser({ id: user.id, taskId });
     setOpen(false);
-  }
+  };
 
   return (
     <>
@@ -54,7 +54,10 @@ function UserButton({ taskId, user }: IUserButtonProps) {
           </Stack>
         </DialogTitle>
         <DialogContent>
-          <Typography className="unassign-btn" variant="body2" onClick={handleUnassign}>
+          <Typography
+            className="unassign-btn"
+            variant="body2"
+            onClick={handleUnassign}>
             Unasssign from a task
           </Typography>
         </DialogContent>

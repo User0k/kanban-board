@@ -13,7 +13,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import ChooseImageModal from '../ChooseImageModal';
-import { PRELOADED_IMAGES } from '../../../constants';
+import { PRELOADED_IMAGES, validateOptions } from '../../../constants';
 import './NewBoardModal.scss';
 
 type FormValues = Omit<NewBoard, 'image'>;
@@ -73,13 +73,13 @@ function NewBoardModal({ children }: IModalProps) {
               fullWidth
               size="small"
               sx={{ mb: 2 }}
-              {...register('name', { required: true })}
+              {...register('name', validateOptions.title)}
             />
             <TextField
               label="Board description*"
               fullWidth
               size="small"
-              {...register('description', { required: true })}
+              {...register('description', validateOptions.description)}
             />
           </DialogContent>
           <DialogActions>

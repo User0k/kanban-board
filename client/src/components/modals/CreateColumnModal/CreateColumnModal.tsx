@@ -17,6 +17,7 @@ import TextField from '@mui/material/TextField';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { validateOptions } from '../../../constants';
 import './CreateColumnModal.scss';
 
 type FormValues = NewColumn;
@@ -80,7 +81,7 @@ function CreateColumnModal({
               label="Column title*"
               type="text"
               fullWidth
-              {...register('title', { required: true })}
+              {...register('title', validateOptions.title)}
             />
             {errors.title && (
               <Typography variant="caption" color="error">

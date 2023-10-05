@@ -9,6 +9,7 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { validateOptions } from '../../constants';
 
 function LoginPage() {
   const [errorMsg, setErrormsg] = useState('Server failed to proceed');
@@ -58,7 +59,7 @@ function LoginPage() {
             label="Email*"
             type="email"
             autoComplete="email"
-            {...register('email', { required: true })}
+            {...register('email', validateOptions.email)}
           />
           {errors.email && (
             <Typography variant="caption" color="error">
@@ -70,11 +71,7 @@ function LoginPage() {
             label="Password*"
             type="password"
             autoComplete="current-password"
-            {...register('password', {
-              required: true,
-              minLength: 6,
-              maxLength: 32,
-            })}
+            {...register('password', validateOptions.password)}
           />
           {errors.password && (
             <Typography variant="caption" color="error">

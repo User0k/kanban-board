@@ -18,6 +18,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import TextField from '@mui/material/TextField';
 import Tooltip from '@mui/material/Tooltip';
+import { validateOptions } from '../../../constants';
 import './EditBoardModal.scss';
 
 type FormValues = Omit<NewBoard, 'image'>;
@@ -98,14 +99,14 @@ function EditBoardModal({
               fullWidth
               size="small"
               sx={{ mb: 2 }}
-              {...register('name', { required: true })}
+              {...register('name', validateOptions.name)}
             />
             <TextField
               label="Board description*"
               defaultValue={description}
               fullWidth
               size="small"
-              {...register('description', { required: true })}
+              {...register('description', validateOptions.description)}
             />
           </DialogContent>
           <DialogActions>

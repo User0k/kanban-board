@@ -9,6 +9,7 @@ import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { validateOptions } from '../../constants';
 import './RegisterPage.scss';
 
 function RegisterPage() {
@@ -59,7 +60,7 @@ function RegisterPage() {
             margin="dense"
             label="Name*"
             autoComplete="username"
-            {...register('name', { required: true, maxLength: 32 })}
+            {...register('name', validateOptions.name)}
           />
           {errors.name && (
             <Typography variant="caption" color="error">
@@ -71,7 +72,7 @@ function RegisterPage() {
             label="Email*"
             type="email"
             autoComplete="email"
-            {...register('email', { required: true })}
+            {...register('email', validateOptions.email)}
           />
           {errors.email && (
             <Typography variant="caption" color="error">
@@ -83,11 +84,7 @@ function RegisterPage() {
             label="Password*"
             type="password"
             autoComplete="current-password"
-            {...register('password', {
-              required: true,
-              minLength: 6,
-              maxLength: 32,
-            })}
+            {...register('password', validateOptions.password)}
           />
           {errors.password && (
             <Typography variant="caption" color="error">

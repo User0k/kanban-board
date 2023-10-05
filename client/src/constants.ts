@@ -23,3 +23,15 @@ export const PRELOADED_IMAGES = [
   'https://images.unsplash.com/photo-1458929526027-052f5d6a3c5e?crop=entropy&w=1920',
   'https://images.unsplash.com/photo-1448518340475-e3c680e9b4be?crop=entropy&w=1920',
 ];
+
+export const validateOptions = {
+  name: { required: true, maxLength: 32 },
+  email: { required: true },
+  password: {
+    required: true,
+    minLength: 6,
+    maxLength: 32,
+  },
+  title: { required: true },
+  description: { required: true },
+};
