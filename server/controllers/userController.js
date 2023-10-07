@@ -33,7 +33,7 @@ const updateUser = errorHandler(async (req, res) => {
 
   await User.update({ email, name, color }, { where: { id } });
   res.status(200);
-  return res.json({ message: 'User has been updated' });
+  return res.json({ id, email, name, color });
 });
 
 const getAllUsers = errorHandler(async (req, res) => {

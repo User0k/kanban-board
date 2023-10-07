@@ -9,6 +9,7 @@
   }
 
   &__credentials-wrapper {
+    margin-bottom: 40px;
     justify-content: center;
     align-items: center;
     gap: 18px;
@@ -16,19 +17,16 @@
 
   &__name,
   &__email {
-    width: 220px;
-    gap: 6px;
-    margin-bottom: 8px;
+    width: 210px;
+  }
 
-    .edit-credentials-icon:hover {
-      cursor: pointer;
-      fill: #4053d1;
-    }
+  &__btn-delete.MuiButtonBase-root,
+  &__btn-edit.MuiButtonBase-root {
+    width: 320px;
   }
 
   &__btn-delete.MuiButtonBase-root {
-    margin-top: 40px;
-    width: 320px;
+    padding: 3px;
   }
 }
 
@@ -40,17 +38,23 @@
     font-size: 2rem;
   }
 
-  .profile.MuiStack-root {
-    &__body-wrapper {
+  .profile {
+    .MuiStack-root &__body-wrapper {
       gap: 10px;
       font-size: 1.1rem;
       margin-left: 10px;
     }
-  }
 
-  .profile__name,
-  .profile__email {
-    width: 210px;
+    &__btn-delete.MuiButtonBase-root,
+    &__btn-edit.MuiButtonBase-root {
+      width: 310px;
+      font-size: 0.78rem;
+    }
+
+    &__name,
+    &__email {
+      width: 210px;
+    }
   }
 }
 

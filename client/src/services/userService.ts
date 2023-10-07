@@ -28,12 +28,13 @@ export const userService = api.injectEndpoints({
         body,
       }),
     }),
-    updateUserName: build.mutation<IServerMessage, Pick<IUser, 'id' | 'name'>>({
-      query: ({ id, name }) => ({
+    updateUser: build.mutation<IUser, Pick<IUser, 'id' | 'name' | 'email'>>({
+      query: ({ id, name, email }) => ({
         url: `users/${id}`,
         method: 'PATCH',
-        body: name,
+        body: { name, email },
       }),
+      invalidatesTags: ['User'],
     }),
     deleteUser: build.mutation<IServerMessage, string>({
       query: (id) => ({
@@ -69,7 +70,7 @@ export const {
   useGetAllUsersQuery,
   useGetUsersInTasksQuery,
   useGetUsersByIdsMutation,
-  useUpdateUserNameMutation,
+  useUpdateUserMutation,
   useDeleteUserMutation,
   useAssignUserMutation,
   useUnassignUserMutation,
