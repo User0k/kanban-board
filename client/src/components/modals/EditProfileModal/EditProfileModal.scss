@@ -1,0 +1,32 @@
+#edit-profile {
+  width: 320px;
+  padding-top: 10px;
+  padding-bottom: 0;
+}
+
+.edit-profile {
+  &__input-error {
+    margin-top: -10px;
+  }
+
+  .MuiPaper-root {
+    margin: 0;
+  }
+}
+
+.edit-profile__content.MuiDialogContent-root {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-bottom: 10px;
+
+  .edit-profile__input-error {
+    margin-top: -10px;
+  }
+}
+
+@media (max-width: 700px) {
+  #edit-profile {
+    width: 300px;
+  }
+}
