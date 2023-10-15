@@ -1,7 +1,11 @@
-import React from 'react';
+import StartScreen from './StartScreen';
 
 function WelcomePage() {
-  return <div>WelcomePage</div>;
+  return (
+    <>
+      <StartScreen />
+    </>
+  );
 }
 
 export default WelcomePage;
