@@ -1,0 +1,28 @@
+.feature-section__title.MuiTypography-root {
+  margin-bottom: 1.8rem;
+  text-align: center;
+
+  @media (max-width: 1024px) {
+    font-size: 1.7rem;
+  }
+}
+
+.feature-section__cards-wrapper.MuiStack-root {
+  align-items: center;
+  gap: 28px;
+
+  @media (min-width: 1025px) {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 32px;
+  }
+}
+
+.feature-card.MuiPaper-root {
+  max-width: 400px;
+}
+
+.feature-card-divder.MuiBox-root {
+  margin: 7px 0;
+  height: 1px;
+}

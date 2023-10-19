@@ -1,12 +1,12 @@
 .start-screen {
-  height: calc(100vh - 50px);
+  height: calc(95vh - 50px);
 
   @media (max-aspect-ratio: 8/5) {
-    height: 70vh;
+    height: 65vh;
   }
 
   @media (max-aspect-ratio: 1) {
-    height: 50vh;
+    height: 45vh;
   }
 
   @media (max-aspect-ratio: 2/3) {
