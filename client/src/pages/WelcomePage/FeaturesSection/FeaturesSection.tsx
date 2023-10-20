@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import FeatureCard from './FeatureCard';
-import './FeatureSection.scss';
+import './FeaturesSection.scss';
 
 const cards = [
   {

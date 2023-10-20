@@ -11,6 +11,7 @@
 .modal-profile {
   .MuiDialogContent-root {
     padding: 13px;
+    margin: 0;
   }
 
   .btn-close {
@@ -19,15 +20,15 @@
   }
 
   &__header {
-    text-align: center;
-    min-width: 280px;
+    width: 280px;
     height: 92px;
     background-color: #1976d2;
   }
 
   &__user-name {
     color: #ffffff;
-    padding: 15px 0 10px 10px;
+    padding: 15px 0 40px 10px;
+    align-self: center;
   }
 
   .unassign-btn {
