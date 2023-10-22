@@ -1,0 +1,173 @@
+#page-not-found {
+  height: 85vh;
+}
+
+#page-not-found,
+.illustration-wrapper {
+  gap: 2rem;
+}
+
+.body__square-row,
+.not-found__paper {
+  gap: .5rem;
+}
+
+.not-found {
+  &__number {
+    font-weight: 900;
+    font-size: 14rem;
+  }
+
+  &__illustration {
+    position: relative;
+    width: 12.2rem;
+    margin-bottom: 3.7rem;
+  }
+
+  &__circle {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 12.2rem;
+    height: 11.4rem;
+    border-radius: 50%;
+    background-color: #00695c;
+  }
+
+  &__clip {
+    position: absolute;
+    bottom: 0.3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    overflow: hidden;
+    width: 12.5rem;
+    height: 13rem;
+    border-radius: 0 0 50% 50%;
+  }
+
+  &__paper {
+    padding: 20px 13px;
+    position: absolute;
+    left: 50%;
+    width: 9.2rem;
+    height: 12.4rem;
+    border: 0.3rem solid #00695c;
+    background-color: white;
+    border-radius: 0.8rem;
+    transform: rotate(10deg) translate(-63px, 30px);
+
+    .body__square {
+      width: 2rem;
+      height: 1rem;
+    }
+
+    .square-1 {
+      background-color: #bbdefb;
+    }
+
+    .square-2 {
+      background-color: #fce4ec;
+    }
+
+    .square-3 {
+      background-color: #b2dfdb;
+    }
+  }
+
+  &-descr.MuiTypography-root {
+    margin-top: -2rem;
+    text-align: center;
+    color: #00695c;
+  }
+}
+
+@media (max-width: 768px) and (min-width: 480px) {
+  .not-found {
+    &__number {
+      font-size: 10rem;
+    }
+
+    &__illustration {
+      width: 8.7rem;
+      margin-bottom: 2.6rem;
+    }
+
+    &__circle {
+      width: 8.7rem;
+      height: 8.1rem;
+    }
+
+    &__clip {
+      width: 8.9rem;
+      height: 9.3rem;
+    }
+
+    &__paper {
+      padding: .75rem;
+      bottom: 0.3rem;
+      width: 7.2rem;
+      height: 9.3rem;
+      transform: rotate(10deg) translate(-50px, 21px);
+
+      .body__square {
+        width: 1.4rem;
+        height: 0.75rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  #page-not-found,
+  .illustration-wrapper {
+    gap: 1rem;
+  }
+
+  .body__square-row,
+  .not-found__paper {
+    gap: .25rem;
+  }
+
+  .not-found {
+    &__number {
+      font-size: 7rem;
+    }
+
+    &__illustration {
+      width: 6.1rem;
+      margin-bottom: 1.9rem;
+    }
+
+    &__circle {
+      width: 6.1rem;
+      height: 5.7rem;
+    }
+
+    &__clip {
+      width: 6.3rem;
+      height: 6.5rem;
+    }
+
+    &__paper {
+      padding: .5rem;
+      bottom: 0.3rem;
+      width: 4.6rem;
+      height: 6.2rem;
+      transform: rotate(10deg) translate(-32px, 16px);
+
+      .body__square {
+        width: 0.9rem;
+        height: 0.5rem;
+      }
+    }
+
+    &-descr.MuiTypography-root {
+      font-size: 1rem;
+    }
+  }
+
+  #page-not-found .MuiButtonBase-root {
+    font-size: 0.75rem;
+    padding: 4px 12px;
+  }
+}
