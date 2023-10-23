@@ -3,16 +3,15 @@ import { useAppSelector } from '../../hooks/useAppSelector';
 import { useFirstLoad } from '../../hooks/useFirstLoad';
 import LoggedInBtnGroup from './AuthButtonGroups/LoggedInBtnGroup';
 import LogOutedBtnGroup from './AuthButtonGroups/LogOutedBtnGroup';
+import LangSwitcher from './LangSwitcher';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import HomeIcon from '@mui/icons-material/Home';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
-import ButtonGroup from '@mui/material/ButtonGroup';
 import './Header.scss';
 
 export default function Header() {
@@ -36,13 +35,7 @@ export default function Header() {
         )}
         <Stack direction={'row'}>
           {isLoggedIn ? <LoggedInBtnGroup /> : <LogOutedBtnGroup />}
-          <ButtonGroup
-            variant="text"
-            aria-label="lang switcher"
-            className="lang-switcher">
-            <Button className="lang-active">En</Button>
-            <Button>Ru</Button>
-          </ButtonGroup>
+          <LangSwitcher />
         </Stack>
       </Toolbar>
     </AppBar>
