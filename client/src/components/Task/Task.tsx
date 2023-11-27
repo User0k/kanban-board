@@ -63,7 +63,7 @@ function Task({ index, ...taskProps }: ITaskProps) {
                   <FormatAlignLeftIcon className="task-description" />
                 )}
               </Stack>
-              <AvatarGroup max={3}>
+              <AvatarGroup max={3} className="avatar-group">
                 {users?.map((user) => (
                   <UserButton key={user.id} taskId={id} user={user} />
                 ))}

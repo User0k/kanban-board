@@ -10,27 +10,27 @@ function PageNotFound() {
 
   return (
     <Stack justifyContent="center" alignItems="center" id="page-not-found">
-      <Stack direction="row" className='illustration-wrapper'>
+      <Stack direction="row" className="illustration-wrapper">
         <Box className="not-found__number">4</Box>
         <div className="not-found__illustration">
           <Box className="not-found__circle"></Box>
           <div className="not-found__clip">
             <Stack direction="row" className="not-found__paper">
-              <Stack className='body__square-row'>
+              <Stack className="body__square-row">
                 {Array(6)
                   .fill('')
                   .map((_, i) => (
                     <Box key={i} className="body__square square-1"></Box>
                   ))}
               </Stack>
-              <Stack className='body__square-row'>
+              <Stack className="body__square-row">
                 {Array(3)
                   .fill('')
                   .map((_, i) => (
                     <Box key={i} className="body__square square-2"></Box>
                   ))}
               </Stack>
-              <Stack className='body__square-row'>
+              <Stack className="body__square-row">
                 {Array(4)
                   .fill('')
                   .map((_, i) => (
@@ -42,10 +42,12 @@ function PageNotFound() {
         </div>
         <Box className="not-found__number">4</Box>
       </Stack>
-      <Typography variant='h6' component={'h1'} className='not-found-descr'>
+      <Typography variant="h6" component={'h1'} className="not-found-descr">
         Oh no! The page you are looking for is gone!
       </Typography>
-      <Button variant="contained" onClick={() => navigate('/')}>Back Home</Button>
+      <Button variant="contained" onClick={() => navigate('/')}>
+        Back Home
+      </Button>
     </Stack>
   );
 }

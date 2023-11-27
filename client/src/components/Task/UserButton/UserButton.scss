@@ -1,7 +1,12 @@
 @import '../../../vars-mixins.scss';
 
-.avatar-small.MuiAvatar-colorDefault {
+.avatar-small.MuiAvatar-colorDefault,
+.avatar-group .MuiAvatar-root {
   @include avatar-small;
+}
+
+.avatar-group :not(.avatar-small) {
+  cursor: default;
 }
 
 .avatar-large.MuiAvatar-colorDefault {
