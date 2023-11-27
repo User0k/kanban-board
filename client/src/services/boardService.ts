@@ -1,4 +1,5 @@
 import { api } from './api';
+import { IMAGE_FULL_HD } from '../constants';
 import { IBoard, IServerMessage, NewBoard } from '../models';
 
 export const boardApi = api.injectEndpoints({
@@ -13,6 +14,15 @@ export const boardApi = api.injectEndpoints({
       query: (id) => ({
         url: `boards/${id}`,
       }),
+      transformResponse: (board: IBoard) => {
+        let img = board.image;
+        img = img[0] === 'u' ? img.split('?')[0] + IMAGE_FULL_HD + ')' : img;
+
+        return {
+          ...board,
+          image: img,
+        };
+      },
     }),
     createBoard: build.mutation<IBoard, NewBoard>({
       query: (body) => ({

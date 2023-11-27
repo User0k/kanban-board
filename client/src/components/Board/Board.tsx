@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useErrorHandler } from '../../hooks/useErrorHandler';
 import { useDeleteBoardMutation } from '../../services/boardService';
-import { setBoardImage } from '../../store/slices/boardSlice';
 import { IBoard } from '../../models';
 import GlobalSpinner from '../Spinners/GlobalSpinner';
 import DeleteConfirmModal from '../modals/DeleteConfirmModal';
@@ -19,7 +17,6 @@ import './Board.scss';
 
 function Board({ name, description, id, image }: IBoard) {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
   const [isUpdating, setIsUpdating] = useState(false);
 
   const [
@@ -29,7 +26,6 @@ function Board({ name, description, id, image }: IBoard) {
 
   const onNavigate = () => {
     navigate(`/boards/${id}`);
-    dispatch(setBoardImage(image));
   };
 
   const onDelete = async () => {

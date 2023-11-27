@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { DragDropContext, Droppable } from '@hello-pangea/dnd';
 import { useAppSelector } from '../../hooks/useAppSelector';
@@ -23,9 +23,6 @@ function BoardPage() {
   const navigate = useNavigate();
   const boardId = useParams().boardId || '';
   const { data: board, isError: boardNotFound } = useGetBoardByIdQuery(boardId);
-  const { bgImage } = useAppSelector((state) => state.boardReducer);
-  const [image, setImage] = useState(bgImage);
-  useEffect(() => setImage(image), [image]);
 
   const [isColumnCreating, setIsColumnCreating] = useState(false);
   const { isColumnsLoading, columnsGetError } = useUpdateColumnSet(boardId);
@@ -43,7 +40,7 @@ function BoardPage() {
       {boardNotFound ? (
         <Box className="board-not-found">This board cannot be found</Box>
       ) : (
-        <Box className="board-page" sx={{ backgroundImage: `${image}` }}>
+        <Box className="board-page" sx={{ backgroundImage: `${board?.image}` }}>
           <Box className="board-page__subheader">
             <Stack
               direction="row"
