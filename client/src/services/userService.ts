@@ -49,7 +49,6 @@ export const userService = api.injectEndpoints({
         method: 'POST',
         body,
       }),
-      invalidatesTags: ['User'],
     }),
     unassignUser: build.mutation<
       IServerMessage,
@@ -60,7 +59,6 @@ export const userService = api.injectEndpoints({
         method: 'DELETE',
         body,
       }),
-      invalidatesTags: ['User'],
     }),
   }),
 });
