@@ -8,6 +8,7 @@ import PageNotFound from './pages/PageNotFound';
 import RegisterPage from './pages/RegisterPage';
 import WelcomePage from './pages/WelcomePage';
 import ProfilePage from './pages/ProfilePage';
+import './global.scss';
 
 function App() {
   return (

@@ -4,11 +4,10 @@
   height: calc(100vh - 50px);
   background-size: cover;
   background-position: center;
+  overflow-y: hidden;
 
   &__subheader {
     width: 100%;
-    position: fixed;
-    top: 50px;
     background: linear-gradient(
       to bottom,
       rgba(0, 0, 0, 0.3) 0%,
@@ -30,7 +29,7 @@
 
   &__columns-wrapper {
     height: 100%;
-    padding: 75px 16px;
+    padding: 0 16px 100px 16px;
     overflow-x: auto;
   }
 

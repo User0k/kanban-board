@@ -1,0 +1,11 @@
+@import './vars-mixins.scss';
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  background-color: $edit-button-color;
+}
