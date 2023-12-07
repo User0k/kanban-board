@@ -3,7 +3,7 @@ import { useDeleteProfile } from '../../hooks/useDeleteProfile';
 import EditProfileModal from '../../components/modals/EditProfileModal';
 import DeleteConfirmModal from '../../components/modals/DeleteConfirmModal';
 import PageSpinner from '../../components/Spinners/PageSpinner';
-import UserAvatar from '../../components/UserAvatar';
+import UserAvatar from './UserAvatar';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
