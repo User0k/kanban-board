@@ -4,7 +4,7 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 
 export default function LangSwitcher() {
   const [language, setLanguage] = useState(
-    localStorage.getItem('lang') || 'En'
+    localStorage.getItem('lang') || 'en'
   );
   const handleLangChange = (language: string) => {
     setLanguage(language);
@@ -17,13 +17,13 @@ export default function LangSwitcher() {
       aria-label="lang switcher"
       className="lang-switcher">
       <Button
-        className={language === 'En' ? 'lang-active' : ''}
-        onClick={() => handleLangChange('En')}>
+        className={language === 'en' ? 'lang-active' : ''}
+        onClick={() => handleLangChange('en')}>
         En
       </Button>
       <Button
-        className={language === 'Ru' ? 'lang-active' : ''}
-        onClick={() => handleLangChange('Ru')}>
+        className={language === 'ru' ? 'lang-active' : ''}
+        onClick={() => handleLangChange('ru')}>
         Ru
       </Button>
     </ButtonGroup>

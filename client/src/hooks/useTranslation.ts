@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Translation } from '../locales/types';
+import { Translation } from '../../locales/types';
 
 export const useTranslation = (lang: string) => {
   const [translation, setTranslation] = useState<Translation | null>(null);
@@ -7,7 +7,7 @@ export const useTranslation = (lang: string) => {
   useEffect(() => {
     const fetchTranslation = async () => {
       try {
-        const module = await import(`../locales/${lang}`);
+        const module = await import(`../../locales/${lang}/index.ts`);
         setTranslation(module[lang]());
       } catch (error) {
         console.error('This language is unsupportable');
