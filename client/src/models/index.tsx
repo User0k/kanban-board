@@ -78,3 +78,5 @@ export interface IUsersInTasks {
 export interface IServerMessage {
   message: string;
 }
+
+export type Language = 'en' | 'ru';

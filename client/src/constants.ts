@@ -1,3 +1,5 @@
+import { Language } from "./models";
+
 export const BASE_URL = 'http://localhost:5000/api/';
 
 export const BACKGROUND_IMG_SOURCE =
@@ -35,3 +37,5 @@ export const validateOptions = {
   title: { required: true },
   description: { required: true },
 };
+
+export const defaultLang: Language = 'en';

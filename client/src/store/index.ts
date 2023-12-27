@@ -3,12 +3,14 @@ import { api } from '../services/api';
 import errorReducer from './slices/errorSlice';
 import authReducer from './slices/authSlice';
 import boardReducer from './slices/boardSlice';
+import langReducer from './slices/langSlice';
 
 const rootReducer = combineReducers({
   [api.reducerPath]: api.reducer,
   errorReducer,
   authReducer,
   boardReducer,
+  langReducer,
 });
 
 export const store = configureStore({
