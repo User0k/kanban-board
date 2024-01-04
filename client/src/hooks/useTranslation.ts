@@ -1,23 +1,25 @@
 import { useEffect, useState } from 'react';
 import { Translation } from '../locales/types';
-import { Language } from '../models';
+import { useAppSelector } from './useAppSelector';
 
-export const useTranslation = (lang: Language) => {
-  const [translation, setTranslation] = useState<Translation | null>(null);
+export const useTranslation = <T extends keyof Translation>(
+  component: T
+): Translation[T] | null => {
+  const { language } = useAppSelector((state) => state.langReducer);
+  const [translation, setTranslation] = useState<Translation[T] | null>(null);
 
   useEffect(() => {
     const fetchTranslation = async () => {
       try {
-        const module = await import(`../locales/${lang}/index.ts`);
-        setTranslation(module[lang]());
+        const module = await import(`../locales/${language}/${component}.ts`);
+        setTranslation(module[component]);
       } catch (error) {
-        console.error('This language is unsupportable');
-        setTranslation(null);
+        console.error(error, 'This language is unsupportable');
       }
     };
 
     fetchTranslation();
-  }, [lang]);
+  }, [language, component]);
 
   return translation;
 };
