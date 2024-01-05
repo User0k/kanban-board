@@ -1,7 +1,7 @@
-import { header } from './en/shared/header';
-import { loggedInGroup } from './en/shared/loggedInGroup';
-import { logOutedGroup } from './en/shared/logOutedGroup';
-import { welcomePage } from './en/pages/welcomePage';
+import { header } from './en/header';
+import { loggedInGroup } from './en/loggedInGroup';
+import { logOutedGroup } from './en/logOutedGroup';
+import { welcomePage } from './en/welcomePage';
 
 const translatedObj = {
   header,
