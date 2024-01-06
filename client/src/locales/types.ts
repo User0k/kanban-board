@@ -1,16 +1,32 @@
+import { board } from './en/board';
+import { boardPage } from './en/boardPage';
+import { column } from './en/column';
 import { header } from './en/header';
-import { loggedInGroup } from './en/loggedInGroup';
-import { logOutedGroup } from './en/logOutedGroup';
-import { welcomePage } from './en/welcomePage';
+import { loginPage } from './en/loginPage';
+import { mainPage } from './en/mainPage';
+import { modals } from './en/modals';
+import { pageNotFound } from './en/pageNotFound';
+import { profilePage } from './en/profilePage';
+import { registerPage } from './en/registerPage';
+import { task } from './en/task';
 
 const translatedObj = {
   header,
-  loggedInGroup,
-  logOutedGroup,
-  welcomePage,
+  board,
+  boardPage,
+  column,
+  loginPage,
+  mainPage,
+  modals,
+  pageNotFound,
+  profilePage,
+  registerPage,
+  task,
 };
 
 type TranslationFn = typeof translatedObj;
 export type Translation = {
-  [K in keyof TranslationFn]: TranslationFn[K] extends () => infer T ? T : never;
+  [K in keyof TranslationFn]: TranslationFn[K] extends () => infer T
+    ? T
+    : never;
 };
