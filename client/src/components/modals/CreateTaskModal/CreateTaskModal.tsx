@@ -8,6 +8,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { useCreateTaskMutation } from '../../../services/taskService';
 import { useErrorHandler } from '../../../hooks/useErrorHandler';
+import { useTranslation } from '../../../hooks/useTranslation';
 import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -63,7 +64,8 @@ function CreateTaskModal({
     setIsOpen(false);
   };
 
-  useErrorHandler(createTaskError, 'Unable to create task');
+  const t = useTranslation('modals');
+  useErrorHandler(createTaskError, t?.createTaskModal.createError);
 
   return (
     <>
@@ -74,14 +76,14 @@ function CreateTaskModal({
         className="modal-task"
         open={isOpen}
         onClose={() => setIsOpen(false)}>
-        <DialogTitle id="create-task">Add a task</DialogTitle>
+        <DialogTitle id="create-task">{t?.createTaskModal.header}</DialogTitle>
         <form onSubmit={handleSubmit(onSubmit)} className="modal-task__content">
           <DialogContent>
             <TextField
               autoFocus
               margin="dense"
               id="new_title"
-              label="Task title*"
+              label={t?.createTaskModal.title}
               type="text"
               fullWidth
               {...register('title', validateOptions.title)}
@@ -91,13 +93,13 @@ function CreateTaskModal({
                 className="modal-task__title-error"
                 variant="caption"
                 color="error">
-                Please, specify a title
+                {t?.createTaskModal.validateError}
               </Typography>
             )}
             <TextField
               margin="dense"
               id="new_description"
-              label="Task description"
+              label={t?.createTaskModal.description}
               type="text"
               fullWidth
               {...register('description')}
@@ -105,10 +107,10 @@ function CreateTaskModal({
           </DialogContent>
           <DialogActions sx={{ justifyContent: 'space-between' }}>
             <Button onClick={() => setIsOpen(false)} color="primary" autoFocus>
-              cancel
+              {t?.commonBtns.cancel}
             </Button>
             <Button type="submit" variant="contained">
-              save
+              {t?.commonBtns.save}
             </Button>
           </DialogActions>
         </form>

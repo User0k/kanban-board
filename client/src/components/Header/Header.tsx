@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useFirstLoad } from '../../hooks/useFirstLoad';
+import { useTranslation } from '../../hooks/useTranslation';
 import LoggedInBtnGroup from './AuthButtonGroups/LoggedInBtnGroup';
 import LogOutedBtnGroup from './AuthButtonGroups/LogOutedBtnGroup';
 import LangSwitcher from './LangSwitcher';
@@ -17,18 +18,19 @@ import './Header.scss';
 export default function Header() {
   const { isLoggedIn } = useAppSelector((state) => state.authReducer);
   useFirstLoad();
+  const t = useTranslation('header');
 
   return (
     <AppBar id="header" position="static">
       <Toolbar disableGutters={true}>
         <IconButton component={Link} to={'/'} sx={{ mr: 2 }}>
           <HomeIcon sx={{ mr: 1 }} />
-          <Typography variant="h6">Home</Typography>
+          <Typography variant="h6">{t?.home}</Typography>
         </IconButton>
         {isLoggedIn ? (
           <IconButton component={Link} to={'/boards'} sx={{ mr: 2 }}>
             <DashboardIcon sx={{ mr: 1 }} />
-            <Typography variant="h6">Boards</Typography>
+            <Typography variant="h6">{t?.main}</Typography>
           </IconButton>
         ) : (
           <Box sx={{ width: '125px' }}></Box>

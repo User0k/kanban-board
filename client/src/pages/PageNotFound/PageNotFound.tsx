@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from '../../hooks/useTranslation';
 import Stack from '@mui/material/Stack';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -7,6 +8,7 @@ import './PageNotFound.scss';
 
 function PageNotFound() {
   const navigate = useNavigate();
+  const t = useTranslation('pageNotFound');
 
   return (
     <Stack justifyContent="center" alignItems="center" id="page-not-found">
@@ -43,10 +45,10 @@ function PageNotFound() {
         <Box className="not-found__number">4</Box>
       </Stack>
       <Typography variant="h6" component={'h1'} className="not-found-descr">
-        Oh no! The page you are looking for is gone!
+        {t?.header}
       </Typography>
       <Button variant="contained" onClick={() => navigate('/')}>
-        Back Home
+        {t?.back}
       </Button>
     </Stack>
   );

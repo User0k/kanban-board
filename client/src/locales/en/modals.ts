@@ -6,7 +6,7 @@ export const modals = () => ({
     createError: 'Unable to create column',
   },
   createTaskModal: {
-    addBtn: 'Add a task',
+    header: 'Add a task',
     title: 'Task title*',
     description: 'Task description',
     validateError: 'Please, specify a title',
@@ -21,6 +21,7 @@ export const modals = () => ({
     name: 'Board name*',
     description: 'Board description*',
     updateError: 'Unable to update board',
+    updateBtn: 'Update',
   },
   editProfileModal: {
     edit: 'Edit profile',
@@ -32,15 +33,19 @@ export const modals = () => ({
     },
   },
   editTaskModal: {
-    edit: 'Edit task',
+    editError: 'Unable to update task',
+    header: 'Edit task',
     participants: 'Participants',
-    editError: 'Please, specify a title',
+    title: 'Task title*',
+    description: 'Task description',
+    validateError: 'Please, specify a title',
   },
   newBoardModal: {
-    create: 'Create a board',
+    header: 'Create a board',
     name: 'Board name*',
     description: 'Board description*',
     createError: 'Unable to create board',
+    createBtn: 'Create',
   },
   commonBtns: {
     cancel: 'cancel',

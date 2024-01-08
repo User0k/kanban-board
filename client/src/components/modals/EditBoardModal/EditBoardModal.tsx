@@ -7,6 +7,7 @@ import {
 } from 'react';
 import { useForm } from 'react-hook-form';
 import { useErrorHandler } from '../../../hooks/useErrorHandler';
+import { useTranslation } from '../../../hooks/useTranslation';
 import { useUpdateBoardMutation } from '../../../services/boardService';
 import { NewBoard } from '../../../models';
 import ChooseImageModal from '../ChooseImageModal';
@@ -75,7 +76,8 @@ function EditBoardModal({
     [setIsUpdating, isBoardUpdating]
   );
 
-  useErrorHandler(updateBoardError, 'Unable to update board');
+  const t = useTranslation('modals');
+  useErrorHandler(updateBoardError, t?.editBoardModal.updateError);
 
   return (
     <>
@@ -85,7 +87,9 @@ function EditBoardModal({
         </Box>
       </Tooltip>
       <Dialog open={open} onClose={onCloseWithPropImage} className="edit-board">
-        <DialogTitle className="edit-board__title">Edit the board</DialogTitle>
+        <DialogTitle className="edit-board__title">
+          {t?.editBoardModal.edit}
+        </DialogTitle>
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogContent sx={{ padding: '0 16px 16px 16px' }}>
             <Box
@@ -94,7 +98,7 @@ function EditBoardModal({
             />
             <ChooseImageModal setImage={setImage} />
             <TextField
-              label="Board name*"
+              label={t?.editBoardModal.name}
               defaultValue={name}
               fullWidth
               size="small"
@@ -102,7 +106,7 @@ function EditBoardModal({
               {...register('name', validateOptions.name)}
             />
             <TextField
-              label="Board description*"
+              label={t?.editBoardModal.description}
               defaultValue={description}
               fullWidth
               size="small"
@@ -110,9 +114,11 @@ function EditBoardModal({
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={onCloseWithPropImage}>Cancel</Button>
+            <Button onClick={onCloseWithPropImage}>
+              {t?.commonBtns.cancel}
+            </Button>
             <Button variant="contained" type="submit" disabled={!isValid}>
-              Update
+              {t?.editBoardModal.updateBtn}
             </Button>
           </DialogActions>
         </form>

@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useErrorHandler } from '../../hooks/useErrorHandler';
-import { useRegisterMutation } from '../../services/authService';
 import useLogin from '../../hooks/useLogin';
+import { useTranslation } from '../../hooks/useTranslation';
+import { useRegisterMutation } from '../../services/authService';
 import { IUserFields } from '../../models';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
@@ -13,8 +14,6 @@ import { validateOptions } from '../../constants';
 import './RegisterPage.scss';
 
 function RegisterPage() {
-  const [errorMsg, setErrormsg] = useState('Unable to create account');
-
   const {
     register,
     handleSubmit,
@@ -39,11 +38,14 @@ function RegisterPage() {
     });
   };
 
+  const t = useTranslation('registerPage');
+  const [errorMsg, setErrormsg] = useState(t?.registerError);
+
   useEffect(() => {
     if (error && 'originalStatus' in error && error.originalStatus === 403) {
-      setErrormsg('User with this email already exists');
+      setErrormsg(t?.existError);
     }
-  }, [error]);
+  }, [error, t?.existError]);
 
   useLogin(userData);
   useErrorHandler(userCreateError, errorMsg);
@@ -51,44 +53,44 @@ function RegisterPage() {
   return (
     <Container id="auth-page">
       <Typography variant="h5" component="h1" className="auth-title">
-        Create a new account
+        {t?.header}
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack>
           <TextField
             autoFocus
             margin="dense"
-            label="Name*"
+            label={t?.name}
             autoComplete="username"
             {...register('name', validateOptions.name)}
           />
           {errors.name && (
             <Typography variant="caption" color="error">
-              Should be from 1 to 32 characters long
+              {t?.validateError.name}
             </Typography>
           )}
           <TextField
             margin="dense"
-            label="Email*"
+            label={t?.email}
             type="email"
             autoComplete="email"
             {...register('email', validateOptions.email)}
           />
           {errors.email && (
             <Typography variant="caption" color="error">
-              Should be a valid email
+              {t?.validateError.email}
             </Typography>
           )}
           <TextField
             margin="dense"
-            label="Password*"
+            label={t?.password}
             type="password"
             autoComplete="current-password"
             {...register('password', validateOptions.password)}
           />
           {errors.password && (
             <Typography variant="caption" color="error">
-              Should be from 6 to 32 characters long
+              {t?.validateError.password}
             </Typography>
           )}
           <Button
@@ -96,7 +98,7 @@ function RegisterPage() {
             variant="contained"
             disabled={isUserCreating}
             sx={{ mt: 1 }}>
-            Create account
+            {t?.createBtn}
           </Button>
         </Stack>
       </form>

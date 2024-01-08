@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { IColumn, ITask } from '../../models';
 import { Droppable } from '@hello-pangea/dnd';
+import { useTranslation } from '../../hooks/useTranslation';
 import DraggableElement from '../../dndWrappers/DraggableElement';
 import ColumnTitleInput from './ColumnTitleInput';
 import ColumnTitleText from './ColumnTitleText';
@@ -24,6 +25,7 @@ function Column({ boardId, id, title, tasks, index }: IColumnProps) {
   const [isTaskCreating, setIsTaskCreating] = useState(false);
   const onCloseInput = () => setIsEditing(false);
   const onOpenInput = () => setIsEditing(true);
+  const t = useTranslation('column');
 
   return (
     <DraggableElement id={id} index={index} className="column">
@@ -71,7 +73,7 @@ function Column({ boardId, id, title, tasks, index }: IColumnProps) {
                 className="btn-create_task"
                 variant="contained"
                 startIcon={<AddIcon />}>
-                Add task
+                {t?.addTask}
               </Button>
             </CreateTaskModal>
           </div>

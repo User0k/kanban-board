@@ -1,4 +1,4 @@
-import { Translation } from "../types";
+import { Translation } from '../types';
 
 export const modals = (): Translation['modals'] => ({
   createColumnModal: {
@@ -8,7 +8,7 @@ export const modals = (): Translation['modals'] => ({
     createError: 'Невозможно создать колонку',
   },
   createTaskModal: {
-    addBtn: 'Добавить задачу',
+    header: 'Добавить задачу',
     title: 'Заголовок задачи*',
     description: 'Описание задачи',
     validateError: 'Пожалуйста, добавьте заголовок',
@@ -23,6 +23,7 @@ export const modals = (): Translation['modals'] => ({
     name: 'Название доски*',
     description: 'Описание доски*',
     updateError: 'Невозможно изменить доску',
+    updateBtn: 'Изменить',
   },
   editProfileModal: {
     edit: 'Редактировать профиль',
@@ -34,15 +35,19 @@ export const modals = (): Translation['modals'] => ({
     },
   },
   editTaskModal: {
-    edit: 'Редактировать задачу',
+    editError: 'Невозможно изменить задачу',
+    header: 'Редактировать задачу',
     participants: 'Участники',
-    editError: 'Пожалуйста, добавьте заголовок',
+    title: 'Заголовок задачи*',
+    description: 'Описание задачи',
+    validateError: 'Пожалуйста, добавьте заголовок',
   },
   newBoardModal: {
-    create: 'Создать доску',
+    header: 'Создать доску',
     name: 'Название доски*',
     description: 'Описание доски*',
     createError: 'Невозможно создать доску',
+    createBtn: 'Создать',
   },
   commonBtns: {
     cancel: 'отменить',

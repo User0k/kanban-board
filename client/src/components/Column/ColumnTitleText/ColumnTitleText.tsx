@@ -1,5 +1,6 @@
 import { useDeleteColumnMutation } from '../../../services/columnService';
 import { useErrorHandler } from '../../../hooks/useErrorHandler';
+import { useTranslation } from '../../../hooks/useTranslation';
 import GlobalSpinner from '../../Spinners/GlobalSpinner';
 import DeleteConfirmModal from '../../modals/DeleteConfirmModal';
 import Typography from '@mui/material/Typography';
@@ -31,7 +32,8 @@ function ColumnTitleText({
     await deleteColumn({ boardId, id });
   };
 
-  useErrorHandler(deleteColumnError, 'Unable to delete column');
+  const t = useTranslation('column');
+  useErrorHandler(deleteColumnError, t?.deleteError);
 
   return (
     <>
@@ -40,11 +42,11 @@ function ColumnTitleText({
         <Typography variant="h6" noWrap>
           {columnName}
         </Typography>
-        <Tooltip title="Edit column name" id="column-title__edit-tooltip">
+        <Tooltip title={t?.editName} id="column-title__edit-tooltip">
           <EditIcon />
         </Tooltip>
       </Stack>
-      <DeleteConfirmModal element="column" onDelete={onDelete}>
+      <DeleteConfirmModal element={t?.element} onDelete={onDelete}>
         <DeleteForeverIcon className="column__delete" />
       </DeleteConfirmModal>
     </>

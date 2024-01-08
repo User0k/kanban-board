@@ -2,6 +2,7 @@ import { IUpdateTask } from '../../models';
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useDeleteTaskMutation } from '../../services/taskService';
 import { useErrorHandler } from '../../hooks/useErrorHandler';
+import { useTranslation } from '../../hooks/useTranslation';
 import GlobalSpinner from '../Spinners/GlobalSpinner';
 import UserButton from './UserButton';
 import DeleteConfirmModal from '../modals/DeleteConfirmModal';
@@ -32,7 +33,8 @@ function Task({ index, ...taskProps }: ITaskProps) {
 
   const users = useAppSelector((state) => state.boardReducer.assignedUsers)[id];
 
-  useErrorHandler(deleteTaskError, 'Unable to delete task');
+  const t = useTranslation('task');
+  useErrorHandler(deleteTaskError, t?.deleteError);
 
   return (
     <>
@@ -51,11 +53,11 @@ function Task({ index, ...taskProps }: ITaskProps) {
               justifyContent="space-between"
               sx={{ minWidth: '250px' }}>
               <Stack className="task__bar" direction="row" alignItems="center">
-                <DeleteConfirmModal element="task" onDelete={onDelete}>
+                <DeleteConfirmModal element={t?.element} onDelete={onDelete}>
                   <DeleteForeverIcon className="task-delete" />
                 </DeleteConfirmModal>
                 <EditTaskModal {...taskProps}>
-                  <Tooltip title="Edit task" id="edit-task-tooltip">
+                  <Tooltip title={t?.edit} id="edit-task-tooltip">
                     <MoreVertIcon className="task-modify" />
                   </Tooltip>
                 </EditTaskModal>

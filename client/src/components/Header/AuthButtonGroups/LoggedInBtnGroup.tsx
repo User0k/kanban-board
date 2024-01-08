@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../../hooks/useAppDispatch';
+import { useTranslation } from '../../../hooks/useTranslation';
 import { resetAuth } from '../../../store/slices/authSlice';
 import { useLogoutMutation } from '../../../services/authService';
 import Typography from '@mui/material/Typography';
@@ -16,15 +17,17 @@ function LoggedInBtnGroup() {
     await logOutUser();
   };
 
+  const t = useTranslation('header');
+
   return (
     <>
       <IconButton component={Link} to={'/profile'}>
         <AccountCircleIcon sx={{ mr: 1 }} />
-        <Typography>Profile</Typography>
+        <Typography>{t?.profile}</Typography>
       </IconButton>
       <IconButton component={Link} to={'/'} onClick={logOut}>
         <LogoutIcon sx={{ mr: 1 }} />
-        <Typography>Log out</Typography>
+        <Typography>{t?.logout}</Typography>
       </IconButton>
     </>
   );

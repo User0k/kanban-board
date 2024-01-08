@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useErrorHandler } from '../../hooks/useErrorHandler';
+import { useTranslation } from '../../hooks/useTranslation';
 import { useDeleteBoardMutation } from '../../services/boardService';
 import { IBoard } from '../../models';
 import GlobalSpinner from '../Spinners/GlobalSpinner';
@@ -32,7 +33,8 @@ function Board({ name, description, id, image }: IBoard) {
     await deleteBoard(id);
   };
 
-  useErrorHandler(deleteBoardError, 'Unable to delete board');
+  const t = useTranslation('board');
+  useErrorHandler(deleteBoardError, t?.deleteError);
 
   return (
     <>
@@ -49,7 +51,7 @@ function Board({ name, description, id, image }: IBoard) {
               setIsUpdating={setIsUpdating}>
               <EditIcon sx={{ m: 1 }} className="edit-button" />
             </EditBoardModal>
-            <DeleteConfirmModal element="board" onDelete={onDelete}>
+            <DeleteConfirmModal element={t?.element} onDelete={onDelete}>
               <DeleteForeverIcon sx={{ m: 1 }} className="delete-button" />
             </DeleteConfirmModal>
           </Box>

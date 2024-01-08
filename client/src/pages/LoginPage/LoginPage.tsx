@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useErrorHandler } from '../../hooks/useErrorHandler';
 import { useLoginMutation } from '../../services/authService';
 import useLogin from '../../hooks/useLogin';
+import { useTranslation } from '../../hooks/useTranslation';
 import { LoginFields } from '../../models';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
@@ -12,8 +13,6 @@ import Typography from '@mui/material/Typography';
 import { validateOptions } from '../../constants';
 
 function LoginPage() {
-  const [errorMsg, setErrormsg] = useState('Server failed to proceed');
-
   const {
     register,
     handleSubmit,
@@ -37,11 +36,14 @@ function LoginPage() {
     });
   };
 
+  const t = useTranslation('loginPage');
+  const [errorMsg, setErrormsg] = useState(t?.serverError);
+
   useEffect(() => {
     if (error && 'originalStatus' in error && error.originalStatus >= 400) {
-      setErrormsg('Email or password is wrong');
+      setErrormsg(t?.credentialsError);
     }
-  }, [error]);
+  }, [error, t?.credentialsError]);
 
   useLogin(userData);
   useErrorHandler(userCreateError, errorMsg);
@@ -49,33 +51,33 @@ function LoginPage() {
   return (
     <Container id="auth-page">
       <Typography variant="h5" component="h1" className="auth-title">
-        Log in
+        {t?.logIn}
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack>
           <TextField
             autoFocus
             margin="dense"
-            label="Email*"
+            label={t?.email}
             type="email"
             autoComplete="email"
             {...register('email', validateOptions.email)}
           />
           {errors.email && (
             <Typography variant="caption" color="error">
-              Should be a valid email
+              {t?.validateError.email}
             </Typography>
           )}
           <TextField
             margin="dense"
-            label="Password*"
+            label={t?.password}
             type="password"
             autoComplete="current-password"
             {...register('password', validateOptions.password)}
           />
           {errors.password && (
             <Typography variant="caption" color="error">
-              Should be from 6 to 32 characters long
+              {t?.validateError.password}
             </Typography>
           )}
           <Button
@@ -83,7 +85,7 @@ function LoginPage() {
             variant="contained"
             disabled={isUserCreating}
             sx={{ mt: 1 }}>
-            Log in
+            {t?.logIn}
           </Button>
         </Stack>
       </form>

@@ -2,6 +2,7 @@ import { ReactElement, useState } from 'react';
 import { useGetAllUsersQuery } from '../../../../services/userService';
 import { nameAbbreviation } from '../../../../utils/nameAbbreviation';
 import { useHandleAssign } from '../../../../hooks/useHandleAssign';
+import { useTranslation } from '../../../../hooks/useTranslation';
 import { AssignedUser } from '../../../../models';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -26,6 +27,7 @@ function ChooseUserModal({ taskId, users, children }: IModalProps) {
   const onOpenAssign = () => setAssignOpen(true);
   const onCloseAssign = () => setAssignOpen(false);
   const handleAssign = useHandleAssign(taskId, users);
+  const t = useTranslation('modals');
 
   return (
     <>
@@ -35,7 +37,9 @@ function ChooseUserModal({ taskId, users, children }: IModalProps) {
         open={assignOpen}
         onClose={onCloseAssign}>
         <CloseIcon className="btn-close" onClick={onCloseAssign} />
-        <DialogTitle className="modal-assign__header">Participants</DialogTitle>
+        <DialogTitle className="modal-assign__header">
+          {t?.editTaskModal.participants}
+        </DialogTitle>
         <DialogContent className="modal-assign__content">
           <Stack>
             {allUsers &&

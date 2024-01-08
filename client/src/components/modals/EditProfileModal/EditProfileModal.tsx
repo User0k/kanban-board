@@ -1,6 +1,7 @@
 import { ReactElement, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useUpdateProfile } from '../../../hooks/useUpdateProfile';
+import { useTranslation } from '../../../hooks/useTranslation';
 import { validateOptions } from '../../../constants';
 import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
@@ -39,18 +40,19 @@ function EditProfileModal({ id, name, email, children }: IModalProps) {
     reset();
   };
 
+  const t = useTranslation('modals');
   const onSubmit = useUpdateProfile(id, handleClose);
 
   return (
     <>
       <Box onClick={handleOpen}>{children}</Box>
       <Dialog className="edit-profile" open={open} onClose={handleClose}>
-        <DialogTitle id="edit-profile">Edit profile</DialogTitle>
+        <DialogTitle id="edit-profile">{t?.editProfileModal.edit}</DialogTitle>
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogContent className="edit-profile__content">
             <TextField
               autoFocus
-              label="Name*"
+              label={t?.editProfileModal.name}
               defaultValue={name}
               fullWidth
               autoComplete="username"
@@ -61,11 +63,11 @@ function EditProfileModal({ id, name, email, children }: IModalProps) {
                 variant="caption"
                 color="error"
                 className="edit-profile__input-error">
-                Should be from 1 to 32 characters long
+                {t?.editProfileModal.validateError.name}
               </Typography>
             )}
             <TextField
-              label="Email*"
+              label={t?.editProfileModal.email}
               type="email"
               defaultValue={email}
               fullWidth
@@ -77,16 +79,16 @@ function EditProfileModal({ id, name, email, children }: IModalProps) {
                 variant="caption"
                 color="error"
                 className="edit-profile__input-error">
-                Should be a valid email
+                {t?.editProfileModal.validateError.email}
               </Typography>
             )}
           </DialogContent>
           <DialogActions sx={{ justifyContent: 'space-between' }}>
             <Button onClick={handleClose} color="primary">
-              cancel
+              {t?.commonBtns.cancel}
             </Button>
             <Button type="submit" variant="contained">
-              save
+              {t?.commonBtns.save}
             </Button>
           </DialogActions>
         </form>

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from '../../../hooks/useTranslation';
 import { useUnassignUserMutation } from '../../../services/userService';
 import { nameAbbreviation } from '../../../utils/nameAbbreviation';
 import { AssignedUser } from '../../../models';
@@ -29,6 +30,8 @@ function UserButton({ taskId, user }: IUserButtonProps) {
     setOpen(false);
   };
 
+  const t = useTranslation('task');
+
   return (
     <>
       <Tooltip title={user.name}>
@@ -58,7 +61,7 @@ function UserButton({ taskId, user }: IUserButtonProps) {
             className="unassign-btn"
             variant="body2"
             onClick={handleUnassign}>
-            Unasssign from a task
+            {t?.unassignUser}
           </Typography>
         </DialogContent>
       </Dialog>

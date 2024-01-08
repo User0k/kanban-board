@@ -1,5 +1,6 @@
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useDeleteProfile } from '../../hooks/useDeleteProfile';
+import { useTranslation } from '../../hooks/useTranslation';
 import EditProfileModal from '../../components/modals/EditProfileModal';
 import DeleteConfirmModal from '../../components/modals/DeleteConfirmModal';
 import PageSpinner from '../../components/Spinners/PageSpinner';
@@ -17,6 +18,7 @@ function ProfilePage() {
   const name = currentUser?.name || ' ';
   const email = currentUser?.email || '';
   const onDeleteUser = useDeleteProfile(id);
+  const t = useTranslation('profilePage');
 
   return (
     <Container id="profile" maxWidth="sm">
@@ -29,7 +31,7 @@ function ProfilePage() {
             component="h1"
             color="text.secondary"
             className="profile__header">
-            Welcome to your profile
+            {t?.header}
           </Typography>
           <Stack direction="row" className="profile__credentials-wrapper">
             <UserAvatar className="avatar-large" name={name} color={color} />
@@ -39,14 +41,16 @@ function ProfilePage() {
                 component="h2"
                 color="text.secondary"
                 className="profile__name">
-                Name: {name}
+                {t?.name}
+                {name}
               </Typography>
               <Typography
                 variant="body1"
                 component="h2"
                 color="text.secondary"
                 className="profile__email">
-                Email: {email}
+                {t?.email}
+                {email}
               </Typography>
             </Stack>
           </Stack>
@@ -56,18 +60,18 @@ function ProfilePage() {
                 variant="contained"
                 color="info"
                 className="profile__btn-edit">
-                Edit profile
+                {t?.edit}
               </Button>
             </EditProfileModal>
             <DeleteConfirmModal
-              element="profile"
+              element={t?.element}
               provideTooltip={false}
               onDelete={onDeleteUser}>
               <Button
                 variant="contained"
                 color="error"
                 className="profile__btn-delete">
-                Delete profile
+                {t?.delete}
               </Button>
             </DeleteConfirmModal>
           </Stack>

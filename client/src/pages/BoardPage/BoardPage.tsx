@@ -6,6 +6,7 @@ import { useDragEnd } from '../../hooks/useDragEnd';
 import { useUpdateColumnSet } from '../../hooks/useUpdateColumnSet';
 import { useUpdateTaskSet } from '../../hooks/useUpdateTaskSet';
 import { useUpdateAssignedUsers } from '../../hooks/useUpdateAssignedUsers';
+import { useTranslation } from '../../hooks/useTranslation';
 import { useGetBoardByIdQuery } from '../../services/boardService';
 import { IColumn } from '../../models';
 import CreateColumnModal from '../../components/modals/CreateColumnModal';
@@ -34,11 +35,12 @@ function BoardPage() {
   const storedTasks = useAppSelector((state) => state.boardReducer).tasks;
 
   const onDragEnd = useDragEnd(boardId);
+  const t = useTranslation('boardPage');
 
   return (
     <>
       {boardNotFound ? (
-        <Box className="board-not-found">This board cannot be found</Box>
+        <Box className="board-not-found">{t?.notFound}</Box>
       ) : (
         <Box className="board-page" sx={{ backgroundImage: `${board?.image}` }}>
           <Box className="board-page__subheader">
@@ -52,7 +54,7 @@ function BoardPage() {
                 variant="contained"
                 startIcon={<ArrowLeftIcon />}
                 onClick={() => navigate(-1)}>
-                Back
+                {t?.backBtn}
               </Button>
               <Typography
                 className="board-page__title"
@@ -99,7 +101,7 @@ function BoardPage() {
                       className="btn-create-column"
                       variant="contained"
                       startIcon={<AddIcon />}>
-                      Create Column
+                      {t?.createColumn}
                     </Button>
                   </CreateColumnModal>
                 </Stack>

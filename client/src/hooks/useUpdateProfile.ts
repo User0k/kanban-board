@@ -3,6 +3,7 @@ import { useAppDispatch } from './useAppDispatch';
 import { useErrorHandler } from './useErrorHandler';
 import { useUpdateUserMutation } from '../services/userService';
 import { setUser } from '../store/slices/authSlice';
+import { useTranslation } from './useTranslation';
 
 interface IFormValues {
   name: string;
@@ -27,10 +28,11 @@ export const useUpdateProfile = (id: string, onCloseFn: () => void) => {
     }
   }, [dispatch, isProfileUpdating, updatedUser]);
 
-  useErrorHandler(updateProfileError, 'Unable to update user');
+  const t = useTranslation('profilePage');
+  useErrorHandler(updateProfileError, t?.updateError);
 
   return async (data: IFormValues) => {
     await updateProfile({ id, ...data });
     onCloseFn();
-  }
+  };
 };

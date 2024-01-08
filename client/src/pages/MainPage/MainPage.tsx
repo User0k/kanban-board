@@ -1,3 +1,4 @@
+import { useTranslation } from '../../hooks/useTranslation';
 import { useGetAllBoardsQuery } from '../../services/boardService';
 import Board from '../../components/Board';
 import NewBoardModal from '../../components/modals/NewBoardModal';
@@ -18,6 +19,8 @@ function MainPage() {
     isError: getBoardsError,
   } = useGetAllBoardsQuery();
 
+  const t = useTranslation('mainPage');
+
   return (
     <Box id="main">
       <Box sx={{ pt: 3 }}>
@@ -26,13 +29,10 @@ function MainPage() {
             <AppsIcon fontSize="large" />
           </Button>
           <Stack sx={{ pl: 2 }}>
-            <Typography variant="h1">Boards</Typography>
-            <Typography variant="body2">
-              You can view, modify or delete them. Need to start with another
-              one? Create new!
-            </Typography>
+            <Typography variant="h1">{t?.boards}</Typography>
+            <Typography variant="body2">{t?.promotion}</Typography>
             <Typography variant="body2" color="text.secondary" sx={{ pt: 1 }}>
-              Number of available boards: {boards?.length ?? 0}
+              {t?.boardsNumber} {boards?.length ?? 0}
             </Typography>
           </Stack>
         </Stack>
@@ -48,9 +48,9 @@ function MainPage() {
             justifyContent={'center'}
             flexWrap="wrap">
             {!getBoardsError ? (
-              <NewBoardModal>create a board</NewBoardModal>
+              <NewBoardModal>{t?.createBoard ?? ''}</NewBoardModal>
             ) : (
-              <Box className="boards-unavailable">Unable to get boards :(</Box>
+              <Box className="boards-unavailable">{t?.boardsUnavailable}</Box>
             )}
             {boards?.map((board) => (
               <Board {...board} key={board.id} />

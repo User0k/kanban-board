@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useErrorHandler } from '../../../hooks/useErrorHandler';
+import { useTranslation } from '../../../hooks/useTranslation';
 import { useCreateBoardMutation } from '../../../services/boardService';
 import imgMinifyer from '../../../utils/imgMinifyer';
 import { NewBoard } from '../../../models';
@@ -49,7 +50,8 @@ function NewBoardModal({ children }: IModalProps) {
     await createBoard({ ...data, image });
   };
 
-  useErrorHandler(createBoardError, 'Unable to create board');
+  const t = useTranslation('modals');
+  useErrorHandler(createBoardError, t?.newBoardModal.createError);
 
   return (
     <>
@@ -59,7 +61,7 @@ function NewBoardModal({ children }: IModalProps) {
       </Box>
       <Dialog open={open} onClose={handleClose} className="create-board">
         <DialogTitle className="create-board__title">
-          Create a board
+          {t?.newBoardModal.header}
         </DialogTitle>
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogContent sx={{ padding: '0 16px 16px 16px' }}>
@@ -69,23 +71,23 @@ function NewBoardModal({ children }: IModalProps) {
             />
             <ChooseImageModal setImage={setImage} />
             <TextField
-              label="Board name*"
+              label={t?.newBoardModal.name}
               fullWidth
               size="small"
               sx={{ mb: 2 }}
               {...register('name', validateOptions.title)}
             />
             <TextField
-              label="Board description*"
+              label={t?.newBoardModal.description}
               fullWidth
               size="small"
               {...register('description', validateOptions.description)}
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={handleClose}>{t?.commonBtns.cancel}</Button>
             <Button variant="contained" type="submit" disabled={!isValid}>
-              Create
+              {t?.newBoardModal.createBtn}
             </Button>
           </DialogActions>
         </form>

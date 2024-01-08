@@ -1,4 +1,5 @@
 import { useState, ReactElement } from 'react';
+import { useTranslation } from '../../../hooks/useTranslation';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -7,14 +8,14 @@ import Tooltip from '@mui/material/Tooltip';
 import Box from '@mui/material/Box';
 
 interface IModalProps {
-  element: string;
+  element?: string;
   onDelete: () => Promise<void>;
   children: ReactElement;
   provideTooltip?: boolean;
 }
 
 function DeleteConfirmModal({
-  element,
+  element = '',
   onDelete,
   children,
   provideTooltip = true,
@@ -26,6 +27,8 @@ function DeleteConfirmModal({
     setOpen(false);
     await onDelete();
   };
+
+  const t = useTranslation('modals');
 
   return (
     <>
@@ -42,12 +45,12 @@ function DeleteConfirmModal({
       )}
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle sx={{ maxWidth: 337 }}>
-          Are you sure you want to delete the {element}?
+          {t?.deleteConfirmModal.confirmation} {element}?
         </DialogTitle>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button variant="contained" color="error" onClick={handleDelete}>
-            Delete
+            {t?.deleteConfirmModal.deleteBtn}
           </Button>
         </DialogActions>
       </Dialog>

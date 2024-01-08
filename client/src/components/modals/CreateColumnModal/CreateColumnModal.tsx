@@ -6,6 +6,7 @@ import {
   useState,
 } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from '../../../hooks/useTranslation';
 import { useCreateColumnMutation } from '../../../services/columnService';
 import { useErrorHandler } from '../../../hooks/useErrorHandler';
 import { NewColumn } from '../../../models';
@@ -56,7 +57,8 @@ function CreateColumnModal({
     setIsOpen(false);
   };
 
-  useErrorHandler(createColumnError, 'Unable to create column');
+  const t = useTranslation('modals');
+  useErrorHandler(createColumnError, t?.createColumnModal.createError);
 
   return (
     <>
@@ -69,7 +71,9 @@ function CreateColumnModal({
         className="modal-column"
         open={isOpen}
         onClose={() => setIsOpen(false)}>
-        <DialogTitle id="create-column">Add a column</DialogTitle>
+        <DialogTitle id="create-column">
+          {t?.createColumnModal.addBtn}
+        </DialogTitle>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="modal-column__content">
@@ -78,23 +82,23 @@ function CreateColumnModal({
               autoFocus
               margin="dense"
               id="new_title"
-              label="Column title*"
+              label={t?.createColumnModal.title}
               type="text"
               fullWidth
               {...register('title', validateOptions.title)}
             />
             {errors.title && (
               <Typography variant="caption" color="error">
-                Please, specify a title
+                {t?.createColumnModal.validateError}
               </Typography>
             )}
           </DialogContent>
           <DialogActions sx={{ justifyContent: 'space-between' }}>
             <Button onClick={() => setIsOpen(false)} color="primary" autoFocus>
-              cancel
+              {t?.commonBtns.cancel}
             </Button>
             <Button type="submit" variant="contained">
-              save
+              {t?.commonBtns.save}
             </Button>
           </DialogActions>
         </form>

@@ -2,6 +2,7 @@ import { ReactElement, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useUpdateTaskMutation } from '../../../services/taskService';
 import { useErrorHandler } from '../../../hooks/useErrorHandler';
+import { useTranslation } from '../../../hooks/useTranslation';
 import UsersStack from './UsersStack';
 import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
@@ -58,7 +59,8 @@ function EditTaskModal({
     reset({ title: data.title, description: data.description });
   };
 
-  useErrorHandler(updateTaskError, 'Unable to update task');
+  const t = useTranslation('modals');
+  useErrorHandler(updateTaskError, t?.editTaskModal.editError);
 
   return (
     <>
@@ -69,7 +71,7 @@ function EditTaskModal({
         className="modal-task"
         open={isOpen}
         onClose={() => setIsOpen(false)}>
-        <DialogTitle id="edit-task">Edit task</DialogTitle>
+        <DialogTitle id="edit-task">{t?.editTaskModal.header}</DialogTitle>
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogContent className="modal-task__content">
             <Controller
@@ -80,7 +82,7 @@ function EditTaskModal({
                   {...field}
                   autoFocus
                   margin="dense"
-                  label="Task title*"
+                  label={t?.editTaskModal.title}
                   type="text"
                   fullWidth
                 />
@@ -92,7 +94,7 @@ function EditTaskModal({
                 className="modal-task__title-error"
                 variant="caption"
                 color="error">
-                Please, specify a title
+                {t?.editTaskModal.validateError}
               </Typography>
             )}
             <Controller
@@ -102,7 +104,7 @@ function EditTaskModal({
                 <TextField
                   {...field}
                   margin="dense"
-                  label="Task description"
+                  label={t?.editTaskModal.description}
                   type="text"
                   fullWidth
                 />
@@ -112,10 +114,10 @@ function EditTaskModal({
           </DialogContent>
           <DialogActions sx={{ justifyContent: 'space-between' }}>
             <Button onClick={() => setIsOpen(false)} color="primary" autoFocus>
-              cancel
+              {t?.commonBtns.cancel}
             </Button>
             <Button type="submit" variant="contained">
-              save
+              {t?.commonBtns.save}
             </Button>
           </DialogActions>
         </form>

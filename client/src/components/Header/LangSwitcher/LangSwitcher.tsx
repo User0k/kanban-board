@@ -1,14 +1,16 @@
-import { useState } from 'react';
+import { useAppSelector } from '../../../hooks/useAppSelector';
+import { useAppDispatch } from '../../../hooks/useAppDispatch';
+import { setLanguage } from '../../../store/slices/langSlice';
+import { Language } from '../../../models';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 
 export default function LangSwitcher() {
-  const [language, setLanguage] = useState(
-    localStorage.getItem('lang') || 'en'
-  );
-  const handleLangChange = (language: string) => {
-    setLanguage(language);
+  const dispatch = useAppDispatch();
+  const { language } = useAppSelector((state) => state.langReducer);
+  const handleLangChange = (language: Language) => {
     localStorage.setItem('lang', language);
+    dispatch(setLanguage(language));
   };
 
   return (
