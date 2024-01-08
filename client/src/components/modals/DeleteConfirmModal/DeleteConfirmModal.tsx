@@ -33,7 +33,7 @@ function DeleteConfirmModal({
   return (
     <>
       {provideTooltip ? (
-        <Tooltip title={`Delete ${element}`}>
+        <Tooltip title={`${t?.deleteConfirmModal.tooltip} ${element}`}>
           <Box className="btn-modal" onClick={handleOpen}>
             {children}
           </Box>
@@ -48,7 +48,7 @@ function DeleteConfirmModal({
           {t?.deleteConfirmModal.confirmation} {element}?
         </DialogTitle>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>{t?.commonBtns.cancel}</Button>
           <Button variant="contained" color="error" onClick={handleDelete}>
             {t?.deleteConfirmModal.deleteBtn}
           </Button>

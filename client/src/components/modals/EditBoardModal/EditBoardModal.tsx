@@ -81,7 +81,7 @@ function EditBoardModal({
 
   return (
     <>
-      <Tooltip title="Update board">
+      <Tooltip title={t?.editBoardModal.tooltip}>
         <Box className="btn-modal" onClick={handleOpen}>
           {children}
         </Box>

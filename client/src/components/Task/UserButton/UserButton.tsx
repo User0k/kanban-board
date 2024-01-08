@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from '../../../hooks/useTranslation';
+import { useAppDispatch } from '../../../hooks/useAppDispatch';
+import { removeUserFromTask } from '../../../store/slices/boardSlice';
 import { useUnassignUserMutation } from '../../../services/userService';
 import { nameAbbreviation } from '../../../utils/nameAbbreviation';
 import { AssignedUser } from '../../../models';
@@ -19,6 +21,7 @@ interface IUserButtonProps {
 }
 
 function UserButton({ taskId, user }: IUserButtonProps) {
+  const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
   const [unassignUser] = useUnassignUserMutation();
   const handleOpen = () => setOpen(true);
@@ -27,6 +30,7 @@ function UserButton({ taskId, user }: IUserButtonProps) {
 
   const handleUnassign = async () => {
     await unassignUser({ id: user.id, taskId });
+    dispatch(removeUserFromTask({ taskId, user }));
     setOpen(false);
   };
 

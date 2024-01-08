@@ -1,4 +1,5 @@
 import { useAppSelector } from '../../../../hooks/useAppSelector';
+import { useTranslation } from '../../../../hooks/useTranslation';
 import UserButton from '../../../Task/UserButton';
 import ChooseUserModal from '../ChooseUserModal';
 import Stack from '@mui/material/Stack';
@@ -11,6 +12,8 @@ function UsersStack({ id }: { id: string }) {
     (state) => state.boardReducer.assignedUsers
   )[id];
 
+  const t = useTranslation('modals');
+
   return (
     <Stack className="user-btns-wrapper" direction="row">
       {usersInTask &&
@@ -18,7 +21,7 @@ function UsersStack({ id }: { id: string }) {
           <UserButton key={user.id} taskId={id} user={user} />
         ))}
       <ChooseUserModal taskId={id} users={usersInTask || []}>
-        <Tooltip title="Assign user">
+        <Tooltip title={t?.editTaskModal.tooltip}>
           <Avatar className="btn-assign">+</Avatar>
         </Tooltip>
       </ChooseUserModal>
