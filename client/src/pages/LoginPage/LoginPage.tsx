@@ -11,6 +11,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { validateOptions } from '../../constants';
+import '../RegisterPage/RegisterPage.scss';
 
 function LoginPage() {
   const {

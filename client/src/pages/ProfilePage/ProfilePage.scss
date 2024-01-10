@@ -1,3 +1,9 @@
+@import '../../vars-mixins.scss';
+
+.avatar-large.MuiAvatar-colorDefault {
+  @include avatar-large;
+}
+
 .profile {
   &__body {
     margin-top: 15vh;
