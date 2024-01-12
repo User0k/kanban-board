@@ -85,6 +85,7 @@ function LoginPage() {
             type="submit"
             variant="contained"
             disabled={isUserCreating}
+            className="btn-min-height"
             sx={{ mt: 1 }}>
             {t?.logIn}
           </Button>

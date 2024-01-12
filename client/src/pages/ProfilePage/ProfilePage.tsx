@@ -59,7 +59,7 @@ function ProfilePage() {
               <Button
                 variant="contained"
                 color="info"
-                className="profile__btn-edit">
+                className="profile__btn-edit btn-min-height">
                 {t?.edit}
               </Button>
             </EditProfileModal>
@@ -70,7 +70,7 @@ function ProfilePage() {
               <Button
                 variant="contained"
                 color="error"
-                className="profile__btn-delete">
+                className="profile__btn-delete btn-min-height">
                 {t?.delete}
               </Button>
             </DeleteConfirmModal>

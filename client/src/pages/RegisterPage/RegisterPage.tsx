@@ -97,6 +97,7 @@ function RegisterPage() {
             type="submit"
             variant="contained"
             disabled={isUserCreating}
+            className="btn-min-height"
             sx={{ mt: 1 }}>
             {t?.createBtn}
           </Button>

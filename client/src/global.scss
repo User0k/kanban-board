@@ -1,5 +1,9 @@
 @import './vars-mixins.scss';
 
+.btn-min-height {
+  min-height: $btn-min-height;
+}
+
 ::-webkit-scrollbar {
   width: 7px;
   height: 5px;

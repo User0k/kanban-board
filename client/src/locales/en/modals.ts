@@ -15,6 +15,7 @@ export const modals = () => ({
   deleteConfirmModal: {
     confirmation: 'Are you sure you want to delete the ',
     deleteBtn: 'Delete',
+    tooltip: 'Delete',
   },
   editBoardModal: {
     edit: 'Edit the board',
@@ -22,6 +23,7 @@ export const modals = () => ({
     description: 'Board description*',
     updateError: 'Unable to update board',
     updateBtn: 'Update',
+    tooltip: 'Update board',
   },
   editProfileModal: {
     edit: 'Edit profile',
@@ -39,6 +41,7 @@ export const modals = () => ({
     title: 'Task title*',
     description: 'Task description',
     validateError: 'Please, specify a title',
+    tooltip: 'Assign user',
   },
   newBoardModal: {
     header: 'Create a board',

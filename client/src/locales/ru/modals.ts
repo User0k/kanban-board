@@ -17,6 +17,7 @@ export const modals = (): Translation['modals'] => ({
   deleteConfirmModal: {
     confirmation: 'Вы уверены, что хотите удалить ',
     deleteBtn: 'Удалить',
+    tooltip: 'Удалить',
   },
   editBoardModal: {
     edit: 'Изменить доску',
@@ -24,6 +25,7 @@ export const modals = (): Translation['modals'] => ({
     description: 'Описание доски*',
     updateError: 'Невозможно изменить доску',
     updateBtn: 'Изменить',
+    tooltip: 'Изменить доску',
   },
   editProfileModal: {
     edit: 'Редактировать профиль',
@@ -41,6 +43,7 @@ export const modals = (): Translation['modals'] => ({
     title: 'Заголовок задачи*',
     description: 'Описание задачи',
     validateError: 'Пожалуйста, добавьте заголовок',
+    tooltip: 'Назначить участника',
   },
   newBoardModal: {
     header: 'Создать доску',
