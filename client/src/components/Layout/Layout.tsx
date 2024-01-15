@@ -3,6 +3,8 @@ import { CssBaseline } from '@mui/material';
 import Box from '@mui/material/Box';
 import Header from '../Header';
 import ErrorBar from '../ErrorBar';
+import { Suspense } from 'react';
+import GlobalSpinner from '../Spinners/GlobalSpinner';
 
 function Layout() {
   return (
@@ -10,7 +12,9 @@ function Layout() {
       <CssBaseline />
       <ErrorBar />
       <Header />
-      <Outlet />
+      <Suspense fallback={<GlobalSpinner />}>
+        <Outlet />
+      </Suspense>
     </Box>
   );
 }
