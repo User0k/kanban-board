@@ -1,14 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { appRoutes } from './routes/appRoutes';
 import Layout from './components/Layout';
-import PrivateRoute from './PrivateRoute';
-import RedirectRoute from './RedirectRoute';
-import LazyBoardPage from './pages/BoardPage';
-import LazyLoginPage from './pages/LoginPage';
-import LazyMainPage from './pages/MainPage';
-import LazyPageNotFound from './pages/PageNotFound';
-import LazyRegisterPage from './pages/RegisterPage';
+import PrivateRoute from './routes/PrivateRoute';
+import RedirectRoute from './routes/RedirectRoute';
 import LazyWelcomePage from './pages/WelcomePage';
-import LazyProfilePage from './pages/ProfilePage';
 import './global.scss';
 
 function App() {
@@ -17,47 +12,21 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<LazyWelcomePage />} />
-          <Route
-            path="/boards"
-            element={
-              <PrivateRoute>
-                <LazyMainPage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/boards/:boardId"
-            element={
-              <PrivateRoute>
-                <LazyBoardPage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/register"
-            element={
-              <RedirectRoute>
-                <LazyRegisterPage />
-              </RedirectRoute>
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <RedirectRoute>
-                <LazyLoginPage />
-              </RedirectRoute>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <PrivateRoute>
-                <LazyProfilePage />
-              </PrivateRoute>
-            }
-          />
-          <Route path="*" element={<LazyPageNotFound />} />
+          {appRoutes.map((route) => (
+            <Route
+              key={route.path}
+              path={route.path}
+              element={
+                route.private ? (
+                  <PrivateRoute>{route.element}</PrivateRoute>
+                ) : route.redirectIfLogin ? (
+                  <RedirectRoute>{route.element}</RedirectRoute>
+                ) : (
+                  route.element
+                )
+              }
+            />
+          ))}
         </Route>
       </Routes>
     </BrowserRouter>

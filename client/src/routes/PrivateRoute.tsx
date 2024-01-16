@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { useCheckAuthQuery } from './services/authService';
-import GlobalSpinner from './components/Spinners/GlobalSpinner';
+import { useCheckAuthQuery } from '../services/authService';
+import GlobalSpinner from '../components/Spinners/GlobalSpinner';
 
 function PrivateRoute({ children }: { children: JSX.Element }) {
   const accessToken = localStorage.getItem('accessToken') ?? '';
