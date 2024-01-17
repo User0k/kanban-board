@@ -2,10 +2,10 @@
   margin-bottom: 1.8rem;
   text-align: center;
 
-  @media (max-width: 1023px) and (min-width: 640px) {
+  @media (max-width: 1024px) and (min-width: 700px) {
     font-size: 1.7rem;
   }
-  @media (max-width: 640px) {
+  @media (max-width: 700px) {
     font-size: 1.5rem;
   }
 }
@@ -15,7 +15,7 @@
   gap: 28px;
   margin-bottom: 20px;
 
-  @media (min-width: 1024px) {
+  @media (min-width: 1025px) {
     flex-direction: row;
     align-items: stretch;
     gap: 32px;
@@ -25,25 +25,13 @@
 .feature-card.MuiPaper-root {
   width: 400px;
 
-  @media (max-width: 640px) {
+  @media (max-width: 1024px) {
     width: auto;
-    max-width: 400px;
+    max-width: 450px;
   }
 }
 
 .feature-card-divder.MuiBox-root {
   margin: 7px 0;
   height: 1px;
-}
-
-.feature-card__title.MuiTypography-root {
-  text-align: center;
-  @media (max-width: 1024px) and (min-width: 640px) {
-    font-size: 1.1rem;
-  }
-
-  @media (max-width: 640px) {
-    font-size: 1rem;
-    font-weight: 700;
-  }
 }

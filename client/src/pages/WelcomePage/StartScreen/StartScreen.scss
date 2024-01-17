@@ -1,40 +1,68 @@
-.start-screen {
-  height: calc(100vh - 70px);
-  margin: 20px;
-
-  @media (max-aspect-ratio: 8/5) {
-    height: 70vh;
-  }
-
-  @media (max-aspect-ratio: 1) {
-    height: 50vh;
-  }
-
-  @media (max-aspect-ratio: 2/3) {
-    height: 30vh;
-  }
+#start-screen {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 40px;
+  padding: 70px 140px 100px 140px;
+  min-height: 63svh;
 }
 
-.start-screen {
+.logo {
   &__wrapper.MuiPaper-root {
     position: relative;
-    width: 50vw;
+    width: 90%;
     box-shadow: none;
     overflow: hidden;
-
-    @media (max-width: 1024px) and (min-width: 768px) {
-      width: calc(50vw + 80px);
-    }
-
-    @media (max-width: 768px) {
-      width: calc(55vw + 60px);
-    }
   }
 
-  &__logo.MuiCardMedia-root {
+  &__picture.MuiCardMedia-root {
     position: absolute;
     top: -30%;
     left: 13%;
     width: 80%;
+  }
+}
+
+.demo-image {
+  width: 50%;
+  height: 100%;
+}
+
+@media (max-width: 1600px) and (min-width: 1024px) {
+  .logo__wrapper.MuiPaper-root {
+    width: 45svw;
+  }
+
+  .demo-image {
+    width: 45svw;
+    padding-right: 20px;
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 700px) {
+  #start-screen {
+    flex-direction: column;
+    gap: 55px;
+    padding: 70px 0 70px 0;
+  }
+
+  .logo__wrapper.MuiPaper-root {
+    width: 75svw;
+  }
+
+  .demo-image {
+    width: 80svw;
+    padding-right: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  #start-screen {
+    flex-direction: column;
+    padding: 50px 0 50px 0;
+  }
+
+  .logo__wrapper.MuiPaper-root, .demo-image {
+    width: 95svw;
   }
 }

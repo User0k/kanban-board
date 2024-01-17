@@ -1,6 +1,6 @@
 #auth-page {
   max-width: 320px;
-  transform: translateY(calc(50vh - 50% - 70px));
+  transform: translateY(calc(50svh - 50% - 70px));
 }
 
 .auth-title {
@@ -10,7 +10,7 @@
 
 @media (max-height: 640px) {
   #auth-page {
-    transform: translateY(calc(50vh - 50% - 20px));
+    transform: translateY(calc(50svh - 50% - 20px));
 
     .auth-title {
       font-size: 1.3rem;
