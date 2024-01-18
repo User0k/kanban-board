@@ -62,7 +62,11 @@
     padding: 50px 0 50px 0;
   }
 
-  .logo__wrapper.MuiPaper-root, .demo-image {
+  .logo__wrapper.MuiPaper-root {
+    width: 85svw;
+  }
+
+  .demo-image {
     width: 95svw;
   }
 }

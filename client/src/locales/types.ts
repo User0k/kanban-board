@@ -9,6 +9,7 @@ import { pageNotFound } from './en/pageNotFound';
 import { profilePage } from './en/profilePage';
 import { registerPage } from './en/registerPage';
 import { task } from './en/task';
+import { welcomePage } from './en/welcomePage';
 
 const translatedObj = {
   header,
@@ -22,6 +23,7 @@ const translatedObj = {
   profilePage,
   registerPage,
   task,
+  welcomePage,
 };
 
 type TranslationFn = typeof translatedObj;
