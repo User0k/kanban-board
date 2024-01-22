@@ -5,11 +5,10 @@ import {
   fetchBaseQuery,
 } from '@reduxjs/toolkit/query/react';
 import { resetAuth } from '../store/slices/authSlice';
-import { BASE_URL } from '../constants';
 import { IAuthResponse } from '../models';
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: BASE_URL,
+  baseUrl: import.meta.env.VITE_BASE_URL,
   credentials: 'include',
   prepareHeaders: (headers, { endpoint }) => {
     const accessToken = localStorage.getItem('accessToken');

@@ -90,6 +90,11 @@ const getUsersInTasks = errorHandler(async (req, res) => {
     throw new Error('Must contain a valid array of task ids');
   }
 
+  if (!taskIds[0]) {
+    res.status(406);
+    throw new Error('An empty array of task ids');
+  }
+
   const uniqueUsers = {};
   const usersInTasks = {};
 

@@ -1,7 +1,5 @@
 import { Language } from "./models";
 
-export const BASE_URL = 'http://localhost:5000/api/';
-
 export const BACKGROUND_IMG_SOURCE =
   'https://source.unsplash.com/random/1920x1080/?nature';
 
