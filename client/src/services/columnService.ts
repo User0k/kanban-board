@@ -15,10 +15,10 @@ export const boardApi = api.injectEndpoints({
       }),
     }),
     createColumn: build.mutation<IColumn, NewColumn>({
-      query: ({ boardId, title }) => ({
+      query: ({ boardId, ...body }) => ({
         url: `boards/${boardId}/columns/`,
         method: 'POST',
-        body: title,
+        body,
       }),
       invalidatesTags: ['Column'],
     }),
@@ -31,10 +31,10 @@ export const boardApi = api.injectEndpoints({
       invalidatesTags: ['Column'],
     }),
     reorderColumn: build.mutation<IServerMessage, IReorderColumn>({
-      query: ({ boardId, id, targetOrder }) => ({
+      query: ({ boardId, id, ...body }) => ({
         url: `boards/${boardId}/reorder/columns/${id}`,
         method: 'PUT',
-        body: targetOrder,
+        body,
       }),
       invalidatesTags: ['Column'],
     }),

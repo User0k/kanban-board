@@ -3,7 +3,7 @@ import { useRefreshQuery } from '../services/authService';
 import { setIsLoggedIn, setUser } from '../store/slices/authSlice';
 import { useAppDispatch } from './useAppDispatch';
 
-export const useFirstLoad = () => {
+export const useFirstLoad = async () => {
   const dispatch = useAppDispatch();
   const { data: userResponse = undefined, isLoading: isRefreshing } =
     useRefreshQuery();
@@ -18,6 +18,4 @@ export const useFirstLoad = () => {
       dispatch(setUser(userResponse.user));
     }
   }, [isRefreshing, userResponse, dispatch]);
-
-  return isRefreshing;
 };
