@@ -8,6 +8,8 @@ import {
 import { useForm } from 'react-hook-form';
 import { useErrorHandler } from '../../../hooks/useErrorHandler';
 import { useTranslation } from '../../../hooks/useTranslation';
+import { useAppDispatch } from '../../../hooks/useAppDispatch';
+import { updateImage } from '../../../store/slices/boardSlice';
 import { useUpdateBoardMutation } from '../../../services/boardService';
 import { NewBoard } from '../../../models';
 import ChooseImageModal from '../ChooseImageModal';
@@ -66,9 +68,11 @@ function EditBoardModal({
     { isLoading: isBoardUpdating, isError: updateBoardError },
   ] = useUpdateBoardMutation();
 
+  const dispatch = useAppDispatch();
   const onSubmit = async (data: FormValues) => {
     handleClose();
     await updateBoard({ ...data, image, id });
+    dispatch(updateImage(image));
   };
 
   useEffect(

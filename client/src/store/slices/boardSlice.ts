@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import { imgMaximizer } from '../../utils/imgMaximizer';
 import {
   AssignedUser,
   IColumn,
@@ -30,6 +31,9 @@ export const boardSlice = createSlice({
   name: 'board',
   initialState,
   reducers: {
+    updateImage: (state, action: PayloadAction<string>) => {
+      state.bgImage = imgMaximizer(action.payload);
+    },
     updateColumnSet: (state, action: PayloadAction<IColumn[]>) => {
       state.columns = action.payload;
     },
@@ -62,6 +66,7 @@ export const boardSlice = createSlice({
 });
 
 export const {
+  updateImage,
   updateColumnSet,
   updateTaskSet,
   updateAssignedSet,

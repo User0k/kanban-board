@@ -28,7 +28,7 @@ function BoardPage() {
   const [isColumnCreating, setIsColumnCreating] = useState(false);
   const { isColumnsLoading, columnsGetError } = useUpdateColumnSet(boardId);
   const boardName = columnsGetError ? 'Can`t get columns' : board?.name || '';
-  const storedColumns = useAppSelector((state) => state.boardReducer).columns;
+  const { columns, bgImage } = useAppSelector((state) => state.boardReducer);
 
   const tasksIds = useUpdateTaskSet(boardId);
   useUpdateAssignedUsers(tasksIds);
@@ -42,7 +42,9 @@ function BoardPage() {
       {boardNotFound ? (
         <Box className="board-not-found">{t?.notFound}</Box>
       ) : (
-        <Box className="board-page" sx={{ backgroundImage: `${board?.image}` }}>
+        <Box
+          className="board-page"
+          sx={{ backgroundImage: `${bgImage || board?.image}` }}>
           <Box className="board-page__subheader">
             <Stack
               direction="row"
@@ -82,7 +84,7 @@ function BoardPage() {
                       <CircularProgress size={30} sx={{ m: 1 }} />
                     </Stack>
                   ) : (
-                    storedColumns.map((column: IColumn, index) => (
+                    columns.map((column: IColumn, index) => (
                       <Column
                         {...column}
                         boardId={boardId}

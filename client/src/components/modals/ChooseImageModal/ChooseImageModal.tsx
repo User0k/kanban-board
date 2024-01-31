@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { IMAGES_LOAD_AMOUNT, PRELOADED_IMAGES } from '../../../constants';
+import { IMAGES_AMOUNT, PRELOADED_IMAGES } from '../../../constants';
 import './ChooseImageModal.scss';
 
 interface IModalProps {
@@ -19,7 +19,7 @@ interface IModalProps {
 function ChooseImageModal({ setImage }: IModalProps) {
   const preloadMinifiedImgs = imgMinifyer(PRELOADED_IMAGES);
   const [images, setImages] = useState(preloadMinifiedImgs);
-  const [gradients, setGradients] = useState(getGradients(IMAGES_LOAD_AMOUNT));
+  const [gradients, setGradients] = useState(getGradients(IMAGES_AMOUNT));
   const [open, setOpen] = useState(false);
   const [isPicture, setIsPicture] = useState(true);
   const [isFetching, setIsFetching] = useState(false);
@@ -38,14 +38,14 @@ function ChooseImageModal({ setImage }: IModalProps) {
 
   const loadMoreImages = async () => {
     setIsFetching(true);
-    const urls: string[] = await getAllSources(IMAGES_LOAD_AMOUNT);
+    const urls: string[] = await getAllSources(IMAGES_AMOUNT);
     const imgArr = imgMinifyer(urls);
     setIsFetching(false);
     setImages([...images, ...imgArr]);
   };
 
   const loadMoreGradients = () => {
-    const newGradients = getGradients(IMAGES_LOAD_AMOUNT);
+    const newGradients = getGradients(IMAGES_AMOUNT);
     setGradients([...gradients, ...newGradients]);
   };
 

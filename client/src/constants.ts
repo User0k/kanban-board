@@ -1,9 +1,9 @@
-import { Language } from "./models";
+import { Language } from './models';
 
 export const BACKGROUND_IMG_SOURCE =
   'https://source.unsplash.com/random/1920x1080/?nature';
 
-export const IMAGES_LOAD_AMOUNT = 8;
+export const IMAGES_AMOUNT = 8;
 
 export const IMAGE_MIN_CROP =
   '?crop=entropy&cs=tinysrgb&fit=crop&h=200&q=80&utm_campaign=api-credit&w=400';
