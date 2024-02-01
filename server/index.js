@@ -21,7 +21,16 @@ const init = async () => {
   try {
     await sequelize.authenticate();
     await sequelize.sync({ alter: true });
-    app.listen(PORT, () => console.log('server is running'));
+    app.listen(PORT, () => console.log(`server is running on port ${PORT}`));
+
+    if (process.env.MODE === 'production') {
+      const path = require('path');
+      app.use(express.static(path.join(__dirname, '../client/dist')));
+      const clientIndex = path.join(__dirname, '../client/dist', 'index.html');
+      app.get('*', (_, res) => res.sendFile(clientIndex));
+    } else {
+      app.get('/', (_, res) => res.send('Connected to server'));
+    }
   } catch (error) {
     console.error('Unable to connect to the database: ', error);
   }

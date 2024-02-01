@@ -1,5 +1,5 @@
 const sequelize = require('../db');
-const { DataTypes, fn, QueryInterface } = require('sequelize');
+const { DataTypes, fn } = require('sequelize');
 
 const Board = sequelize.define('Board', {
   id: {
