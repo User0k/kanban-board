@@ -98,7 +98,7 @@ const reorderTasks = errorHandler(async (req, res) => {
 
   const unshiftOrderTasks = await Task.findAll({
     where: {
-      ColumnId: columnId,
+      ColumnId: targetColumnId,
       order: { [Op.gte]: targetOrder },
     },
   });
