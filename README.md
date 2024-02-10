@@ -5,7 +5,6 @@ This web application is for managing and organizing tasks using the Kanban metho
 [deployed demo](https://kanban-board-nwiv.onrender.com/)
 > [!NOTE]
 > As this uses a free tier you may need to wait up to 2-3 minutes until the server wakes up.
-## Features
 
 ![animation-1](https://github.com/User0k/kanban-board/assets/25122117/6eb5b774-d2b0-46b7-9cf9-2548f6dc0c71)
 
@@ -15,6 +14,22 @@ This web application is for managing and organizing tasks using the Kanban metho
   ![animation-2](https://github.com/User0k/kanban-board/assets/25122117/f74e2242-0d75-4e10-a01c-a56f5bdfeeeb)
     
 </details>
+
+<p>
+  <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-007ACC.svg?logo=typescript&logoColor=white" /> 
+  <img alt="React" src="https://img.shields.io/badge/React-212121?logo=react&logoColor=5ed3f3" />
+  <img alt="Vite" src="https://img.shields.io/badge/Vite-f5f900?logo=vite" />
+  <img alt="Material UI" src="https://img.shields.io/badge/MUI-007fff.svg?&logo=mui&logoColor=white">
+  <img alt="React Hook Form" src="https://img.shields.io/badge/React Hook Form-f93787.svg?&logo=reacthookform&logoColor=white">
+  <img alt="React Router" src="https://img.shields.io/badge/React Router-black.svg?&logo=reactrouter">
+</p>
+<p>
+  <img alt="Express" src="https://img.shields.io/badge/Express-010101.svg?logo=express" /> 
+  <img alt="Sequelize" src="https://img.shields.io/badge/Sequelize-0253ef.svg?logo=Sequelize" /> 
+  <img alt="PostgreSQL" src="https://img.shields.io/badge/PostgreSQL-eeffff.svg?logo=postgresql" /> 
+  <img alt="JWT" src="https://img.shields.io/badge/JSON Web Tokens-d63aff.svg?logo=jsonwebtokens" /> 
+  <img alt="bcrypt" src="https://img.shields.io/badge/bcrypt-1a0dab.svg?logo=bcrypt" /> 
+</p>
 
 ## Features
 This project includes the following features:
@@ -26,10 +41,6 @@ This project includes the following features:
 - Drag and drop: users can easily move columns and tasks between columns or within same column using drag and drop functionality.
 - Collaboration: users can assign themselves or their team members to certain tasks.
 - Adaptive from 1920px to 320px.
-
-## Technologies Used
-- Frontend: React, TypeScript, Vite, Material-UI, Emotion, React Hook Form, React Router
-- Backend: Express.js, PostgreSQL, Sequelize, JSON Web Tokens (JWT), bcrypt
 
 ## Getting Started
 To run this locally, follow these steps:
