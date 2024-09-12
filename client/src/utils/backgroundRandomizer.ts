@@ -14,12 +14,14 @@ interface IResponse extends Omit<Response, 'url'> {
   }[];
 }
 
-export async function fetchRandomImagesPage() {
+export async function fetchRandomImages() {
   const totalPages = Math.floor(TOTAL_POSSIBLE_IMAGES_AMOUNT / IMAGES_PER_PAGE);
   const currentPage = Math.floor(Math.random() * totalPages) + 1;
-  const resp = await fetch(
-    `${BACKGROUND_IMG_SOURCE}&per_page=${IMAGES_PER_PAGE}&page=${currentPage}`,
-  );
-  const data: IResponse = await resp.json();
-  return data?.results.map((item) => item.urls.regular);
+  try {
+    const resp = await fetch(
+      `${BACKGROUND_IMG_SOURCE}&per_page=${IMAGES_PER_PAGE}&page=${currentPage}`,
+    );
+    const data: IResponse = await resp.json();
+    return data.results.map((item) => item.urls.regular);
+  } catch (error) {}
 }

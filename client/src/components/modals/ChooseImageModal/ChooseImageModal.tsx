@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import { fetchRandomImagesPage } from '../../../utils/backgroundRandomizer';
+import { fetchRandomImages } from '../../../utils/backgroundRandomizer';
 import imgMinifyer from '../../../utils/imgMinifyer';
 import { getGradients } from '../../../utils/gradientGenerator';
 import Box from '@mui/material/Box';
@@ -40,7 +40,12 @@ function ChooseImageModal({ setImage }: IModalProps) {
 
   const loadMoreImages = async () => {
     setIsFetching(true);
-    const urls: string[] = await fetchRandomImagesPage();
+    const urls = await fetchRandomImages();
+
+    if (!urls) {
+      setIsFetching(false);
+      return;
+    }
     const imgArr = imgMinifyer(urls);
     setIsFetching(false);
     setImages([...images, ...imgArr]);
