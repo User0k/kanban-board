@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import { getAllSources } from '../../../utils/backgroundRandomizer';
+import { fetchRandomImagesPage } from '../../../utils/backgroundRandomizer';
 import imgMinifyer from '../../../utils/imgMinifyer';
 import { getGradients } from '../../../utils/gradientGenerator';
 import Box from '@mui/material/Box';
@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import { IMAGES_AMOUNT, PRELOADED_IMAGES } from '../../../constants';
+import { ADDITIONAL_IMAGES_AMOUNT, PRELOADED_IMAGES } from '../../../constants';
 import './ChooseImageModal.scss';
 
 interface IModalProps {
@@ -19,7 +19,9 @@ interface IModalProps {
 function ChooseImageModal({ setImage }: IModalProps) {
   const preloadMinifiedImgs = imgMinifyer(PRELOADED_IMAGES);
   const [images, setImages] = useState(preloadMinifiedImgs);
-  const [gradients, setGradients] = useState(getGradients(IMAGES_AMOUNT));
+  const [gradients, setGradients] = useState(
+    getGradients(ADDITIONAL_IMAGES_AMOUNT),
+  );
   const [open, setOpen] = useState(false);
   const [isPicture, setIsPicture] = useState(true);
   const [isFetching, setIsFetching] = useState(false);
@@ -38,14 +40,14 @@ function ChooseImageModal({ setImage }: IModalProps) {
 
   const loadMoreImages = async () => {
     setIsFetching(true);
-    const urls: string[] = await getAllSources(IMAGES_AMOUNT);
+    const urls: string[] = await fetchRandomImagesPage();
     const imgArr = imgMinifyer(urls);
     setIsFetching(false);
     setImages([...images, ...imgArr]);
   };
 
   const loadMoreGradients = () => {
-    const newGradients = getGradients(IMAGES_AMOUNT);
+    const newGradients = getGradients(ADDITIONAL_IMAGES_AMOUNT);
     setGradients([...gradients, ...newGradients]);
   };
 
@@ -55,7 +57,8 @@ function ChooseImageModal({ setImage }: IModalProps) {
         direction={'row'}
         alignItems="end"
         spacing={1}
-        className="choose-image__btn-wrapper">
+        className="choose-image__btn-wrapper"
+      >
         <Box className="choose-image__btn-more" onClick={handleOpenWithImages}>
           <MoreHorizIcon />
         </Box>
@@ -69,7 +72,8 @@ function ChooseImageModal({ setImage }: IModalProps) {
         ))}
         <Box
           className="choose-image__btn-more"
-          onClick={handleOpenWithGradients}>
+          onClick={handleOpenWithGradients}
+        >
           <MoreHorizIcon />
         </Box>
       </Stack>
@@ -92,7 +96,8 @@ function ChooseImageModal({ setImage }: IModalProps) {
             variant="contained"
             size="small"
             className="load-more-btn"
-            onClick={isPicture ? loadMoreImages : loadMoreGradients}>
+            onClick={isPicture ? loadMoreImages : loadMoreGradients}
+          >
             <KeyboardDoubleArrowDownIcon fontSize={'small'} />
           </Button>
         </Stack>

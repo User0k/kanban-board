@@ -1,9 +1,9 @@
 import { Language } from './models';
 
-export const BACKGROUND_IMG_SOURCE =
-  'https://source.unsplash.com/random/1920x1080/?nature';
-
-export const IMAGES_AMOUNT = 8;
+export const TOTAL_POSSIBLE_IMAGES_AMOUNT = 10000;
+export const IMAGES_PER_PAGE = 30;
+export const ADDITIONAL_IMAGES_AMOUNT = 8;
+export const BACKGROUND_IMG_SOURCE = `https://api.unsplash.com//search/photos?client_id=${import.meta.env.VITE_UNSPLASH_KEY}&query=nature&orientation=landscape`;
 
 export const IMAGE_MIN_CROP =
   '?crop=entropy&cs=tinysrgb&fit=crop&h=200&q=80&utm_campaign=api-credit&w=400';
