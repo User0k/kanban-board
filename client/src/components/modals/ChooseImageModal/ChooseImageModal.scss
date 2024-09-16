@@ -6,6 +6,8 @@
   &__image {
     width: 200px;
     height: 140px;
+    background-size: cover;
+    background-position: center;
     cursor: pointer;
     &:hover {
       filter: brightness(0.9);

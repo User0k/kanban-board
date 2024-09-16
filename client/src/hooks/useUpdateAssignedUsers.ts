@@ -5,7 +5,9 @@ import { useAppDispatch } from './useAppDispatch';
 
 export const useUpdateAssignedUsers = (tasksIds: string[]) => {
   const dispatch = useAppDispatch();
-  const { data: users } = useGetUsersInTasksQuery(tasksIds);
+  const { data: users } = useGetUsersInTasksQuery(tasksIds, {
+    skip: tasksIds.length === 0,
+  });
 
   useEffect(() => {
     if (users) {
