@@ -1,4 +1,4 @@
-export const modals = () => ({
+export const modals = {
   createColumnModal: {
     addBtn: 'Add a column',
     title: 'Column title*',
@@ -54,4 +54,4 @@ export const modals = () => ({
     cancel: 'cancel',
     save: 'save',
   },
-});
+};

@@ -1,4 +1,4 @@
-export const welcomePage = () => ({
+export const welcomePage = {
   featuresection: {
     cards: [
       {
@@ -19,4 +19,4 @@ export const welcomePage = () => ({
     ],
     header: 'Key features',
   },
-});
+}

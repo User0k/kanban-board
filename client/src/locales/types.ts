@@ -26,9 +26,4 @@ const translatedObj = {
   welcomePage,
 };
 
-type TranslationFn = typeof translatedObj;
-export type Translation = {
-  [K in keyof TranslationFn]: TranslationFn[K] extends () => infer T
-    ? T
-    : never;
-};
+export type Translation = typeof translatedObj;

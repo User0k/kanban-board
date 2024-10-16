@@ -1,4 +1,4 @@
-export const profilePage = () => ({
+export const profilePage = {
   header: 'Welcome to your profile',
   name: 'Name: ',
   email: 'Email: ',
@@ -7,4 +7,4 @@ export const profilePage = () => ({
   element: 'profile',
   deleteError: 'Unable to delete account',
   updateError: 'Unable to update profile',
-});
+}

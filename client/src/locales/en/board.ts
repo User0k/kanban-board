@@ -1,4 +1,5 @@
-export const board = () => ({
+export const board = {
   deleteError: 'Unable to delete board',
   element: 'board',
-});
+}
+

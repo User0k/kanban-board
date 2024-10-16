@@ -1,4 +1,4 @@
-export const registerPage = () => ({
+export const registerPage = {
   registerError: 'Unable to create account',
   existError: 'User with this email already exists',
   header: 'Create a new account',
@@ -11,4 +11,4 @@ export const registerPage = () => ({
     email: 'Should be a valid email',
     password: 'Should be from 6 to 32 characters long',
   },
-});
+}
