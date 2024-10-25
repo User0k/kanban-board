@@ -1,7 +1,7 @@
-@import '../../vars-mixins.scss';
+@use '../../vars-mixins.scss' as vars;
 
 .avatar-large.MuiAvatar-colorDefault {
-  @include avatar-large;
+  @include vars.avatar-large;
 }
 
 .profile {

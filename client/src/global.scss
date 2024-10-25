@@ -1,4 +1,4 @@
-@import './vars-mixins.scss';
+@use './vars-mixins.scss' as *;
 
 .btn-min-height {
   min-height: $btn-min-height;

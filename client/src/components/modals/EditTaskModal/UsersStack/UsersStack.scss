@@ -1,4 +1,4 @@
-@import '../../../../vars-mixins.scss';
+@use '../../../../vars-mixins.scss' as mixins;
 
 .user-btns-wrapper {
   gap: 4px;
@@ -7,7 +7,7 @@
 }
 
 .btn-assign.MuiAvatar-root {
-  @include avatar-small;
+  @include mixins.avatar-small;
   font-size: 1.3rem;
   background-color: #3f6cc0;
 

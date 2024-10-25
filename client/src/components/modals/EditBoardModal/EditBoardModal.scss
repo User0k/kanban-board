@@ -1,4 +1,6 @@
-@import '../../../vars-mixins.scss';
+@use '../../../vars-mixins.scss' as vars;
+
+$font-size: vars.$modal-header-font;
 
 .edit-board {
   .MuiPaper-root {
@@ -7,7 +9,7 @@
 
   .edit-board__ {
     &title {
-      font-size: $modal-header-font;
+      font-size: $font-size;
       padding: 6px;
       text-align: center;
     }

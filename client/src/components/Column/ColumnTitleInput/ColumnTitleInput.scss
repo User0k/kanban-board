@@ -1,4 +1,4 @@
-@import '../../../vars-mixins.scss';
+@use '../../../vars-mixins.scss' as vars;
 
 .column__title {
   &-input {
@@ -19,6 +19,6 @@
   }
 
   &-cancel svg {
-    fill: $error-color;
+    fill: vars.$error-color;
   }
 }

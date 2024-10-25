@@ -1,8 +1,8 @@
-@import '../../../vars-mixins.scss';
+@use '../../../vars-mixins.scss' as vars;
 
 .avatar-small.MuiAvatar-colorDefault,
 .avatar-group .MuiAvatar-root {
-  @include avatar-small;
+  @include vars.avatar-small;
 }
 
 .avatar-group :not(.avatar-small) {
@@ -10,7 +10,7 @@
 }
 
 .avatar-large.MuiAvatar-colorDefault {
-  @include avatar-large;
+  @include vars.avatar-large;
 }
 
 .modal-profile {
@@ -20,7 +20,7 @@
   }
 
   .btn-close {
-    @include btn-close;
+    @include vars.btn-close;
     fill: #ffffff;
   }
 

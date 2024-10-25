@@ -1,4 +1,4 @@
-@import '../../vars-mixins.scss';
+@use '../../vars-mixins.scss' as vars;
 
 .board-page {
   height: calc(100svh - 50px);
@@ -34,7 +34,7 @@
   }
 
   .btn-create-column {
-    background-color: $secondary-button-color;
+    background-color: vars.$secondary-button-color;
     align-self: baseline;
     min-width: max-content;
   }
@@ -42,12 +42,12 @@
 
 .board-not-found {
   margin: calc(25svh - 50px) auto;
-  @include board-sizes;
+  @include vars.board-sizes;
   font-size: 1.2rem;
-  padding-top: calc($board-height / 2 - 12px);
+  padding-top: calc(vars.$board-height / 2 - 12px);
   background-color: rgb(247, 247, 247);
-  color: $error-color;
-  box-shadow: $shadow-button;
+  color: vars.$error-color;
+  box-shadow: vars.$shadow-button;
   text-align: center;
 }
 

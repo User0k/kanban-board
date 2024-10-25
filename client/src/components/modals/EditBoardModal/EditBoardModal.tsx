@@ -77,7 +77,7 @@ function EditBoardModal({
 
   useEffect(
     () => setIsUpdating(isBoardUpdating),
-    [setIsUpdating, isBoardUpdating]
+    [setIsUpdating, isBoardUpdating],
   );
 
   const t = useTranslation('modals');

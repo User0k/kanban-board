@@ -1,4 +1,4 @@
-@import '../../../../vars-mixins.scss';
+@use '../../../../vars-mixins.scss' as mixins;
 
 .modal-assign {
   &.MuiDialog-root {
@@ -6,7 +6,7 @@
   }
 
   .btn-close {
-    @include btn-close;
+    @include mixins.btn-close;
   }
 
   &__header {
@@ -39,7 +39,7 @@
   }
 
   .avatar-medium {
-    @include avatar-medium;
+    @include mixins.avatar-medium;
   }
 
   .assigned-icon {
